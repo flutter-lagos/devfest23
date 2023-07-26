@@ -48,5 +48,5 @@ Some note goes here
 
 ## License
 
-Project is published under the [MIT license](/LICENSE.md).
+Project is published under the [MIT license](/LICENSE).
 Feel free to clone and modify repo as you want, but don't forget to add reference to authors 🙂
