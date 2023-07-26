@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "inputs": [
+		{
+			"id": "buildMode",
+			"type": "pickString",
+			"default": "debug",
+			"options": ["debug", "profile", "release"],
+			"description": "Which build mode to use?"
+		},
+		{
+			"id": "environment",
+			"type": "pickString",
+			"default": "staging",
+			"options": ["staging", "prod"],
+			"description": "Which environment to run against?"
+		}
+	],
+    "configurations": [
+        {
+            "name": "Devfest23 App",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_${input:environment}.dart",
+            "flutterMode": "${input:buildMode}"
+        }
+    ]
+}
