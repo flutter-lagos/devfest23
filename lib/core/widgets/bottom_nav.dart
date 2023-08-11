@@ -124,32 +124,35 @@ class _DevfestBottomNavTile extends StatelessWidget {
         : bottomNavItemTheme.unselectedColor;
     return InkWell(
       onTap: onTap,
-      child: AnimatedDefaultTextStyle(
-        duration: Constants.kAnimationDur,
-        style: bottomNavItemTheme.labelStyle.copyWith(color: itemColor),
-        child: IconTheme(
-          data: IconThemeData(size: 24, color: itemColor),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (selected) ...[
-                Container(
-                  height: 30,
-                  width: 30,
-                  decoration: ShapeDecoration(
-                    shape: const CircleBorder(),
-                    color: itemColor.withOpacity(0.4),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 70),
+        child: AnimatedDefaultTextStyle(
+          duration: Constants.kAnimationDur,
+          style: bottomNavItemTheme.labelStyle.copyWith(color: itemColor),
+          child: IconTheme(
+            data: IconThemeData(size: 24, color: itemColor),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (selected) ...[
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: ShapeDecoration(
+                      shape: const CircleBorder(),
+                      color: itemColor.withOpacity(0.4),
+                    ),
+                    alignment: Alignment.center,
+                    child: icon,
                   ),
-                  alignment: Alignment.center,
-                  child: icon,
-                ),
-                const SizedBox(height: 2),
-              ] else ...[
-                icon,
-                const SizedBox(height: 8)
+                  const SizedBox(height: 2),
+                ] else ...[
+                  icon,
+                  const SizedBox(height: 8)
+                ],
+                Text(label),
               ],
-              Text(label),
-            ],
+            ),
           ),
         ),
       ),
