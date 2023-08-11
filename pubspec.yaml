@@ -19,11 +19,15 @@ dependencies:
   equatable: ^2.0.5
   cloud_firestore: ^4.8.4
   firebase_core: ^2.15.0
+  widgetbook: ^3.1.0
+  widgetbook_annotation: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  widgetbook_generator: ^3.0.0
+  build_runner: ^2.4.6
 
 
 flutter:
