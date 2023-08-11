@@ -32,7 +32,7 @@ class DevfestButtonTheme extends ThemeExtension<DevfestButtonTheme> {
       : this._(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(48))),
-          backgroundColor: DevfestColors.grey100,
+          backgroundColor: DevfestColors.background,
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,

@@ -1,3 +1,4 @@
+import 'package:devfest23/core/themes/bottom_nav_theme.dart';
 import 'package:devfest23/core/themes/button_theme.dart';
 import 'package:devfest23/core/themes/outlined_button_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
   final DevfestTextTheme? textTheme;
   final DevfestButtonTheme? buttonTheme;
   final DevfestOutlinedButtonTheme? outlinedButtonTheme;
+  final DevfestBottomNavTheme? bottomNavTheme;
   final Color? backgroundColor;
 
   static DevFestTheme of(BuildContext context) =>
@@ -19,6 +21,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
     this.textTheme,
     this.backgroundColor,
     this.outlinedButtonTheme,
+    this.bottomNavTheme,
     this.buttonTheme,
   });
 
@@ -27,6 +30,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           backgroundColor: DevfestColors.background,
           buttonTheme: const DevfestButtonTheme.light(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.light(),
+          bottomNavTheme: const DevfestBottomNavTheme.light(),
         );
 
   const DevFestTheme.dark()
@@ -34,12 +38,22 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           backgroundColor: DevfestColors.darkbackground,
           buttonTheme: const DevfestButtonTheme.dark(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.dark(),
+          bottomNavTheme: const DevfestBottomNavTheme.dark(),
         );
 
   @override
-  ThemeExtension<DevFestTheme> copyWith() {
-    // TODO: implement lerp
-    return const DevFestTheme();
+  DevFestTheme copyWith({
+    DevfestTextTheme? textTheme,
+    DevfestButtonTheme? buttonTheme,
+    DevfestOutlinedButtonTheme? outlinedButtonTheme,
+    DevfestBottomNavTheme? bottomNavTheme,
+  }) {
+    return DevFestTheme(
+      textTheme: textTheme ?? this.textTheme,
+      buttonTheme: buttonTheme ?? this.buttonTheme,
+      outlinedButtonTheme: outlinedButtonTheme ?? this.outlinedButtonTheme,
+      bottomNavTheme: bottomNavTheme ?? this.bottomNavTheme,
+    );
   }
 
   @override
@@ -51,6 +65,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
       buttonTheme: buttonTheme?.lerp(other.buttonTheme, t),
       outlinedButtonTheme:
           outlinedButtonTheme?.lerp(other.outlinedButtonTheme, t),
+      bottomNavTheme: bottomNavTheme?.lerp(other.bottomNavTheme, t),
     );
   }
 }
