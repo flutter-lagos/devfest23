@@ -4,6 +4,7 @@ import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../constants.dart';
 import 'widgets.dart';
 
 @widgetbook.UseCase(name: 'Filled Button', type: DevfestButtons)
@@ -114,12 +115,12 @@ class DevfestFilledButton extends StatelessWidget {
         onTap: onPressed,
         customBorder: buttonTheme.shape,
         child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 700),
+          duration: Constants.kAnimationDur,
           style: buttonTheme.textStyle,
           child: IconTheme(
             data: IconThemeData(color: buttonTheme.iconColor),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 700),
+              duration: Constants.kAnimationDur,
               height: 67,
               width: double.infinity,
               decoration: ShapeDecoration(
@@ -195,12 +196,12 @@ class DevfestOutlinedButton extends StatelessWidget {
         onTap: onPressed,
         customBorder: outlinedButtonTheme.shape,
         child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 700),
+          duration: Constants.kAnimationDur,
           style: outlinedButtonTheme.textStyle,
           child: IconTheme(
             data: IconThemeData(color: outlinedButtonTheme.iconColor),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 700),
+              duration: Constants.kAnimationDur,
               height: 67,
               width: double.infinity,
               decoration: ShapeDecoration(
