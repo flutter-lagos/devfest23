@@ -18,7 +18,9 @@ class ThemeManager extends ChangeNotifier {
   }
 
   ThemeMode _themeMode = ThemeMode.system;
+
   ThemeMode get themeMode => _themeMode;
+
   void toggleThemeMode() {
     _themeMode =
         _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
@@ -52,6 +54,16 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
       routeInformationProvider: appRouter.mainRouter.routeInformationProvider,
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
+      // builder: (context, child) {
+      //   return DefaultTextStyle(
+      //     style: TextStyle(
+      //       color: MediaQuery.platformBrightnessOf(context) == Brightness.dark
+      //           ? DevfestColors.green
+      //           : DevfestColors.grey0,
+      //     ),
+      //     child: child!,
+      //   );
+      // },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
