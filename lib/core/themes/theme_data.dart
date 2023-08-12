@@ -31,6 +31,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           buttonTheme: const DevfestButtonTheme.light(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.light(),
           bottomNavTheme: const DevfestBottomNavTheme.light(),
+          textTheme: const DevfestTextTheme.fallback(),
         );
 
   const DevFestTheme.dark()
@@ -39,6 +40,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           buttonTheme: const DevfestButtonTheme.dark(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.dark(),
           bottomNavTheme: const DevfestBottomNavTheme.dark(),
+          textTheme: const DevfestTextTheme.fallback(),
         );
 
   @override
