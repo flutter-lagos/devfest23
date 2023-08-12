@@ -64,25 +64,25 @@ class OnboardingPage extends StatelessWidget {
             const Categories(),
             const Spacer(),
             Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Constants.horizontalMargin),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DevfestFilledButton(
-                      title: const Text('Login to RSVP'),
-                      onPressed: () {
-                        context
-                            .go('${RoutePaths.onboarding}/${RoutePaths.auth}');
-                      },
-                    ),
-                    const SizedBox(height: 13),
-                    DevfestOutlinedButton(
-                      title: const Text('Continue Without Login'),
-                      onPressed: () {},
-                    ),
-                  ],
-                )),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.horizontalMargin),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DevfestFilledButton(
+                    title: const Text('Login to RSVP'),
+                    onPressed: () {
+                      context.go('${RoutePaths.onboarding}/${RoutePaths.auth}');
+                    },
+                  ),
+                  const SizedBox(height: 13),
+                  DevfestOutlinedButton(
+                    title: const Text('Continue Without Login'),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 26),
           ],
         ),
