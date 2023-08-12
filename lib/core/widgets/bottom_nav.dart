@@ -115,10 +115,8 @@ class _DevfestBottomNavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = DevFestTheme.of(context);
-    final bottomNavItemTheme =
-        theme.bottomNavTheme ?? const DevfestBottomNavTheme.light();
-    final textTheme = theme.textTheme;
+    final bottomNavItemTheme = DevFestTheme.of(context).bottomNavTheme ??
+        const DevfestBottomNavTheme.light();
 
     final itemColor = selected
         ? bottomNavItemTheme.selectedColor
@@ -163,7 +161,7 @@ class _DevfestBottomNavTile extends StatelessWidget {
                 ),
                 Text(
                   label,
-                  style: textTheme?.body04,
+                  style: bottomNavItemTheme.labelStyle,
                 ),
               ],
             ),

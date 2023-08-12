@@ -30,38 +30,20 @@ class _AppHomeState extends ConsumerState<AppHome> {
       bottomNavigationBar: DevfestBottomNav(
         index: index,
         items: const [
-          DevfestBottomNavItem(
-              label: 'Home',
-              icon: Icon(
-                Icons.home_filled,
-                size: 24,
-              )),
+          DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_filled)),
           DevfestBottomNavItem(
             label: 'Schedule',
-            icon: Icon(
-              Icons.checklist_rtl_rounded,
-              size: 24,
-            ),
+            icon: Icon(Icons.checklist_rtl_rounded),
           ),
           DevfestBottomNavItem(
-              label: 'Speakers',
-              icon: Icon(
-                Icons.person_2_rounded,
-                size: 24,
-              )),
+              label: 'Speakers', icon: Icon(Icons.person_2_rounded)),
           DevfestBottomNavItem(
             label: 'Favourites',
-            icon: Icon(
-              Icons.star_border_rounded,
-              size: 24,
-            ),
+            icon: Icon(Icons.star_border_rounded),
           ),
           DevfestBottomNavItem(
             label: 'More',
-            icon: Icon(
-              Icons.more_rounded,
-              size: 24,
-            ),
+            icon: Icon(Icons.more_rounded),
           ),
         ],
         onTap: (page) {

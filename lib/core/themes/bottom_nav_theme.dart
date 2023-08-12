@@ -19,6 +19,7 @@ class DevfestBottomNavTheme extends ThemeExtension<DevfestBottomNavTheme> {
             fontSize: 14,
             fontWeight: FontWeight.w500,
             height: 1.27,
+            fontFamily: 'Google Sans',
           ),
           selectedColor: DevfestColors.blue,
           unselectedColor: DevfestColors.grey70,
@@ -29,6 +30,7 @@ class DevfestBottomNavTheme extends ThemeExtension<DevfestBottomNavTheme> {
           labelStyle: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
+            fontFamily: 'Google Sans',
             height: 1.27,
           ),
           selectedColor: DevfestColors.blue,
