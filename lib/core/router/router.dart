@@ -1,11 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/features/splash_screen/splash_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:devfest23/features/onboarding/pages/authentication.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/home/pages/home.dart';
-import '../../features/onboarding/onboarding.dart';
+import '../../features/onboarding/pages/onboarding.dart';
+import '../../features/splash/splash.dart';
 
 enum TabItem { home, schedule, speakers, favourites, more }
 
@@ -41,10 +42,34 @@ class AppRouter {
               return '/app/${tabId ?? TabItem.home.name}';
             },
             builder: (context, state) => const OnboardingPage(),
+            routes: [
+              GoRoute(
+                path: RoutePaths.auth,
+                name: RouteNames.auth,
+                builder: (context, state) {
+                  return const AuthenticationPage();
+                },
+              ),
+              GoRoute(
+                path: '${RoutePaths.auth}/:state',
+                builder: (context, state) {
+                  final stateId = state.pathParameters['state'];
+                  AuthState? authState;
+
+                  if (stateId != null) {
+                    authState = AuthState.values.firstWhereOrNull(
+                      (stateItem) =>
+                          stateItem == AuthState.values.byName(stateId),
+                    );
+                  }
+                  return AuthenticationPage(authState: authState);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/',
-            builder: (context, state) => const SplashScreen(),
+            builder: (context, state) => const SplashPage(),
           ),
           GoRoute(
             path: '/app/:tab',
