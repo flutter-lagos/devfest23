@@ -69,9 +69,8 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
               unselectedColor: widget.unselectedColor,
             ),
       ),
-      child: Container(
-        height: 88,
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: SizedBox(
+        height: 88 + MediaQuery.paddingOf(context).bottom,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
@@ -116,8 +115,10 @@ class _DevfestBottomNavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomNavItemTheme = DevFestTheme.of(context).bottomNavTheme ??
-        const DevfestBottomNavTheme.light();
+    final theme = DevFestTheme.of(context);
+    final bottomNavItemTheme =
+        theme.bottomNavTheme ?? const DevfestBottomNavTheme.light();
+    final textTheme = theme.textTheme;
 
     final itemColor = selected
         ? bottomNavItemTheme.selectedColor
@@ -160,7 +161,10 @@ class _DevfestBottomNavTile extends StatelessWidget {
                           children: [icon, const SizedBox(height: 8)],
                         ),
                 ),
-                Text(label),
+                Text(
+                  label,
+                  style: textTheme?.body04,
+                ),
               ],
             ),
           ),

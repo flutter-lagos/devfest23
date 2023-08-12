@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/router/router.dart';
 import 'core/themes/themes.dart';
 
 class ThemeManager extends ChangeNotifier {
@@ -23,31 +26,32 @@ class ThemeManager extends ChangeNotifier {
   }
 }
 
-class DevfestApp extends StatefulWidget {
+class DevfestApp extends ConsumerStatefulWidget {
   const DevfestApp({super.key});
 
   @override
-  State<DevfestApp> createState() => _DevfestAppState();
+  ConsumerState<DevfestApp> createState() => _DevfestAppState();
 }
 
-class _DevfestAppState extends State<DevfestApp> {
-  late ThemeManager themeManager;
+class _DevfestAppState extends ConsumerState<DevfestApp> {
+  late AppRouter appRouter;
 
   @override
   void initState() {
     super.initState();
-    themeManager = ThemeManager()
-      ..addListener(() {
-        setState(() {});
-      });
+    FlutterNativeSplash.remove();
+    appRouter = AppRouter(ref);
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      themeMode: themeManager.themeMode,
+    return MaterialApp.router(
+      routerDelegate: appRouter.mainRouter.routerDelegate,
+      routeInformationParser: appRouter.mainRouter.routeInformationParser,
+      routeInformationProvider: appRouter.mainRouter.routeInformationProvider,
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -65,73 +69,6 @@ class _DevfestAppState extends State<DevfestApp> {
           /// DevFestTheme(textTheme: DevfestTextTheme()),
           DevFestTheme.dark(),
         ],
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  late ThemeManager themeManager;
-
-  @override
-  void initState() {
-    super.initState();
-    themeManager = ThemeManager()
-      ..addListener(() {
-        setState(() {});
-      });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () => themeManager.toggleThemeMode(),
-            icon: const Icon(Icons.lightbulb_outlined),
-          )
-        ],
-      ),
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
