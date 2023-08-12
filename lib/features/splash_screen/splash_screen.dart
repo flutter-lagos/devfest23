@@ -1,3 +1,4 @@
+import 'package:devfest23/core/images.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late AssetImage image;
+
   @override
   void initState() {
     super.initState();
@@ -23,17 +26,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    image = AssetImage(isDark ? AppImages.splashDark : AppImages.splashLight);
+    precacheImage(image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 68.0),
-          child: Image.asset(
-            'assets/images/splash-light.png',
-            height: 120,
-            width: double.infinity,
-            fit: BoxFit.fitWidth,
+      extendBody: true,
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: DevFestTheme.of(context).backgroundColor,
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: image, fit: BoxFit.cover),
           ),
         ),
       ),
