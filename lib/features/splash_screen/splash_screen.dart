@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void didChangeDependencies() {
-    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     image = AssetImage(isDark ? AppImages.splashDark : AppImages.splashLight);
     precacheImage(image, context);
     super.didChangeDependencies();
