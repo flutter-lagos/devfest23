@@ -1,4 +1,6 @@
 import 'package:devfest23/core/router/routes.dart';
+import 'package:devfest23/features/splash_screen/splash_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,24 +27,24 @@ class AppRouter {
         initialLocation: initialLocation,
         debugLogDiagnostics: true,
         redirect: (context, state) {
-          if (showOnboarding(state, ref)) {
-            return RoutePaths.onboarding;
-          }
-
           return null;
         },
         routes: [
           GoRoute(
             path: RoutePaths.onboarding,
             name: RouteNames.onboarding,
+            redirect: (context, state) {
+              if (showOnboarding(state, ref)) {
+                return null;
+              }
+              final tabId = state.pathParameters['tab'];
+              return '/app/${tabId ?? TabItem.home.name}';
+            },
             builder: (context, state) => const OnboardingPage(),
           ),
           GoRoute(
             path: '/',
-            redirect: (context, state) {
-              final tabId = state.pathParameters['tab'];
-              return '/app/${tabId ?? TabItem.home.name}';
-            },
+            builder: (context, state) => const SplashScreen(),
           ),
           GoRoute(
             path: '/app/:tab',
