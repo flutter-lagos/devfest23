@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 2), () {
-        GoRouter.of(context).push(RoutePaths.onboarding);
+        GoRouter.of(context).go(RoutePaths.onboarding);
       });
     });
   }
