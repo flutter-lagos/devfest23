@@ -20,6 +20,13 @@
 		}
 	],
     "configurations": [
+		{
+            "name": "Devfest23 Widgetbook",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/widgetbook.dart",
+            "flutterMode": "debug"
+        },
         {
             "name": "Devfest23 App",
             "request": "launch",
