@@ -86,7 +86,8 @@ class _AuthenticationHome extends StatelessWidget {
           ),
           onPressed: () {
             context.go(
-                '${RoutePaths.onboarding}/${RoutePaths.auth}/${AuthState.success.name}');
+              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.success.name}',
+            );
           },
         ),
         const SizedBox(height: Constants.verticalGutter),
@@ -138,7 +139,8 @@ class _AuthenticationSuccess extends StatelessWidget {
           title: const Text('Continue to App'),
           onPressed: () {
             context.go(
-                '${RoutePaths.onboarding}/${RoutePaths.auth}/${AuthState.pending.name}');
+              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.pending.name}',
+            );
           },
         ),
       ],
@@ -184,7 +186,8 @@ class _AuthenticationPending extends StatelessWidget {
           title: const Text('Register Now'),
           onPressed: () {
             context.go(
-                '${RoutePaths.onboarding}/${RoutePaths.auth}/${AuthState.failed.name}');
+              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.failed.name}',
+            );
           },
         ),
         const SizedBox(height: Constants.verticalGutter),

@@ -45,15 +45,8 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: RoutePaths.auth,
-                name: RouteNames.auth,
                 builder: (context, state) {
-                  return const AuthenticationPage();
-                },
-              ),
-              GoRoute(
-                path: '${RoutePaths.auth}/:state',
-                builder: (context, state) {
-                  final stateId = state.pathParameters['state'];
+                  final stateId = state.uri.queryParameters['result'];
                   AuthState? authState;
 
                   if (stateId != null) {

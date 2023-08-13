@@ -96,107 +96,149 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          controller: ScrollController(initialScrollOffset: 20),
-          child: const Row(
-            children: [
-              CategoryChip(
-                chipColor: Color(0xffeee4dd),
-                emoji: '🎨',
-                title: 'Design',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffffd4cc),
-                emoji: '📊',
-                title: 'Blockchain',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffffd4cc),
-                emoji: '🖼️',
-                title: 'Frontend',
-              ),
-            ],
-          ),
+        InfiniteScrollCategoriesWidget(
+          children: [
+            CategoryChip(
+              chipColor: Color(0xffeee4dd),
+              emoji: '🎨',
+              title: 'Design',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffffd4cc),
+              emoji: '📊',
+              title: 'Blockchain',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffffd4cc),
+              emoji: '🖼️',
+              title: 'Frontend',
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          controller: ScrollController(initialScrollOffset: 50),
-          child: const Row(
-            children: [
-              CategoryChip(
-                chipColor: Color(0xffeeebdd),
-                emoji: '🪛',
-                title: 'Backend',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffccf4ff),
-                emoji: '☯️',
-                title: 'Mental Health',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffffe2cc),
-                emoji: '⭐',
-                title: 'Leader',
-              ),
-            ],
-          ),
+        SizedBox(height: 8),
+        InfiniteScrollCategoriesWidget(
+          children: [
+            CategoryChip(
+              chipColor: Color(0xffeeebdd),
+              emoji: '🪛',
+              title: 'Backend',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffccf4ff),
+              emoji: '☯️',
+              title: 'Mental Health',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffffe2cc),
+              emoji: '⭐',
+              title: 'Leader',
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          controller: ScrollController(initialScrollOffset: 40),
-          child: const Row(
-            children: [
-              CategoryChip(
-                chipColor: Color(0xffe6ddee),
-                emoji: '💼',
-                title: 'Product Management',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffffebcc),
-                emoji: '🛡️',
-                title: 'Cybersecurity',
-              ),
-            ],
-          ),
+        SizedBox(height: 8),
+        InfiniteScrollCategoriesWidget(
+          children: [
+            CategoryChip(
+              chipColor: Color(0xffe6ddee),
+              emoji: '💼',
+              title: 'Product Management',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffffebcc),
+              emoji: '🛡️',
+              title: 'Cybersecurity',
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          controller: ScrollController(initialScrollOffset: 35),
-          child: const Row(
-            children: [
-              CategoryChip(
-                chipColor: Color(0xfffdccff),
-                emoji: '♠️',
-                title: 'Networking',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffccf8ff),
-                emoji: '✨',
-                title: 'DevOps',
-              ),
-              SizedBox(width: 8),
-              CategoryChip(
-                chipColor: Color(0xffefefdc),
-                emoji: '📉',
-                title: 'Big Data',
-              ),
-            ],
-          ),
+        SizedBox(height: 8),
+        InfiniteScrollCategoriesWidget(
+          children: [
+            CategoryChip(
+              chipColor: Color(0xfffdccff),
+              emoji: '♠️',
+              title: 'Networking',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffccf8ff),
+              emoji: '✨',
+              title: 'DevOps',
+            ),
+            CategoryChip(
+              chipColor: Color(0xffefefdc),
+              emoji: '📉',
+              title: 'Big Data',
+            ),
+          ],
         ),
       ],
+    );
+  }
+}
+
+class InfiniteScrollCategoriesWidget extends StatefulWidget {
+  const InfiniteScrollCategoriesWidget({super.key, required this.children});
+
+  final List<Widget> children;
+
+  @override
+  State<InfiniteScrollCategoriesWidget> createState() =>
+      _InfiniteScrollCategoriesWidgetState();
+}
+
+class _InfiniteScrollCategoriesWidgetState
+    extends State<InfiniteScrollCategoriesWidget>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animController;
+  final _listController = ScrollController(initialScrollOffset: 50);
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Duration is set to keep the framework happy and doesn't impact scroll speed
+    _animController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1))
+          ..addListener(_animateList)
+          ..repeat();
+  }
+
+  void _animateList() {
+    if (_listController.hasClients) {
+      _listController.animateTo(
+        _listController.offset + 1.0,
+        duration: const Duration(milliseconds: 20),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    _listController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48,
+      child: ListView.builder(
+        controller: _listController,
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          final page = index % widget.children.length;
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: widget.children[page],
+          );
+        },
+      ),
     );
   }
 }
@@ -223,15 +265,16 @@ class CategoryChip extends StatelessWidget {
       ),
       child: RichText(
         text: TextSpan(
-            text: emoji,
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body01
-                ?.copyWith(color: DevfestColors.grey20),
-            children: [
-              const WidgetSpan(child: SizedBox(width: 8)),
-              TextSpan(text: title),
-            ]),
+          text: emoji,
+          style: DevFestTheme.of(context)
+              .textTheme
+              ?.body01
+              ?.copyWith(color: DevfestColors.grey20),
+          children: [
+            const WidgetSpan(child: SizedBox(width: 8)),
+            TextSpan(text: title),
+          ],
+        ),
       ),
     );
   }
