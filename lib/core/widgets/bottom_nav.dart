@@ -77,6 +77,7 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
             widget.items.length,
             (index) => _DevfestBottomNavTile(
               icon: widget.items[index].icon,
+              inactiveIcon: widget.items[index].inactiveIcon,
               label: widget.items[index].label,
               selected: widget.index == index,
               onTap: () {
@@ -93,10 +94,12 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
 class DevfestBottomNavItem {
   final String label;
   final Widget icon;
+  final Widget? inactiveIcon;
 
   const DevfestBottomNavItem({
     required this.label,
     required this.icon,
+    this.inactiveIcon,
   });
 }
 
@@ -105,6 +108,7 @@ class _DevfestBottomNavTile extends StatelessWidget {
     required this.icon,
     required this.label,
     this.selected = false,
+    this.inactiveIcon,
     required this.onTap,
   });
 
@@ -112,6 +116,7 @@ class _DevfestBottomNavTile extends StatelessWidget {
   final Widget icon;
   final bool selected;
   final VoidCallback onTap;
+  final Widget? inactiveIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +161,10 @@ class _DevfestBottomNavTile extends StatelessWidget {
                       : Column(
                           key: const Key('unselected icon'),
                           mainAxisSize: MainAxisSize.min,
-                          children: [icon, const SizedBox(height: 8)],
+                          children: [
+                            inactiveIcon ?? icon,
+                            const SizedBox(height: 8)
+                          ],
                         ),
                 ),
                 Text(
