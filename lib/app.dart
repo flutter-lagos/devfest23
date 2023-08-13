@@ -5,27 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/router.dart';
 import 'core/themes/themes.dart';
 
-class ThemeManager extends ChangeNotifier {
-  // Private constructor
-  ThemeManager._privateConstructor();
-
-  // Static instance variable
-  static final ThemeManager _instance = ThemeManager._privateConstructor();
-
-  // Factory method to return the same instance
-  factory ThemeManager() {
-    return _instance;
-  }
-
-  ThemeMode _themeMode = ThemeMode.system;
-  ThemeMode get themeMode => _themeMode;
-  void toggleThemeMode() {
-    _themeMode =
-        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
-  }
-}
-
 class DevfestApp extends ConsumerStatefulWidget {
   const DevfestApp({super.key});
 
@@ -46,6 +25,10 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final textColor =
+        MediaQuery.platformBrightnessOf(context) == Brightness.dark
+            ? DevfestColors.background
+            : DevfestColors.grey0;
     return MaterialApp.router(
       routerDelegate: appRouter.mainRouter.routerDelegate,
       routeInformationParser: appRouter.mainRouter.routeInformationParser,
@@ -55,6 +38,7 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textTheme: TextTheme(bodyMedium: TextStyle(color: textColor)),
         extensions: const <ThemeExtension<dynamic>>[
           /// Use the below format for raw theme data
           /// DevFestTheme(textTheme: DevfestTextTheme()),
@@ -64,6 +48,7 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textTheme: TextTheme(bodyMedium: TextStyle(color: textColor)),
         extensions: const <ThemeExtension<dynamic>>[
           /// Use the below format for raw theme data
           /// DevFestTheme(textTheme: DevfestTextTheme()),
