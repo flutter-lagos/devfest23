@@ -1,0 +1,51 @@
+workflows:
+  dev-android:
+    name: build, test & publish Android version
+    instance_type: mac_mini_m1
+    max_build_duration: 120
+    environment:
+      flutter: 3.10.6
+      xcode: latest
+      android_signing:
+        - devfest23-key
+    cache:
+      cache_paths:
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/.gradle/caches
+        - $HOME/Library/Caches/CocoaPods
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'dev'
+          include: true
+          source: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Set up local.properties
+        script: |
+          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Flutter analyze
+        ignore_failure: true   
+        script: |
+          flutter analyze .
+      - name: Flutter unit tests
+        script: |
+          flutter test
+        ignore_failure: true          
+      - name: Build Apk with Flutter  
+        script: |
+          flutter build apk --flavor prod -t lib/main_staging.dart --release --obfuscate --split-debug-info=.
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - abadasamuelosp@gmail.com
+          - sebastinesoacatp@gmai.com
+        notify:
+          success: true # To receive a notification when a build succeeds
+          failure: false # To not receive a notification when a build fails

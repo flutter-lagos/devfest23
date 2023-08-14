@@ -1,4 +1,5 @@
 # Devfest Lagos 2023
+[![Codemagic build status](https://api.codemagic.io/apps/64da71850bfae33ab37b51d5/64da71850bfae33ab37b51d4/status_badge.svg)](https://codemagic.io/apps/64da71850bfae33ab37b51d5/64da71850bfae33ab37b51d4/latest_build)
 
 <p align="center">
   <img src="./shots/gdg-logo.png" alt="Devfest Lagos 2023" width="50%" />

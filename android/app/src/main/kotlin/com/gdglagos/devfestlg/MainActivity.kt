@@ -1,4 +1,4 @@
-package com.example.devfest23
+package com.gdglagos.devfestlg
 
 import io.flutter.embedding.android.FlutterActivity
 
