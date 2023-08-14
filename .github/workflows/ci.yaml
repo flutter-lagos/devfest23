@@ -14,6 +14,8 @@ jobs:
           channel: "stable"
       - name: Fetch dependencies
         run: flutter packages get
+      - name: Widgetbook generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Analyze project
         run: flutter analyze .
       # - name: Run tests
