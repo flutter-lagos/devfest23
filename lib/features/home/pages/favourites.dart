@@ -21,17 +21,31 @@ class FavouritesPage extends StatefulWidget {
 
 class _FavouritesPageState extends State<FavouritesPage> {
   late DevfestDay day;
+  late ScrollController _scrollController;
+  Map<int, double> scrollOffsets = {};
 
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        scrollOffsets[day.index] = _scrollController.offset;
+      });
 
     day = widget.initialDay;
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return NestedScrollView(
+      controller: _scrollController,
+      key: const PageStorageKey<String>('FavouritesPageScrollView'),
       headerSliverBuilder: (context, isScrolledUnder) {
         return [
           SliverAppBar(
@@ -103,6 +117,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 onTap: (tab) {
                   setState(() {
                     day = DevfestDay.values[tab];
+                    if (scrollOffsets.containsKey(day.index)) {
+                      _scrollController.jumpTo(scrollOffsets[day.index]!);
+                    } else {
+                      _scrollController.jumpTo(0);
+                    }
                   });
                 },
               ),
@@ -114,6 +133,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
         index: day.index,
         children: [
           ListView.separated(
+            key: const PageStorageKey<String>('Day1'),
             padding: const EdgeInsets.symmetric(
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
@@ -124,6 +144,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
             itemCount: 5,
           ),
           ListView.separated(
+            key: const PageStorageKey<String>('Day1'),
             padding: const EdgeInsets.symmetric(
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),

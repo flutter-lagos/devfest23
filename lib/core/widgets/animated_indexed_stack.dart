@@ -19,6 +19,7 @@ class AnimatedIndexedStack extends StatelessWidget {
       children: [
         for (var i = 0; i < children.length; i++)
           AnimatedScale(
+            key: children[i].key,
             scale: index == i ? 1.0 : 0.98,
             curve: Curves.easeIn,
             duration: duration,
