@@ -47,7 +47,7 @@ workflows:
       email:
         recipients:
           - abadasamuelosp@gmail.com
-          - sebastinesoacatp@gmai.com
+          - sebastinesoacatp@gmail.com
         notify:
           success: true # To receive a notification when a build succeeds
           failure: false # To not receive a notification when a build fails
