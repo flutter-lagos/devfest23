@@ -22,6 +22,7 @@ migrate_working_dir/
 .vscode/
 .fvm/
 *.jks
+coverage/
 
 # Flutter/Dart/Pub related
 **/doc/api/

@@ -18,12 +18,10 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
       - name: Analyze project
         run: flutter analyze .
-      # - name: Run tests
-      #   run: flutter test --coverage
-      # - name: Upload coverage reports to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   with:
-      #     file: ./coverage/lcov.info
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Build app
-        run: flutter build apk --debug -t lib/main_staging.dart --obfuscate --split-debug-info=.
+      - name: Run tests
+        run: flutter test --coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
