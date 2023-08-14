@@ -25,13 +25,10 @@ class TitleTile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-      child: RichText(
-        text: TextSpan(
+      child: Text.rich(
+        TextSpan(
           text: emoji,
-          style: DevFestTheme.of(context)
-              .textTheme
-              ?.body03
-              ?.copyWith(color: DevFestTheme.of(context).onBackgroundColor),
+          style: DevFestTheme.of(context).textTheme?.body03,
           children: [
             const WidgetSpan(child: SizedBox(width: 4)),
             TextSpan(text: title)

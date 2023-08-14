@@ -73,15 +73,10 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: Constants.verticalGutter),
-                  RichText(
-                    text: TextSpan(
+                  Text.rich(
+                    TextSpan(
                       text: 'Favourites',
-                      style: DevFestTheme.of(context)
-                          .textTheme
-                          ?.title01
-                          ?.copyWith(
-                            color: DevFestTheme.of(context).onBackgroundColor,
-                          ),
+                      style: DevFestTheme.of(context).textTheme?.title01,
                       children: const [
                         WidgetSpan(child: SizedBox(width: 4)),
                         TextSpan(text: '❤️')

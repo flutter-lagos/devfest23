@@ -268,8 +268,8 @@ class CategoryChip extends StatelessWidget {
         color: chipColor,
         borderRadius: const BorderRadius.all(Radius.circular(48)),
       ),
-      child: RichText(
-        text: TextSpan(
+      child: Text.rich(
+        TextSpan(
           text: emoji,
           style: DevFestTheme.of(context)
               .textTheme

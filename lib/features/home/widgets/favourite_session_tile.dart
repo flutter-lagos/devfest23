@@ -123,15 +123,11 @@ class _ActiveFavouriteSessionTile extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: Constants.horizontalGutter),
-                            RichText(
-                              text: TextSpan(
+                            Text.rich(
+                              TextSpan(
                                 text: 'Samuel Abada',
-                                style: DevFestTheme.of(context)
-                                    .textTheme
-                                    ?.body04
-                                    ?.copyWith(
-                                        color: DevFestTheme.of(context)
-                                            .onBackgroundColor),
+                                style:
+                                    DevFestTheme.of(context).textTheme?.body04,
                                 children: [
                                   WidgetSpan(
                                     alignment: PlaceholderAlignment.middle,
@@ -234,8 +230,8 @@ class _InActiveFavouriteSessionTile extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: Constants.horizontalGutter),
-                          RichText(
-                            text: TextSpan(
+                          Text.rich(
+                            TextSpan(
                               text: 'Samuel Abada',
                               style: DevFestTheme.of(context)
                                   .textTheme
