@@ -1,7 +1,6 @@
 import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/icons.dart';
-import 'package:devfest23/core/router/router.dart';
 import 'package:devfest23/core/themes/themes.dart';
 import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/enums/tab_item.dart';
 import '../../../core/router/routes.dart';
 import '../widgets/go_back_button.dart';
 

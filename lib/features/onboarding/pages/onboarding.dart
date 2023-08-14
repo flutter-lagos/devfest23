@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/enums/devfest_day.dart';
+import '../../../core/enums/tab_item.dart';
 import '../../../core/router/routes.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -78,7 +80,10 @@ class OnboardingPage extends StatelessWidget {
                   const SizedBox(height: 13),
                   DevfestOutlinedButton(
                     title: const Text('Continue Without Login'),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go(
+                          '/app/${TabItem.home.name}/${DevfestDay.day1.name}');
+                    },
                   ),
                 ],
               ),

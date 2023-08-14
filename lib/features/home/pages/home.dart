@@ -3,7 +3,7 @@ import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/router/router.dart';
+import '../../../core/enums/tab_item.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
 

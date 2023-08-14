@@ -8,8 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/home/pages/home.dart';
 import '../../features/onboarding/pages/onboarding.dart';
 import '../../features/splash/splash.dart';
-
-enum TabItem { home, schedule, speakers, favourites, more }
+import '../enums/tab_item.dart';
 
 class AppRouter {
   AppRouter(WidgetRef ref) {
