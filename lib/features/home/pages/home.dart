@@ -1,3 +1,4 @@
+import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,14 @@ class AppHome extends ConsumerStatefulWidget {
 }
 
 class _AppHomeState extends ConsumerState<AppHome> {
+  static const _pages = [
+    SizedBox(),
+    SizedBox(),
+    SizedBox(),
+    FavouritesPage(),
+    SizedBox(),
+  ];
+
   int index = 0;
 
   @override
@@ -27,6 +36,10 @@ class _AppHomeState extends ConsumerState<AppHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
+      body: IndexedStack(
+        index: index,
+        children: _pages,
+      ),
       bottomNavigationBar: DevfestBottomNav(
         index: index,
         items: const [
@@ -43,7 +56,7 @@ class _AppHomeState extends ConsumerState<AppHome> {
           ),
           DevfestBottomNavItem(
             label: 'More',
-            icon: Icon(Icons.more_rounded, size: 16),
+            icon: Icon(Icons.more_rounded, size: 18),
             inactiveIcon: Icon(Icons.more_rounded),
           ),
         ],

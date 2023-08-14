@@ -14,6 +14,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
   final DevfestBottomNavTheme? bottomNavTheme;
   final Color? backgroundColor;
   final Color? onBackgroundColor;
+  final Color? inverseBackgroundColor;
 
   static DevFestTheme of(BuildContext context) =>
       Theme.of(context).extension<DevFestTheme>()!;
@@ -22,6 +23,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
     this.textTheme,
     this.backgroundColor,
     this.onBackgroundColor,
+    this.inverseBackgroundColor,
     this.outlinedButtonTheme,
     this.bottomNavTheme,
     this.buttonTheme,
@@ -31,6 +33,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
       : this(
           backgroundColor: DevfestColors.background,
           onBackgroundColor: DevfestColors.grey0,
+          inverseBackgroundColor: DevfestColors.grey30,
           buttonTheme: const DevfestButtonTheme.light(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.light(),
           bottomNavTheme: const DevfestBottomNavTheme.light(),
@@ -41,6 +44,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
       : this(
           backgroundColor: DevfestColors.darkbackground,
           onBackgroundColor: DevfestColors.background,
+          inverseBackgroundColor: DevfestColors.grey70,
           buttonTheme: const DevfestButtonTheme.dark(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.dark(),
           bottomNavTheme: const DevfestBottomNavTheme.dark(),

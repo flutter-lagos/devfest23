@@ -23,8 +23,14 @@ class WidgetbookApp extends StatelessWidget {
             WidgetbookTheme(
               name: 'Light',
               data: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                brightness: Brightness.light,
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.deepPurple,
+                  brightness: Brightness.light,
+                ),
                 useMaterial3: true,
+                textTheme: const TextTheme(
+                    bodyMedium: TextStyle(color: DevfestColors.grey0)),
                 extensions: const <ThemeExtension<dynamic>>[
                   /// Use the below format for raw theme data
                   /// DevFestTheme(textTheme: DevfestTextTheme()),
@@ -35,8 +41,14 @@ class WidgetbookApp extends StatelessWidget {
             WidgetbookTheme(
               name: 'Dark',
               data: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                brightness: Brightness.dark,
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.deepPurple,
+                  brightness: Brightness.dark,
+                ),
                 useMaterial3: true,
+                textTheme: const TextTheme(
+                    bodyMedium: TextStyle(color: DevfestColors.background)),
                 extensions: const <ThemeExtension<dynamic>>[
                   /// Use the below format for raw theme data
                   /// DevFestTheme(textTheme: DevfestTextTheme()),
