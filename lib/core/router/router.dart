@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +40,8 @@ class AppRouter {
                 return null;
               }
               final tabId = state.pathParameters['tab'];
-              return '/app/${tabId ?? TabItem.home.name}';
+              final dayId = state.pathParameters['day'];
+              return '/app/${tabId ?? TabItem.home.name}/${dayId ?? DevfestDay.day1}';
             },
             builder: (context, state) => const OnboardingPage(),
             routes: [
@@ -65,7 +67,7 @@ class AppRouter {
             builder: (context, state) => const SplashPage(),
           ),
           GoRoute(
-            path: '/app/:tab',
+            path: '/app/:tab/:day',
             name: RouteNames.home,
             builder: (context, state) {
               final tabId = state.pathParameters['tab'];
@@ -73,8 +75,16 @@ class AppRouter {
                 (tabItem) => tabItem == TabItem.values.byName(tabId!),
                 orElse: (() => throw Exception('Tab not found: $tabId')),
               );
+              final dayId = state.pathParameters['day'];
+              final dayItem = DevfestDay.values.firstWhere(
+                  (dayItem) => dayItem == DevfestDay.values.byName(dayId!),
+                  orElse: (() => throw Exception('Day not found: $dayId')));
 
-              return AppHome(key: state.pageKey, initialTab: tabItem);
+              return AppHome(
+                key: state.pageKey,
+                initialTab: tabItem,
+                initialDay: dayItem,
+              );
             },
           ),
         ],

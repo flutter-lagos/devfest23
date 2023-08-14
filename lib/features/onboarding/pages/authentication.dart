@@ -1,4 +1,5 @@
 import 'package:devfest23/core/constants.dart';
+import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/icons.dart';
 import 'package:devfest23/core/router/router.dart';
 import 'package:devfest23/core/themes/themes.dart';
@@ -237,7 +238,7 @@ class _AuthenticationFailure extends StatelessWidget {
         DevfestOutlinedButton(
           title: const Text('Proceed to App'),
           onPressed: () {
-            context.go('/app/${TabItem.home.name}');
+            context.go('/app/${TabItem.home.name}/${DevfestDay.day2.name}');
           },
         ),
       ],
