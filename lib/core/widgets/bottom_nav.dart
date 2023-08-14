@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../constants.dart';
@@ -81,6 +82,7 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
               label: widget.items[index].label,
               selected: widget.index == index,
               onTap: () {
+                HapticFeedback.lightImpact();
                 widget.onTap.call(index);
               },
             ),

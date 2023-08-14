@@ -1,3 +1,5 @@
+import 'package:devfest23/core/enums/devfest_day.dart';
+import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,15 +8,28 @@ import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
 
 class AppHome extends ConsumerStatefulWidget {
-  const AppHome({super.key, this.initialTab = TabItem.home});
+  const AppHome({
+    super.key,
+    this.initialTab = TabItem.home,
+    this.initialDay = DevfestDay.day1,
+  });
 
   final TabItem initialTab;
+  final DevfestDay initialDay;
 
   @override
   ConsumerState<AppHome> createState() => _AppHomeState();
 }
 
 class _AppHomeState extends ConsumerState<AppHome> {
+  late final _pages = [
+    const SizedBox(),
+    const SizedBox(),
+    const SizedBox(),
+    FavouritesPage(initialDay: widget.initialDay),
+    const SizedBox(),
+  ];
+
   int index = 0;
 
   @override
@@ -27,6 +42,10 @@ class _AppHomeState extends ConsumerState<AppHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
+      body: IndexedStack(
+        index: index,
+        children: _pages,
+      ),
       bottomNavigationBar: DevfestBottomNav(
         index: index,
         items: const [
@@ -43,7 +62,7 @@ class _AppHomeState extends ConsumerState<AppHome> {
           ),
           DevfestBottomNavItem(
             label: 'More',
-            icon: Icon(Icons.more_rounded, size: 16),
+            icon: Icon(Icons.more_rounded, size: 18),
             inactiveIcon: Icon(Icons.more_rounded),
           ),
         ],
