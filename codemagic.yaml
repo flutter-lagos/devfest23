@@ -14,12 +14,11 @@ workflows:
         - $HOME/.gradle/caches
         - $HOME/Library/Caches/CocoaPods
     triggering:
-      events:
-        - push
       branch_patterns:
         - pattern: 'dev'
           include: true
-          source: true
+      events:
+        - push
       cancel_previous_builds: true
     scripts:
       - name: Set up local.properties
@@ -38,7 +37,7 @@ workflows:
         ignore_failure: true          
       - name: Build Apk with Flutter  
         script: |
-          flutter build apk --flavor prod -t lib/main_staging.dart --release --obfuscate --split-debug-info=.
+          flutter build apk -t lib/main_staging.dart --release --obfuscate --split-debug-info=.
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
