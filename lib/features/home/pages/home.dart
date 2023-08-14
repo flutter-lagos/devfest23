@@ -44,6 +44,7 @@ class _AppHomeState extends ConsumerState<AppHome> {
           DevfestBottomNavItem(
             label: 'More',
             icon: Icon(Icons.more_rounded, size: 16),
+            inactiveIcon: Icon(Icons.more_rounded),
           ),
         ],
         onTap: (page) {
