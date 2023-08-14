@@ -1,6 +1,6 @@
 # Devfest Lagos 2023
-[![Codemagic build status](https://api.codemagic.io/apps/64da71850bfae33ab37b51d5/64da71850bfae33ab37b51d4/status_badge.svg)](https://codemagic.io/apps/64da71850bfae33ab37b51d5/64da71850bfae33ab37b51d4/latest_build)
-[![CI](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml)
+[![Codemagic build status](https://api.codemagic.io/apps/64da71850bfae33ab37b51d5/dev-android/status_badge.svg)](https://codemagic.io/apps/64da71850bfae33ab37b51d5/dev-android/latest_build)
+[![CI](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml/badge.svg?branch=dev)](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml)
 
 <p align="center">
   <img src="./shots/gdg-logo.png" alt="Devfest Lagos 2023" width="50%" />

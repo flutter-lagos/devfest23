@@ -1,5 +1,5 @@
 abstract class Constants {
-  static const kAnimationDur = Duration(milliseconds: 700);
+  static const kAnimationDur = Duration(milliseconds: 300);
 
   static const horizontalMargin = 24.0;
   static const horizontalGutter = 8.0;

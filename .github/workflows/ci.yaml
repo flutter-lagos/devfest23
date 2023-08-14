@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [master, dev]
   pull_request:
     branches: [master, dev]
 
@@ -12,6 +14,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          cache: true
       - name: Fetch dependencies
         run: flutter packages get
       - name: Widgetbook generator
