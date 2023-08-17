@@ -4,8 +4,11 @@ import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+import '../providers/providers.dart';
 
 @widgetbook.UseCase(name: 'Schedule Tabs', type: DevfestTabs)
 Widget devfestTab(BuildContext context) {
@@ -45,13 +48,6 @@ class ScheduleTabBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'SCHEDULE',
-          style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
-                color: DevFestTheme.of(context).inverseBackgroundColor,
-              ),
-        ),
-        const SizedBox(height: Constants.verticalGutter),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -127,7 +123,7 @@ class _DateTile extends StatelessWidget {
   }
 }
 
-class _TabTile extends StatelessWidget {
+class _TabTile extends ConsumerWidget {
   const _TabTile({
     required this.text,
     required this.selected,
@@ -139,14 +135,14 @@ class _TabTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
-
+  Widget build(BuildContext context, ref) {
     return AnimatedDefaultTextStyle(
       style: DevFestTheme.of(context).textTheme!.title01!.copyWith(
         color: () {
           if (selected) return DevFestTheme.of(context).onBackgroundColor;
-          return isDark ? DevfestColors.grey70 : DevfestColors.grey40;
+          return ref.watch(isDarkProvider)
+              ? DevfestColors.grey70
+              : DevfestColors.grey40;
         }(),
       ),
       duration: Constants.kAnimationDur,
@@ -164,7 +160,9 @@ class _TabTile extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 color: () {
                   if (selected) {
-                    return isDark ? DevfestColors.grey30 : DevfestColors.grey0;
+                    return ref.watch(isDarkProvider)
+                        ? DevfestColors.grey30
+                        : DevfestColors.grey0;
                   }
                 }(),
               ),

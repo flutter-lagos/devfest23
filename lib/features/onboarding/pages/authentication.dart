@@ -5,15 +5,23 @@ import 'package:devfest23/core/themes/themes.dart';
 import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/enums/tab_item.dart';
+import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
 import '../widgets/go_back_button.dart';
 
 enum AuthState { pending, success, failed }
+
+final authSubtitleTextColorProvider = Provider.autoDispose<Color>((ref) {
+  return ref.watch(isDarkProvider)
+      ? DevfestColors.grey70
+      : DevfestColors.grey30;
+});
 
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key, this.authState});
@@ -44,11 +52,11 @@ class AuthenticationPage extends StatelessWidget {
   }
 }
 
-class _AuthenticationHome extends StatelessWidget {
+class _AuthenticationHome extends ConsumerWidget {
   const _AuthenticationHome();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -70,11 +78,10 @@ class _AuthenticationHome extends StatelessWidget {
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
             'To continue using the app to RSVP for your favourite talks we need to check if you are registered for the event.',
-            style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                color:
-                    MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                        ? DevfestColors.grey70
-                        : DevfestColors.grey30),
+            style: DevFestTheme.of(context)
+                .textTheme
+                ?.body02
+                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
         const SizedBox(height: Constants.largeVerticalGutter * 2),
@@ -102,11 +109,11 @@ class _AuthenticationHome extends StatelessWidget {
   }
 }
 
-class _AuthenticationSuccess extends StatelessWidget {
+class _AuthenticationSuccess extends ConsumerWidget {
   const _AuthenticationSuccess();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,11 +135,10 @@ class _AuthenticationSuccess extends StatelessWidget {
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
             'We are really glad to have you here with us at another DevFest! Make memories and have fun 🤩',
-            style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                color:
-                    MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                        ? DevfestColors.grey70
-                        : DevfestColors.grey30),
+            style: DevFestTheme.of(context)
+                .textTheme
+                ?.body02
+                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
         const SizedBox(height: Constants.largeVerticalGutter * 2),
@@ -149,11 +155,11 @@ class _AuthenticationSuccess extends StatelessWidget {
   }
 }
 
-class _AuthenticationPending extends StatelessWidget {
+class _AuthenticationPending extends ConsumerWidget {
   const _AuthenticationPending();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -175,11 +181,10 @@ class _AuthenticationPending extends StatelessWidget {
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
             'Your email is not in our data bse for now, but registration is still ongoing oh! Register now 😍',
-            style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                color:
-                    MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                        ? DevfestColors.grey70
-                        : DevfestColors.grey30),
+            style: DevFestTheme.of(context)
+                .textTheme
+                ?.body02
+                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
         const SizedBox(height: Constants.largeVerticalGutter * 2),
@@ -201,11 +206,11 @@ class _AuthenticationPending extends StatelessWidget {
   }
 }
 
-class _AuthenticationFailure extends StatelessWidget {
+class _AuthenticationFailure extends ConsumerWidget {
   const _AuthenticationFailure();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -227,11 +232,10 @@ class _AuthenticationFailure extends StatelessWidget {
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
             'Your email was not in our data base and sadly registration is closed. But, hey! Have an amazing DevFest 2023! 🥳',
-            style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                color:
-                    MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                        ? DevfestColors.grey70
-                        : DevfestColors.grey30),
+            style: DevFestTheme.of(context)
+                .textTheme
+                ?.body02
+                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
         const SizedBox(height: Constants.largeVerticalGutter * 2),

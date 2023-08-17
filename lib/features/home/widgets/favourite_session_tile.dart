@@ -4,8 +4,11 @@ import 'package:devfest23/core/themes/colors.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+import '../../../core/providers/providers.dart';
 
 @widgetbook.UseCase(
     name: 'Favourite sessions tile',
@@ -165,19 +168,20 @@ class _ActiveFavouriteSessionTile extends StatelessWidget {
   }
 }
 
-class _InActiveFavouriteSessionTile extends StatelessWidget {
+class _InActiveFavouriteSessionTile extends ConsumerWidget {
   const _InActiveFavouriteSessionTile();
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+  Widget build(BuildContext context, ref) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           FavouriteSessionTile.timeFormat.format(DateTime.now()),
           style: DevFestTheme.of(context).textTheme?.body01?.copyWith(
-                color: isDark ? DevfestColors.grey30 : DevfestColors.grey70,
+                color: ref.watch(isDarkProvider)
+                    ? DevfestColors.grey30
+                    : DevfestColors.grey70,
               ),
         ),
         const SizedBox(width: 12),
@@ -186,7 +190,9 @@ class _InActiveFavouriteSessionTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(16)),
               border: Border.all(
-                color: isDark ? DevfestColors.grey10 : DevfestColors.grey90,
+                color: ref.watch(isDarkProvider)
+                    ? DevfestColors.grey10
+                    : DevfestColors.grey90,
               ),
             ),
             padding: const EdgeInsets.all(Constants.verticalGutter),
@@ -249,7 +255,7 @@ class _InActiveFavouriteSessionTile extends StatelessWidget {
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: Constants.horizontalGutter),
                                     decoration: BoxDecoration(
-                                      color: isDark
+                                      color: ref.watch(isDarkProvider)
                                           ? DevfestColors.grey30
                                           : DevfestColors.grey70,
                                       shape: BoxShape.circle,
