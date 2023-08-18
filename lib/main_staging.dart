@@ -2,7 +2,6 @@ import 'package:devfest23/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -24,5 +23,5 @@ void main() async {
   // TODO: Firebase initialization
   // TODO: Use firebase emulator on staging initialization
 
-  runApp(const ProviderScope(child: DevfestApp()));
+  runApp(const DevfestApp());
 }

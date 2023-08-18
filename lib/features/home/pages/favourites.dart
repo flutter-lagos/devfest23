@@ -1,6 +1,5 @@
 import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/icons.dart';
-import 'package:devfest23/core/themes/colors.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/animated_indexed_stack.dart';
 import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
@@ -66,35 +65,21 @@ class _FavouritesPageState extends State<FavouritesPage> {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+            padding: const EdgeInsets.only(
+              left: Constants.horizontalMargin,
+              right: Constants.horizontalMargin,
+              bottom: Constants.largeVerticalGutter,
+            ),
             sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: Constants.verticalGutter),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Favourites',
-                      style: DevFestTheme.of(context).textTheme?.title01,
-                      children: const [
-                        WidgetSpan(child: SizedBox(width: 4)),
-                        TextSpan(text: '❤️')
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: Constants.smallVerticalGutter),
-                  Text(
-                    'View all your saved sessions here',
-                    style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                          color: MediaQuery.platformBrightnessOf(context) ==
-                                  Brightness.dark
-                              ? DevfestColors.grey80
-                              : DevfestColors.grey40,
-                        ),
-                  ),
-                  const SizedBox(height: Constants.verticalGutter * 2),
-                ],
+              child: Text.rich(
+                TextSpan(
+                  text: '🌟',
+                  style: DevFestTheme.of(context).textTheme?.title01,
+                  children: const [
+                    WidgetSpan(child: SizedBox(width: 4)),
+                    TextSpan(text: 'Favourites')
+                  ],
+                ),
               ),
             ),
           ),

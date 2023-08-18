@@ -2,16 +2,19 @@ import 'package:devfest23/core/images.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SplashPage extends StatefulWidget {
+import '../../core/providers/providers.dart';
+
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   late AssetImage image;
 
   @override
@@ -27,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void didChangeDependencies() {
-    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    final isDark = ref.read(isDarkProvider);
     image = AssetImage(isDark ? AppImages.splashDark : AppImages.splashLight);
     precacheImage(image, context);
     super.didChangeDependencies();
