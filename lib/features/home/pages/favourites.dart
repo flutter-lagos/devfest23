@@ -3,11 +3,11 @@ import 'package:devfest23/core/icons.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/animated_indexed_stack.dart';
 import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
-import 'package:devfest23/features/home/widgets/favourite_session_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
+import '../widgets/agenda_tile.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key, required this.initialDay});
@@ -118,18 +118,18 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return FavouriteSessionTile(isActive: index == 1);
+              return const ScheduleTile();
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),
             itemCount: 5,
           ),
           ListView.separated(
-            key: const PageStorageKey<String>('Day1'),
+            key: const PageStorageKey<String>('Day2'),
             padding: const EdgeInsets.symmetric(
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return FavouriteSessionTile(isActive: index == 1);
+              return const ScheduleTile();
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),
             itemCount: 5,

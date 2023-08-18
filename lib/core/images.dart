@@ -4,4 +4,9 @@ abstract final class AppImages {
 
   static const splashDark = 'assets/images/splash-dark.png';
   static const splashLight = 'assets/images/splash-light.png';
+
+  static const googleLogo = 'assets/images/google-logo.png';
+  static const spotifyLogo = 'assets/images/spotify-logo.png';
+  static const uberLogo = 'assets/images/uber-logo.png';
+  static const lyftLogo = 'assets/images/lyft-logo.png';
 }
