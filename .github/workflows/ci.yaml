@@ -50,7 +50,8 @@ jobs:
       - name: Deploy widgetbook
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ALFRED }}
+          personal_token: ${{ secrets.ALFRED }}
           publish_dir: ./build/web
           force_orphan: true
           user_name: 'Alfred 🦇'
@@ -59,7 +60,7 @@ jobs:
       - name: Comment Widgetbook status
         uses: thollander/actions-comment-pull-request@v2
         with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.ALFRED}}
           message: |
             Hello Team :wave:
             All widgets are now available for preview at: https://mastersam07.github.io/devfest23
