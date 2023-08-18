@@ -30,33 +30,35 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerDelegate: appRouter.mainRouter.routerDelegate,
-      routeInformationParser: appRouter.mainRouter.routeInformationParser,
-      routeInformationProvider: appRouter.mainRouter.routeInformationProvider,
-      debugShowCheckedModeBanner: false,
-      themeMode: ref.watch(themeManagerProvider),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: TextTheme(
-            bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
-        extensions: const <ThemeExtension<dynamic>>[
-          /// Use the below format for raw theme data
-          /// DevFestTheme(textTheme: DevfestTextTheme()),
-          DevFestTheme.light(),
-        ],
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: TextTheme(
-            bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
-        extensions: const <ThemeExtension<dynamic>>[
-          /// Use the below format for raw theme data
-          /// DevFestTheme(textTheme: DevfestTextTheme()),
-          DevFestTheme.dark(),
-        ],
+    return ProviderScope(
+      child: MaterialApp.router(
+        routerDelegate: appRouter.mainRouter.routerDelegate,
+        routeInformationParser: appRouter.mainRouter.routeInformationParser,
+        routeInformationProvider: appRouter.mainRouter.routeInformationProvider,
+        debugShowCheckedModeBanner: false,
+        themeMode: ref.watch(themeManagerProvider),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          textTheme: TextTheme(
+              bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
+          extensions: const <ThemeExtension<dynamic>>[
+            /// Use the below format for raw theme data
+            /// DevFestTheme(textTheme: DevfestTextTheme()),
+            DevFestTheme.light(),
+          ],
+        ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          textTheme: TextTheme(
+              bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
+          extensions: const <ThemeExtension<dynamic>>[
+            /// Use the below format for raw theme data
+            /// DevFestTheme(textTheme: DevfestTextTheme()),
+            DevFestTheme.dark(),
+          ],
+        ),
       ),
     );
   }
