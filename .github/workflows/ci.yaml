@@ -45,22 +45,22 @@ jobs:
         run: flutter packages get
       - name: Widgetbook generator
         run: flutter pub run build_runner build --delete-conflicting-outputs
+      - name: Generate release build
       - run: flutter build web --release -t lib/widgetbook.dart
-      - run: |
-          git init
-          git config --global user.email alfred@batman.inc
-          git config --global user.name Alfred
-          git status
-          git remote add origin https://${{secrets.ALFRED}}@github.com/mastersam07/devfest23.git
-          git checkout -b gh-pages
-          git add build/web
-          git commit -m "feat: deploy widgetbook"
-          git push origin gh-pages -f
+      - name: Deploy widgetbook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          force_orphan: true
+          user_name: 'Alfred 🦇'
+          user_email: 'alfred@batman.inc'
+          commit_message: 'feat: publish widgetbook'
       - name: Comment Widgetbook status
         uses: thollander/actions-comment-pull-request@v2
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           message: |
             Hello Team :wave:
-            All widgets are now available for preview at: https://mastersam07.github.io/devfest23.
+            All widgets are now available for preview at: https://mastersam07.github.io/devfest23
           reactions: eyes, rocket, heart, +1, -1
