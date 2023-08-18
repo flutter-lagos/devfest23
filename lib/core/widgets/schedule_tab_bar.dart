@@ -151,7 +151,10 @@ class _TabTile extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(text),
+            Text(
+              text,
+              style: DevFestTheme.of(context).textTheme?.title02,
+            ),
             const SizedBox(height: Constants.smallVerticalGutter),
             AnimatedContainer(
               duration: Constants.kAnimationDur,

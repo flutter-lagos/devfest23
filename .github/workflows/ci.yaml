@@ -28,3 +28,41 @@ jobs:
         with:
           file: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
+  
+  widgetbook:
+    name: Build widgetbook
+    needs: test
+    env:
+      ALFRED: ${{secrets.ALFRED}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Fetch dependencies
+        run: flutter packages get
+      - name: Widgetbook generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      - name: Generate release build
+        run: flutter build web --release -t lib/widgetbook.dart --web-renderer canvaskit
+      - name: Deploy widgetbook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ALFRED }}
+          personal_token: ${{ secrets.ALFRED }}
+          publish_dir: ./build/web
+          force_orphan: true
+          user_name: 'Alfred 🦇'
+          user_email: 'alfred@batman.inc'
+          full_commit_message: 'feat: publish widgetbook'
+          commit_message: 'feat: publish widgetbook'
+      - name: Comment Widgetbook status
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{secrets.ALFRED}}
+          message: |
+            Hello Team :wave:
+            All widgets are now available for preview at: https://devfest23.netlify.app
+          reactions: rocket
