@@ -28,8 +28,6 @@ jobs:
         with:
           file: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Build widgetbook
-        run: flutter build web -t lib/widgetbook.dart
   
   widgetbook:
     name: Build widgetbook
