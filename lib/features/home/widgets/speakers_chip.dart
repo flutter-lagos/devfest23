@@ -10,7 +10,7 @@ import '../../../core/themes/themes.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
-    name: 'Speaker chips',
+    name: 'Speaker chip',
     type: DevfestSpeakerChips,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
@@ -23,8 +23,6 @@ Widget devfestSpeakerChip(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SpeakersChip(),
-          SizedBox(height: Constants.verticalGutter),
-          SpeakersChip()
         ],
       ),
     ),
@@ -36,7 +34,7 @@ class SpeakersChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.read(isDarkProvider);
+    final isDark = ref.watch(isDarkProvider);
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(24)),

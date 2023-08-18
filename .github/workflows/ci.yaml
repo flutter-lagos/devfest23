@@ -28,3 +28,41 @@ jobs:
         with:
           file: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Build widgetbook
+        run: flutter build web -t lib/widgetbook.dart
+  
+  build:
+    name: Build widgetbook
+    neeeds: test
+    env:
+      my_secret: ${{secrets.ALFRED}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Fetch dependencies
+        run: flutter packages get
+      - name: Widgetbook generator
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      - run: flutter build web --release -t lib/widgetbook.dart
+      - run: |
+          cd build/web
+          git init
+          git config --global user.email alfred@batman.inc
+          git config --global user.name Alfred
+          git status
+          git remote add origin https://${{secrets.ALFRED}}@github.com/mastersam07/devfest23.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "feat: deploy widgetbook"
+          git push origin gh-pages -f
+      - name: Comment Widgetbook status
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Hello Team :wave:
+            All widgets are now available for preview at: https://mastersam07.github.io/devfest23.
+          reactions: eyes, rocket, heart, +1, -1

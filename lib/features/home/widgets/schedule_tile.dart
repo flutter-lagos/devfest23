@@ -25,8 +25,6 @@ Widget devfestAgendaTile(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ScheduleTile(onTap: () {}),
-          const SizedBox(height: Constants.verticalGutter),
-          ScheduleTile(onTap: () {})
         ],
       ),
     ),
@@ -72,7 +70,7 @@ class _InActiveFavouriteSessionTileState
     extends ConsumerState<_InActiveFavouriteSessionTile> {
   @override
   Widget build(BuildContext context) {
-    final isDark = ref.read(isDarkProvider);
+    final isDark = ref.watch(isDarkProvider);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

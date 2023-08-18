@@ -34,7 +34,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = ref.read(isDarkProvider);
+    final isDark = ref.watch(isDarkProvider);
     return SafeArea(
       child: SingleChildScrollView(
         primary: true,

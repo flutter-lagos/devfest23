@@ -17,17 +17,16 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget devfestSponsorTile(BuildContext context) {
   return Material(
     color: DevFestTheme.of(context).backgroundColor,
-    child: const Padding(
-      padding: EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SponsorsChip(image: AppImages.googleLogo),
-          SizedBox(),
-          SponsorsChip(
-            image: AppImages.spotifyLogo,
-          )
-        ],
+    child: SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SponsorsChip(image: AppImages.googleLogo),
+          ],
+        ),
       ),
     ),
   );
@@ -43,7 +42,7 @@ class SponsorsChip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.read(isDarkProvider);
+    final isDark = ref.watch(isDarkProvider);
     return Container(
       decoration: ShapeDecoration(
         color: isDark ? const Color(0xFF1C1C1C) : const Color(0xFFFFFAEB),
