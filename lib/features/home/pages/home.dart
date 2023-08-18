@@ -1,4 +1,5 @@
 import 'package:devfest23/core/enums/devfest_day.dart';
+import 'package:devfest23/features/home/pages/agenda.dart';
 import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:devfest23/features/home/pages/more.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class AppHome extends ConsumerStatefulWidget {
 
 class _AppHomeState extends ConsumerState<AppHome> {
   late final _pages = [
-    const SizedBox(),
+    AgendaPage(initialDay: widget.initialDay),
     const SizedBox(),
     const SizedBox(),
     FavouritesPage(initialDay: widget.initialDay),

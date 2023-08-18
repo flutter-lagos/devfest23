@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import 'core/providers/providers.dart';
 import 'core/themes/themes.dart';
 import 'widgetbook.directories.g.dart';
 
@@ -11,14 +12,21 @@ void main() {
 }
 
 @widgetbook.App()
-class WidgetbookApp extends StatelessWidget {
+class WidgetbookApp extends ConsumerWidget {
   const WidgetbookApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Widgetbook.material(
       directories: directories,
       addons: [
+        DeviceFrameAddon(
+          devices: [
+            ...Devices.ios.all,
+            ...Devices.android.all,
+          ],
+          initialDevice: Devices.ios.iPhone13ProMax,
+        ),
         ThemeAddon(
           themes: [
             WidgetbookTheme(
@@ -59,6 +67,10 @@ class WidgetbookApp extends StatelessWidget {
             ),
           ],
           themeBuilder: (context, theme, child) {
+            final isDark = theme.brightness == Brightness.dark ? true : false;
+            ref
+                .read(themeManagerProvider.notifier)
+                .updateThemeMode(isDark ? ThemeMode.dark : ThemeMode.light);
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: theme,
