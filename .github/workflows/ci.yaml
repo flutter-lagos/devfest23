@@ -31,9 +31,9 @@ jobs:
       - name: Build widgetbook
         run: flutter build web -t lib/widgetbook.dart
   
-  build:
+  widgetbook:
     name: Build widgetbook
-    neeeds: test
+    needs: test
     env:
       my_secret: ${{secrets.ALFRED}}
     runs-on: ubuntu-latest
