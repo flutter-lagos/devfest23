@@ -9,7 +9,7 @@ import '../../../core/images.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
-import '../widgets/agenda_tile.dart';
+import '../widgets/schedule_tile.dart';
 import '../widgets/speakers_chip.dart';
 import '../widgets/sponsors_chip.dart';
 

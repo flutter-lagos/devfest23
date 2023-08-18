@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
-import '../widgets/agenda_tile.dart';
+import '../widgets/schedule_tile.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key, required this.initialDay});

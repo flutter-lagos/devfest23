@@ -11,7 +11,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../../../core/providers/providers.dart';
 
 @widgetbook.UseCase(
-    name: 'Favourite sessions tile',
+    name: 'Schedule tile',
     type: DevfestScheduleTiles,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
