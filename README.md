@@ -48,6 +48,9 @@ Some note goes here
 
 **Maintainer:** [Samuel Abada](https://github.com/mastersam07)
 
+**Contributors:**
+- [Sebastine Odeh](https://github.com/CoderNamedHendrick)
+
 ## License
 
 Project is published under the [MIT license](/LICENSE).

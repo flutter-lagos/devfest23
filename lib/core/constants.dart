@@ -6,4 +6,6 @@ abstract class Constants {
   static const largeVerticalGutter = 24.0;
   static const verticalGutter = 16.0;
   static const smallVerticalGutter = 8.0;
+
+  static const iconWeight = 600.0;
 }
