@@ -1,7 +1,6 @@
-import 'package:devfest23/core/themes/button_theme.dart';
-import 'package:devfest23/core/themes/outlined_button_theme.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
+import 'package:devfest23/core/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../constants.dart';
@@ -87,6 +86,39 @@ Widget devfestOutlinedButton(BuildContext context) {
       ],
     ),
   );
+}
+
+@widgetbook.UseCase(name: 'Favourite Button', type: DevfestButtons)
+Widget devfestFavouriteButton(BuildContext context) {
+  bool isFavourite0 = true;
+  bool isFavourite1 = false;
+  return StatefulBuilder(builder: (context, setState) {
+    return Material(
+      color: DevFestTheme.of(context).backgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DevfestFavouriteButton(
+              isFavourite: isFavourite0,
+              onPressed: () {
+                setState(() => isFavourite0 = !isFavourite0);
+              },
+            ),
+            const SizedBox(height: 10),
+            DevfestFavouriteButton(
+              isFavourite: isFavourite1,
+              onPressed: () {
+                setState(() => isFavourite1 = !isFavourite1);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  });
 }
 
 class DevfestFilledButton extends StatelessWidget {
@@ -248,6 +280,54 @@ class DevfestOutlinedButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DevfestFavouriteButton extends StatelessWidget {
+  const DevfestFavouriteButton({
+    super.key,
+    this.title,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.onPressed,
+    this.isFavourite = false,
+  });
+
+  final Widget? title;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final VoidCallback? onPressed;
+  final bool isFavourite;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: Constants.kAnimationDur,
+      child: () {
+        if (isFavourite) {
+          return DevfestOutlinedButton(
+            title: title ?? const Text('Remove from Favourites'),
+            prefixIcon: prefixIcon ??
+                const Icon(
+                  Symbols.grade_rounded,
+                  weight: Constants.iconWeight,
+                  color: DevfestColors.yellow,
+                  fill: 1,
+                ),
+            suffixIcon: suffixIcon,
+            onPressed: onPressed,
+          );
+        }
+
+        return DevfestFilledButton(
+          title: title ?? const Text('Add to Favourites'),
+          prefixIcon: prefixIcon ??
+              const Icon(Symbols.grade, weight: Constants.iconWeight),
+          suffixIcon: suffixIcon,
+          onPressed: onPressed,
+        );
+      }(),
     );
   }
 }
