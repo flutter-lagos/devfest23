@@ -15,23 +15,28 @@ import '../../../core/widgets/widgets.dart';
 Widget devfestSessionCatChip(BuildContext context) {
   return Material(
     color: DevFestTheme.of(context).backgroundColor,
-    child: Padding(
-      padding:
-          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ...[
-            'All Speakers',
-            'Mobile',
-            'Cloud',
-          ].map(
-            (tab) => SessionCategoryChip(
-              selectedTab: 'All Speakers',
-              tab: tab,
-            ),
-          )
-        ],
+    child: SizedBox(
+      height: MediaQuery.sizeOf(context).height,
+      child: Padding(
+        padding:
+            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...[
+                'All Speakers',
+                'Mobile',
+                'Cloud',
+              ].map(
+                (tab) => SessionCategoryChip(
+                  selectedTab: 'All Speakers',
+                  tab: tab,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     ),
   );
