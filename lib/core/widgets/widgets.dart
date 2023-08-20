@@ -14,3 +14,7 @@ abstract final class DevfestScheduleTiles {}
 abstract final class DevfestSpeakerChips {}
 
 abstract final class DevfestSponsorChips {}
+
+abstract final class DevfestSpeakerActionCard {}
+
+abstract final class DevfestSessionCatChips {}

@@ -74,7 +74,10 @@ class _FavouritesPageState extends State<FavouritesPage> {
               child: Text.rich(
                 TextSpan(
                   text: '🌟',
-                  style: DevFestTheme.of(context).textTheme?.title01,
+                  style: DevFestTheme.of(context)
+                      .textTheme
+                      ?.title01
+                      ?.copyWith(fontWeight: FontWeight.w500),
                   children: const [
                     WidgetSpan(child: SizedBox(width: 4)),
                     TextSpan(text: 'Favourites')
@@ -88,7 +91,6 @@ class _FavouritesPageState extends State<FavouritesPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 80,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),

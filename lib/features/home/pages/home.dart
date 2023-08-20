@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/enums/tab_item.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
+import 'speakers.dart';
 
 class AppHome extends ConsumerStatefulWidget {
   const AppHome({
@@ -28,7 +29,7 @@ class _AppHomeState extends ConsumerState<AppHome> {
   late final _pages = [
     AgendaPage(initialDay: widget.initialDay),
     SchedulePage(initialDay: widget.initialDay),
-    const SizedBox(),
+    SpeakersPage(initialDay: widget.initialDay),
     FavouritesPage(initialDay: widget.initialDay),
     const MorePage(),
   ];

@@ -15,7 +15,7 @@ import '../../../core/providers/providers.dart';
     type: DevfestScheduleTiles,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
-Widget devfestAgendaTile(BuildContext context) {
+Widget devfestScheduleTile(BuildContext context) {
   return Material(
     color: DevFestTheme.of(context).backgroundColor,
     child: Padding(
@@ -24,6 +24,11 @@ Widget devfestAgendaTile(BuildContext context) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          ScheduleTile(
+            onTap: () {},
+            isGeneral: true,
+          ),
+          const SizedBox(height: 8),
           ScheduleTile(onTap: () {}),
         ],
       ),

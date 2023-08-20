@@ -40,7 +40,11 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         textTheme: TextTheme(
-            bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
+          bodyMedium: TextStyle(
+            fontFamily: 'Google Sans',
+            color: ref.watch(textColorProvider),
+          ),
+        ),
         extensions: const <ThemeExtension<dynamic>>[
           /// Use the below format for raw theme data
           /// DevFestTheme(textTheme: DevfestTextTheme()),
@@ -51,7 +55,11 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         textTheme: TextTheme(
-            bodyMedium: TextStyle(color: ref.watch(textColorProvider))),
+          bodyMedium: TextStyle(
+            fontFamily: 'Google Sans',
+            color: ref.watch(textColorProvider),
+          ),
+        ),
         extensions: const <ThemeExtension<dynamic>>[
           /// Use the below format for raw theme data
           /// DevFestTheme(textTheme: DevfestTextTheme()),
