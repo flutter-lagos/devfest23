@@ -13,7 +13,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/enums/tab_item.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
-import '../widgets/go_back_button.dart';
 
 enum AuthState { pending, success, failed }
 

@@ -1,7 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/router/routes.dart';
+import 'package:devfest23/features/home/pages/agenda.dart';
+import 'package:devfest23/features/home/pages/favourites.dart';
+import 'package:devfest23/features/home/pages/more.dart';
+import 'package:devfest23/features/home/pages/schedule.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
+import 'package:devfest23/features/session/pages/session.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +23,8 @@ class AppRouter {
   }
 
   static String initialLocation = RoutePaths.app;
+  static final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey();
+  static final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey();
 
   late GoRouter mainRouter;
 
@@ -26,12 +35,14 @@ class AppRouter {
 
   GoRouter _getRouter(WidgetRef ref) => GoRouter(
         initialLocation: initialLocation,
-        debugLogDiagnostics: true,
+        navigatorKey: _rootNavigatorKey,
+        debugLogDiagnostics: kDebugMode,
         redirect: (context, state) {
           return null;
         },
         routes: [
           GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
             path: RoutePaths.onboarding,
             name: RouteNames.onboarding,
             redirect: (context, state) {
@@ -45,6 +56,7 @@ class AppRouter {
             builder: (context, state) => const OnboardingPage(),
             routes: [
               GoRoute(
+                parentNavigatorKey: _rootNavigatorKey,
                 path: RoutePaths.auth,
                 builder: (context, state) {
                   final stateId = state.uri.queryParameters['result'];
@@ -63,28 +75,61 @@ class AppRouter {
           ),
           GoRoute(
             path: '/',
+            parentNavigatorKey: _rootNavigatorKey,
             builder: (context, state) => const SplashPage(),
           ),
-          GoRoute(
-            path: '/app/:tab/:day',
-            name: RouteNames.home,
-            builder: (context, state) {
+          ShellRoute(
+            // path: '/app/:tab/:day',
+            // name: RouteNames.home,
+            parentNavigatorKey: _rootNavigatorKey,
+            navigatorKey: _shellNavigatorKey,
+            builder: (context, state, child) {
               final tabId = state.pathParameters['tab'];
               final tabItem = TabItem.values.firstWhere(
                 (tabItem) => tabItem == TabItem.values.byName(tabId!),
                 orElse: (() => throw Exception('Tab not found: $tabId')),
               );
-              final dayId = state.pathParameters['day'];
-              final dayItem = DevfestDay.values.firstWhere(
-                  (dayItem) => dayItem == DevfestDay.values.byName(dayId!),
-                  orElse: (() => throw Exception('Day not found: $dayId')));
 
               return AppHome(
                 key: state.pageKey,
-                initialTab: tabItem,
-                initialDay: dayItem,
+                tab: tabItem,
+                child: child,
               );
             },
+            routes: [
+              GoRoute(
+                path: '/app/:tab/:day',
+                parentNavigatorKey: _shellNavigatorKey,
+                name: RouteNames.home,
+                builder: (context, state) {
+                  final tabId = state.pathParameters['tab'];
+                  final tabItem = TabItem.values.firstWhere(
+                    (tabItem) => tabItem == TabItem.values.byName(tabId!),
+                    orElse: (() => throw Exception('Tab not found: $tabId')),
+                  );
+                  final dayId = state.pathParameters['day'];
+                  final dayItem = DevfestDay.values.firstWhere(
+                      (dayItem) => dayItem == DevfestDay.values.byName(dayId!),
+                      orElse: (() => throw Exception('Day not found: $dayId')));
+
+                  return switch (tabItem) {
+                    TabItem.home => AgendaPage(initialDay: dayItem),
+                    TabItem.schedule => SchedulePage(initialDay: dayItem),
+                    TabItem.speakers => const SizedBox(),
+                    TabItem.favourites => FavouritesPage(initialDay: dayItem),
+                    TabItem.more => const MorePage(),
+                  };
+                },
+              ),
+              GoRoute(
+                path: '${RoutePaths.session}/:tab',
+                name: RouteNames.session,
+                parentNavigatorKey: _shellNavigatorKey,
+                builder: (context, state) {
+                  return const SessionPage();
+                },
+              ),
+            ],
           ),
         ],
       );
