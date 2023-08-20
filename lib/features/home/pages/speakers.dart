@@ -28,6 +28,15 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
   Map<int, double> scrollOffsets = {};
   String activeTab = 'All Speakers';
 
+  List<String> allCategories = [
+    'All Speakers',
+    'Mobile Development',
+    'Product Design',
+    'Cloud',
+    'Backend',
+    'Frontend'
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -93,29 +102,24 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                     ),
                   ),
                   const SizedBox(height: Constants.largeVerticalGutter),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...[
-                          'All Speakers',
-                          'Mobile Development',
-                          'Product Design',
-                          'Cloud',
-                          'Backend',
-                          'Frontend'
-                        ].map(
-                          (type) => SessionCategoryChip(
+                  SizedBox(
+                    height: 38,
+                    child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final session = allCategories.elementAt(index);
+                          return SessionCategoryChip(
                             onTap: () => setState(() {
-                              activeTab = type;
+                              activeTab = session;
                             }),
-                            tab: type,
+                            tab: session,
                             selectedTab: activeTab,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 8),
+                        itemCount: allCategories.length),
+                  )
                 ],
               ),
             ),
