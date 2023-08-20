@@ -1,27 +1,32 @@
-import 'package:devfest23/core/enums/devfest_day.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import 'package:devfest23/features/home/widgets/speakers_chip.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/enums/devfest_day.dart';
+import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
-import '../widgets/schedule_tile.dart';
+import '../../../core/widgets/widgets.dart';
+import '../widgets/session_category_chip.dart';
 
-class SchedulePage extends StatefulWidget {
-  const SchedulePage({super.key, required this.initialDay});
+class SpeakersPage extends ConsumerStatefulWidget {
+  const SpeakersPage({super.key, required this.initialDay});
 
   final DevfestDay initialDay;
 
   @override
-  State<SchedulePage> createState() => _SchedulePageState();
+  ConsumerState<SpeakersPage> createState() => _SpeakersPageState();
 }
 
-class _SchedulePageState extends State<SchedulePage> {
+class _SpeakersPageState extends ConsumerState<SpeakersPage> {
   late DevfestDay day;
   late ScrollController _scrollController;
   Map<int, double> scrollOffsets = {};
+  String activeTab = 'All Speakers';
 
   @override
   void initState() {
@@ -44,7 +49,7 @@ class _SchedulePageState extends State<SchedulePage> {
   Widget build(BuildContext context) {
     return NestedScrollView(
       controller: _scrollController,
-      key: const PageStorageKey<String>('FavouritesPageScrollView'),
+      key: const PageStorageKey<String>('SpeakersPageScrollView'),
       headerSliverBuilder: (context, isScrolledUnder) {
         return [
           SliverAppBar(
@@ -71,15 +76,47 @@ class _SchedulePageState extends State<SchedulePage> {
               bottom: Constants.largeVerticalGutter,
             ),
             sliver: SliverToBoxAdapter(
-              child: Text.rich(
-                TextSpan(
-                  text: '🕧',
-                  style: DevFestTheme.of(context).textTheme?.title01,
-                  children: const [
-                    WidgetSpan(child: SizedBox(width: 4)),
-                    TextSpan(text: 'Schedule')
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      text: '🎤',
+                      style: DevFestTheme.of(context)
+                          .textTheme
+                          ?.title01
+                          ?.copyWith(fontWeight: FontWeight.w500),
+                      children: const [
+                        WidgetSpan(child: SizedBox(width: 4)),
+                        TextSpan(text: 'Speakers')
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: Constants.largeVerticalGutter),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ...[
+                          'All Speakers',
+                          'Mobile Development',
+                          'Product Design',
+                          'Cloud',
+                          'Backend',
+                          'Frontend'
+                        ].map(
+                          (type) => SessionCategoryChip(
+                            onTap: () => setState(() {
+                              activeTab = type;
+                            }),
+                            tab: type,
+                            selectedTab: activeTab,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -88,6 +125,7 @@ class _SchedulePageState extends State<SchedulePage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
+            toolbarHeight: 40,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
@@ -117,8 +155,11 @@ class _SchedulePageState extends State<SchedulePage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return ScheduleTile(
-                isGeneral: index % 2 == 0,
+              return SpeakersChip(
+                onTap: () {
+                  context.go(
+                      '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
+                },
               );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),
@@ -130,7 +171,12 @@ class _SchedulePageState extends State<SchedulePage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return const ScheduleTile();
+              return SpeakersChip(
+                onTap: () {
+                  context.go(
+                      '/app/${TabItem.speakers.name}/${DevfestDay.day2.name}/speakers/$index');
+                },
+              );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),
             itemCount: 5,

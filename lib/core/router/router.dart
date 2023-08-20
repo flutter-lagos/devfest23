@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/router/routes.dart';
+import 'package:devfest23/features/home/pages/speaker_details.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -66,26 +67,38 @@ class AppRouter {
             builder: (context, state) => const SplashPage(),
           ),
           GoRoute(
-            path: '/app/:tab/:day',
-            name: RouteNames.home,
-            builder: (context, state) {
-              final tabId = state.pathParameters['tab'];
-              final tabItem = TabItem.values.firstWhere(
-                (tabItem) => tabItem == TabItem.values.byName(tabId!),
-                orElse: (() => throw Exception('Tab not found: $tabId')),
-              );
-              final dayId = state.pathParameters['day'];
-              final dayItem = DevfestDay.values.firstWhere(
-                  (dayItem) => dayItem == DevfestDay.values.byName(dayId!),
-                  orElse: (() => throw Exception('Day not found: $dayId')));
+              path: '/app/:tab/:day',
+              name: RouteNames.home,
+              builder: (context, state) {
+                final tabId = state.pathParameters['tab'];
+                final tabItem = TabItem.values.firstWhere(
+                  (tabItem) => tabItem == TabItem.values.byName(tabId!),
+                  orElse: (() => throw Exception('Tab not found: $tabId')),
+                );
+                final dayId = state.pathParameters['day'];
+                final dayItem = DevfestDay.values.firstWhere(
+                    (dayItem) => dayItem == DevfestDay.values.byName(dayId!),
+                    orElse: (() => throw Exception('Day not found: $dayId')));
 
-              return AppHome(
-                key: state.pageKey,
-                initialTab: tabItem,
-                initialDay: dayItem,
-              );
-            },
-          ),
+                return AppHome(
+                  key: state.pageKey,
+                  initialTab: tabItem,
+                  initialDay: dayItem,
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: '${RoutePaths.speakers}/:id',
+                  builder: (context, state) {
+                    final speakerId = state.uri.queryParameters['id'];
+
+                    if (speakerId != null) {
+                      return const SpeakerDetailsPage();
+                    }
+                    return const SpeakerDetailsPage();
+                  },
+                ),
+              ]),
         ],
       );
 }

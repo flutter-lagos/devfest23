@@ -24,6 +24,11 @@ Widget devfestAgendaTile(BuildContext context) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          ScheduleTile(
+            onTap: () {},
+            isGeneral: true,
+          ),
+          const SizedBox(height: 8),
           ScheduleTile(onTap: () {}),
         ],
       ),

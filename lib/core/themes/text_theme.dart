@@ -14,6 +14,7 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
   final TextStyle? body03;
   final TextStyle? body04;
   final TextStyle? body05;
+  final TextStyle? button;
 
   const DevfestTextTheme({
     this.headline01,
@@ -28,6 +29,7 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
     this.body03,
     this.body04,
     this.body05,
+    this.button,
   });
 
   const DevfestTextTheme.fallback()
@@ -92,6 +94,11 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
+          button: const TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
         );
 
   @override
@@ -108,6 +115,7 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
     TextStyle? body03,
     TextStyle? body04,
     TextStyle? body05,
+    TextStyle? button,
   }) {
     return DevfestTextTheme(
       headline01: headline01 ?? this.headline01,
@@ -122,6 +130,7 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
       body03: body03 ?? this.body03,
       body04: body04 ?? this.body04,
       body05: body05 ?? this.body05,
+      button: button ?? this.button,
     );
   }
 
@@ -141,6 +150,7 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
       body03: TextStyle.lerp(body03, other.body03, t),
       body04: TextStyle.lerp(body04, other.body04, t),
       body05: TextStyle.lerp(body05, other.body05, t),
+      button: TextStyle.lerp(button, other.button, t),
     );
   }
 }
