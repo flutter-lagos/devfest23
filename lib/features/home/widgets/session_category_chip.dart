@@ -12,7 +12,7 @@ import '../../../core/widgets/widgets.dart';
     type: DevfestSessionCatChips,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
-Widget devfestAgendaTile(BuildContext context) {
+Widget devfestSessionCatChip(BuildContext context) {
   return Material(
     color: DevFestTheme.of(context).backgroundColor,
     child: Padding(
