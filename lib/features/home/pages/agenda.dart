@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
+import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/images.dart';
 import '../../../core/providers/providers.dart';
@@ -35,69 +37,79 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = ref.watch(isDarkProvider);
-    return NestedScrollView(
-      headerSliverBuilder: (context, isScrolledUnder) {
-        return [
-          SliverAppBar(
-            backgroundColor: DevFestTheme.of(context).backgroundColor,
-            elevation: 0,
-            scrolledUnderElevation: 0,
-            leadingWidth: 100,
-            leading: Row(
-              children: [
-                const SizedBox(width: Constants.horizontalMargin),
-                SvgPicture.asset(
-                  AppIcons.devfestLogo,
-                  height: 16,
-                  fit: BoxFit.contain,
-                ),
-              ],
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              left: Constants.horizontalMargin,
-              right: Constants.horizontalMargin,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+    return SafeArea(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, isScrolledUnder) {
+          return [
+            SliverAppBar(
+              backgroundColor: DevFestTheme.of(context).backgroundColor,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              leadingWidth: 100,
+              leading: Row(
                 children: [
-                  Text.rich(
-                    TextSpan(
-                      text: 'Hey Bruce',
-                      style: DevFestTheme.of(context).textTheme?.title01,
-                      children: const [
-                        WidgetSpan(child: SizedBox(width: 4)),
-                        TextSpan(text: '🤭')
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: Constants.smallVerticalGutter),
-                  Text(
-                    'Welcome to Devfest Lagos 2023 🥳',
-                    style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: isDark
-                              ? DevfestColors.grey80
-                              : DevfestColors.grey40,
-                        ),
+                  const SizedBox(width: Constants.horizontalMargin),
+                  SvgPicture.asset(
+                    AppIcons.devfestLogo,
+                    height: 16,
+                    fit: BoxFit.contain,
                   ),
                 ],
               ),
             ),
-          ),
-        ];
-      },
-      body: SafeArea(
-        child: SingleChildScrollView(
+            SliverPadding(
+              padding: const EdgeInsets.only(
+                left: Constants.horizontalMargin,
+                right: Constants.horizontalMargin,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                        text: 'Hey Bruce',
+                        style: DevFestTheme.of(context).textTheme?.title01,
+                        children: const [
+                          WidgetSpan(child: SizedBox(width: 4)),
+                          TextSpan(text: '🤭')
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: Constants.smallVerticalGutter),
+                    Text(
+                      'Welcome to Devfest Lagos 2023 🥳',
+                      style:
+                          DevFestTheme.of(context).textTheme?.body02?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: isDark
+                                    ? DevfestColors.grey80
+                                    : DevfestColors.grey40,
+                              ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ];
+        },
+        body: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: Constants.horizontalMargin),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: Constants.verticalGutter),
+                Text(
+                  'SCHEDULE',
+                  style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
+                        color: DevfestColors.grey30,
+                      ),
+                ),
+                const SizedBox(height: Constants.verticalGutter),
                 ScheduleTabBar(
                   index: day.index,
                   onTap: (tab) {
@@ -213,7 +225,12 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) {
-                    return const SpeakersChip();
+                    return SpeakersChip(
+                      onTap: () {
+                        context.go(
+                            '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
+                      },
+                    );
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: Constants.verticalGutter),

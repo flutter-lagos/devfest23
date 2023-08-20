@@ -5,6 +5,7 @@ import 'package:devfest23/features/home/pages/agenda.dart';
 import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:devfest23/features/home/pages/more.dart';
 import 'package:devfest23/features/home/pages/schedule.dart';
+import 'package:devfest23/features/home/pages/speaker_details.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
 import 'package:devfest23/features/session/pages/session.dart';
 import 'package:flutter/cupertino.dart';
@@ -128,9 +129,21 @@ class AppRouter {
                 builder: (context, state) {
                   return const SessionPage();
                 },
-              ),
-            ],
-          ),
+                ),
+              ],
+              routes: [
+                GoRoute(
+                  path: '${RoutePaths.speakers}/:id',
+                  builder: (context, state) {
+                    final speakerId = state.uri.queryParameters['id'];
+
+                    if (speakerId != null) {
+                      return const SpeakerDetailsPage();
+                    }
+                    return const SpeakerDetailsPage();
+                  },
+                ),
+              ]),
         ],
       );
 }

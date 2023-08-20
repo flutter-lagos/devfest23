@@ -19,11 +19,14 @@ class WidgetbookApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Widgetbook.material(
       directories: directories,
+      initialRoute: '/?path=core/widgets/devfestbottomnav/devfest-bottom-nav',
       addons: [
         DeviceFrameAddon(
           devices: [
-            ...Devices.ios.all,
-            ...Devices.android.all,
+            ...Devices.ios.all.where(
+                (element) => element.identifier.type == DeviceType.phone),
+            ...Devices.android.all.where(
+                (element) => element.identifier.type == DeviceType.phone),
           ],
           initialDevice: Devices.ios.iPhone13ProMax,
         ),

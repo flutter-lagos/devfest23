@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.18.1
   shared_preferences: ^2.2.0
   material_symbols_icons: ^4.2668.0
+  iconoir_flutter: ^6.11.0
 
 dev_dependencies:
   flutter_test:

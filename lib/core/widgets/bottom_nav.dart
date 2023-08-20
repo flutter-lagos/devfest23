@@ -71,7 +71,7 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
             ),
       ),
       child: SizedBox(
-        height: 88 + MediaQuery.paddingOf(context).bottom,
+        height: 88,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
