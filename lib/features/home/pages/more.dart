@@ -1,8 +1,11 @@
+import 'package:devfest23/core/enums/tab_item.dart';
+import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/widgets/switcher.dart';
 import 'package:devfest23/features/home/widgets/more_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/constants.dart';
@@ -59,7 +62,12 @@ class _MorePageState extends ConsumerState<MorePage> {
               leading: const Icon(Symbols.account_circle),
               title: const Text('Profile'),
               trailing: const Icon(Icons.chevron_right_rounded),
-              onPressed: () {},
+              onPressed: () {
+                context.goNamed(
+                  RouteNames.profile,
+                  pathParameters: {'tab': TabItem.more.name},
+                );
+              },
             ),
             const _MoreDivider(),
             MoreTile(
@@ -72,7 +80,6 @@ class _MorePageState extends ConsumerState<MorePage> {
                       enabled ? ThemeMode.dark : ThemeMode.light);
                 },
               ),
-              onPressed: () {},
             ),
             const _MoreDivider(),
             MoreTile(

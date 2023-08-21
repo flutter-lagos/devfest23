@@ -8,6 +8,7 @@ import 'package:devfest23/features/home/pages/schedule.dart';
 import 'package:devfest23/features/home/pages/speaker_details.dart';
 import 'package:devfest23/features/home/pages/speakers.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
+import 'package:devfest23/features/profile/pages/profile.dart';
 import 'package:devfest23/features/session/pages/session.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -133,6 +134,7 @@ class AppRouter {
               ),
               GoRoute(
                 path: '${RoutePaths.speakers}/:tab/:id',
+                parentNavigatorKey: _shellNavigatorKey,
                 builder: (context, state) {
                   final speakerId = state.uri.queryParameters['id'];
 
@@ -142,6 +144,14 @@ class AppRouter {
                   return const SpeakerDetailsPage();
                 },
               ),
+              GoRoute(
+                path: '${RoutePaths.profile}/:tab',
+                name: RouteNames.profile,
+                parentNavigatorKey: _shellNavigatorKey,
+                builder: (context, state) {
+                  return const ProfilePage();
+                },
+              )
             ],
           ),
         ],

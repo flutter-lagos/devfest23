@@ -9,4 +9,6 @@ abstract final class AppImages {
   static const spotifyLogo = 'assets/images/spotify-logo.png';
   static const uberLogo = 'assets/images/uber-logo.png';
   static const lyftLogo = 'assets/images/lyft-logo.png';
+
+  static const devfestBanner = 'assets/images/devfest-banner.png';
 }
