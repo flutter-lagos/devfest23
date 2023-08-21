@@ -1,9 +1,12 @@
 import 'package:devfest23/core/enums/devfest_day.dart';
+import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
@@ -88,6 +91,7 @@ class _SchedulePageState extends State<SchedulePage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
+            toolbarHeight: 80,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
@@ -119,6 +123,12 @@ class _SchedulePageState extends State<SchedulePage> {
             itemBuilder: (context, index) {
               return ScheduleTile(
                 isGeneral: index % 2 == 0,
+                onTap: () {
+                  context.goNamed(RouteNames.session, pathParameters: {
+                    'tab': TabItem.schedule.name,
+                    // 'day': DevfestDay.day1.name,
+                  });
+                },
               );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),

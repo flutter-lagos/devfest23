@@ -1,57 +1,37 @@
 import 'package:devfest23/core/enums/devfest_day.dart';
-import 'package:devfest23/features/home/pages/agenda.dart';
-import 'package:devfest23/features/home/pages/favourites.dart';
-import 'package:devfest23/features/home/pages/more.dart';
-import 'package:devfest23/features/home/pages/schedule.dart';
+import 'package:devfest23/core/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/enums/tab_item.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
-import 'speakers.dart';
 
 class AppHome extends ConsumerStatefulWidget {
   const AppHome({
     super.key,
-    this.initialTab = TabItem.home,
-    this.initialDay = DevfestDay.day1,
+    this.tab = TabItem.home,
+    this.day = DevfestDay.day1,
+    required this.child,
   });
 
-  final TabItem initialTab;
-  final DevfestDay initialDay;
+  final TabItem tab;
+  final DevfestDay day;
+  final Widget child;
 
   @override
   ConsumerState<AppHome> createState() => _AppHomeState();
 }
 
 class _AppHomeState extends ConsumerState<AppHome> {
-  late final _pages = [
-    AgendaPage(initialDay: widget.initialDay),
-    SchedulePage(initialDay: widget.initialDay),
-    SpeakersPage(initialDay: widget.initialDay),
-    FavouritesPage(initialDay: widget.initialDay),
-    const MorePage(),
-  ];
-
-  int index = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    index = widget.initialTab.index;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
-      body: IndexedStack(
-        index: index,
-        children: _pages,
-      ),
+      body: widget.child,
       bottomNavigationBar: DevfestBottomNav(
-        index: index,
+        index: widget.tab.index,
         items: const [
           DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_filled)),
           DevfestBottomNavItem(
@@ -71,7 +51,15 @@ class _AppHomeState extends ConsumerState<AppHome> {
           ),
         ],
         onTap: (page) {
-          setState(() => index = page);
+          if (TabItem.values[page] == widget.tab) return;
+
+          context.goNamed(
+            RouteNames.home,
+            pathParameters: {
+              'tab': TabItem.values[page].name,
+              'day': widget.day.name,
+            },
+          );
         },
       ),
     );

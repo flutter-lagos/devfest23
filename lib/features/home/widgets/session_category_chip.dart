@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
 import '../../../core/themes/themes.dart';
-
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
 import '../../../core/widgets/widgets.dart';
 
 @widgetbook.UseCase(
     name: 'Session category chip',
-    type: DevfestSessionCatChips,
+    type: DevfestChips,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
 Widget devfestSessionCatChip(BuildContext context) {

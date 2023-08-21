@@ -12,7 +12,7 @@ import '../../../core/providers/providers.dart';
 
 @widgetbook.UseCase(
     name: 'Schedule tile',
-    type: DevfestScheduleTiles,
+    type: DevfestTiles,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
 Widget devfestScheduleTile(BuildContext context) {

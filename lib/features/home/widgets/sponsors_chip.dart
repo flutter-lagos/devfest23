@@ -1,17 +1,16 @@
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
 import '../../../core/images.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/themes/themes.dart';
 
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
 @widgetbook.UseCase(
     name: 'Sponsor chip',
-    type: DevfestSponsorChips,
+    type: DevfestChips,
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
 Widget devfestSponsorTile(BuildContext context) {

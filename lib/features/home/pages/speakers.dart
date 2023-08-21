@@ -129,7 +129,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 40,
+            toolbarHeight: 80,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
@@ -161,8 +161,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go(
-                      '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
+                  context.go('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },
@@ -177,8 +176,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go(
-                      '/app/${TabItem.speakers.name}/${DevfestDay.day2.name}/speakers/$index');
+                  context.go('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },
