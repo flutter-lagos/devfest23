@@ -93,27 +93,31 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                     ),
                   ),
                   const SizedBox(height: Constants.largeVerticalGutter),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...[
-                          'All Speakers',
-                          'Mobile Development',
-                          'Product Design',
-                          'Cloud',
-                          'Backend',
-                          'Frontend'
-                        ].map(
-                          (type) => SessionCategoryChip(
-                            onTap: () => setState(() {
-                              activeTab = type;
-                            }),
-                            tab: type,
-                            selectedTab: activeTab,
+                  Container(
+                    color: Colors.transparent,
+                    height: 80,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...[
+                            'All Speakers',
+                            'Mobile Development',
+                            'Product Design',
+                            'Cloud',
+                            'Backend',
+                            'Frontend'
+                          ].map(
+                            (type) => SessionCategoryChip(
+                              onTap: () => setState(() {
+                                activeTab = type;
+                              }),
+                              tab: type,
+                              selectedTab: activeTab,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -125,20 +129,23 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 40,
+            toolbarHeight: 80,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
               child: ScheduleTabBar(
                 index: day.index,
                 onTap: (tab) {
-                  setState(() {
-                    day = DevfestDay.values[tab];
-                    if (scrollOffsets.containsKey(day.index)) {
-                      _scrollController.jumpTo(scrollOffsets[day.index]!);
-                    } else {
-                      _scrollController.jumpTo(0);
-                    }
+                  WidgetsFlutterBinding.ensureInitialized()
+                      .addPostFrameCallback((_) {
+                    setState(() {
+                      day = DevfestDay.values[tab];
+                      if (scrollOffsets.containsKey(day.index)) {
+                        _scrollController.jumpTo(scrollOffsets[day.index]!);
+                      } else {
+                        _scrollController.jumpTo(0);
+                      }
+                    });
                   });
                 },
               ),
@@ -157,8 +164,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go(
-                      '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
+                  context.go('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },
@@ -173,8 +179,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go(
-                      '/app/${TabItem.speakers.name}/${DevfestDay.day2.name}/speakers/$index');
+                  context.go('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },

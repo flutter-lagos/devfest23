@@ -6,6 +6,7 @@ import 'package:devfest23/features/home/pages/favourites.dart';
 import 'package:devfest23/features/home/pages/more.dart';
 import 'package:devfest23/features/home/pages/schedule.dart';
 import 'package:devfest23/features/home/pages/speaker_details.dart';
+import 'package:devfest23/features/home/pages/speakers.dart';
 import 'package:devfest23/features/onboarding/pages/authentication.dart';
 import 'package:devfest23/features/session/pages/session.dart';
 import 'package:flutter/cupertino.dart';
@@ -116,7 +117,7 @@ class AppRouter {
                   return switch (tabItem) {
                     TabItem.home => AgendaPage(initialDay: dayItem),
                     TabItem.schedule => SchedulePage(initialDay: dayItem),
-                    TabItem.speakers => const SizedBox(),
+                    TabItem.speakers => SpeakersPage(initialDay: dayItem),
                     TabItem.favourites => FavouritesPage(initialDay: dayItem),
                     TabItem.more => const MorePage(),
                   };
@@ -129,21 +130,20 @@ class AppRouter {
                 builder: (context, state) {
                   return const SessionPage();
                 },
-                ),
-              ],
-              routes: [
-                GoRoute(
-                  path: '${RoutePaths.speakers}/:id',
-                  builder: (context, state) {
-                    final speakerId = state.uri.queryParameters['id'];
+              ),
+              GoRoute(
+                path: '${RoutePaths.speakers}/:tab/:id',
+                builder: (context, state) {
+                  final speakerId = state.uri.queryParameters['id'];
 
-                    if (speakerId != null) {
-                      return const SpeakerDetailsPage();
-                    }
+                  if (speakerId != null) {
                     return const SpeakerDetailsPage();
-                  },
-                ),
-              ]),
+                  }
+                  return const SpeakerDetailsPage();
+                },
+              ),
+            ],
+          ),
         ],
       );
 }

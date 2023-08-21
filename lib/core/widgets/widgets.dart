@@ -12,5 +12,3 @@ abstract final class DevfestTabs {}
 abstract final class DevfestChips {}
 
 abstract final class DevfestSpeakerActionCard {}
-
-abstract final class DevfestSessionCatChips {}

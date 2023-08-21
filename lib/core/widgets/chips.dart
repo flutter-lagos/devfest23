@@ -57,7 +57,7 @@ class SessionTimeChip extends StatelessWidget {
         children: [
           Icon(
             Symbols.alarm,
-            weight: Constants.iconWeight + 100,
+            weight: Constants.iconWeight,
             color: DevFestTheme.of(context).onBackgroundColor,
           ),
           const SizedBox(width: Constants.horizontalGutter),
@@ -66,7 +66,7 @@ class SessionTimeChip extends StatelessWidget {
             style: DevFestTheme.of(context)
                 .textTheme
                 ?.body03
-                ?.copyWith(fontWeight: FontWeight.w600),
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -96,7 +96,7 @@ class SessionTimeLeftChip extends StatelessWidget {
         children: [
           Icon(
             Symbols.hourglass_empty,
-            weight: Constants.iconWeight + 100,
+            weight: Constants.iconWeight,
             color: DevFestTheme.of(context).onBackgroundColor,
           ),
           const SizedBox(width: Constants.horizontalGutter / 2),
@@ -105,7 +105,7 @@ class SessionTimeLeftChip extends StatelessWidget {
             style: DevFestTheme.of(context)
                 .textTheme
                 ?.body03
-                ?.copyWith(fontWeight: FontWeight.w600),
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -135,7 +135,7 @@ class SessionVenueChip extends StatelessWidget {
         children: [
           Icon(
             Symbols.pin_drop,
-            weight: Constants.iconWeight + 100,
+            weight: Constants.iconWeight,
             color: DevFestTheme.of(context).onBackgroundColor,
           ),
           const SizedBox(width: Constants.horizontalGutter),
@@ -144,7 +144,7 @@ class SessionVenueChip extends StatelessWidget {
             style: DevFestTheme.of(context)
                 .textTheme
                 ?.body03
-                ?.copyWith(fontWeight: FontWeight.w600),
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -183,7 +183,7 @@ class SessionSlotsChip extends StatelessWidget {
         children: [
           Icon(
             Symbols.group,
-            weight: Constants.iconWeight + 100,
+            weight: Constants.iconWeight,
             color: contentColor,
           ),
           const SizedBox(width: Constants.horizontalGutter / 2),
@@ -192,7 +192,7 @@ class SessionSlotsChip extends StatelessWidget {
             style: DevFestTheme.of(context)
                 .textTheme
                 ?.body03
-                ?.copyWith(fontWeight: FontWeight.w600, color: contentColor),
+                ?.copyWith(fontWeight: FontWeight.w500, color: contentColor),
           ),
         ],
       ),
@@ -235,7 +235,7 @@ class SessionStatusChip extends StatelessWidget {
                 Text(
                   'Ongoing',
                   style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: contentColor,
                       ),
                 ),
@@ -246,7 +246,7 @@ class SessionStatusChip extends StatelessWidget {
               style: DevFestTheme.of(context)
                   .textTheme
                   ?.body03
-                  ?.copyWith(fontWeight: FontWeight.w600, color: contentColor),
+                  ?.copyWith(fontWeight: FontWeight.w500, color: contentColor),
             ),
     );
   }

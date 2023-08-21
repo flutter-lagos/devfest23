@@ -5,7 +5,7 @@ class RoutePaths {
   static const home = 'home';
   static const auth = 'auth';
   static const session = '/session';
-  static const speakers = 'speakers';
+  static const speakers = '/speakers';
 }
 
 /// All route names
