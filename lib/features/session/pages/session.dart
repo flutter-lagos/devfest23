@@ -38,18 +38,6 @@ class SessionPage extends StatefulWidget {
 }
 
 class _SessionPageState extends State<SessionPage> {
-  static SessionInfo get _generalSession => SessionInfo(
-        title: '🍽️ WTM + WW Breakfast / Registration',
-        host: 'Femi',
-        venue: 'Entrance',
-        slotsLeft: 0,
-        sessionTime: DateTime.now(),
-        isGeneralSession: true,
-        description:
-            'Wake up to reality! Nothing ever goes as planned in this accursed world. The longer you live, the more you realize that the only things that truly exist in this reality are merely pain, suffering and futility. Listen, everywhere you look in this world, wherever there is light, there will always be shadows to be found as well.',
-        status: SessionStatus.completed,
-      );
-
   static SessionInfo get _speakerSession => SessionInfo(
         title: 'Understanding the importance of creativity',
         host: 'Aise Idahor',
