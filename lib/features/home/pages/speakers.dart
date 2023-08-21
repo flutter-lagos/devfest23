@@ -28,6 +28,15 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
   Map<int, double> scrollOffsets = {};
   String activeTab = 'All Speakers';
 
+  List<String> allCategories = [
+    'All Speakers',
+    'Mobile Development',
+    'Product Design',
+    'Cloud',
+    'Backend',
+    'Frontend'
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -93,33 +102,24 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                     ),
                   ),
                   const SizedBox(height: Constants.largeVerticalGutter),
-                  Container(
-                    color: Colors.transparent,
-                    height: 80,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ...[
-                            'All Speakers',
-                            'Mobile Development',
-                            'Product Design',
-                            'Cloud',
-                            'Backend',
-                            'Frontend'
-                          ].map(
-                            (type) => SessionCategoryChip(
-                              onTap: () => setState(() {
-                                activeTab = type;
-                              }),
-                              tab: type,
-                              selectedTab: activeTab,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  SizedBox(
+                    height: 38,
+                    child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final session = allCategories.elementAt(index);
+                          return SessionCategoryChip(
+                            onTap: () => setState(() {
+                              activeTab = session;
+                            }),
+                            tab: session,
+                            selectedTab: activeTab,
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 8),
+                        itemCount: allCategories.length),
+                  )
                 ],
               ),
             ),
@@ -136,16 +136,13 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
               child: ScheduleTabBar(
                 index: day.index,
                 onTap: (tab) {
-                  WidgetsFlutterBinding.ensureInitialized()
-                      .addPostFrameCallback((_) {
-                    setState(() {
-                      day = DevfestDay.values[tab];
-                      if (scrollOffsets.containsKey(day.index)) {
-                        _scrollController.jumpTo(scrollOffsets[day.index]!);
-                      } else {
-                        _scrollController.jumpTo(0);
-                      }
-                    });
+                  setState(() {
+                    day = DevfestDay.values[tab];
+                    if (scrollOffsets.containsKey(day.index)) {
+                      _scrollController.jumpTo(scrollOffsets[day.index]!);
+                    } else {
+                      _scrollController.jumpTo(0);
+                    }
                   });
                 },
               ),

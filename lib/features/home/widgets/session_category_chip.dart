@@ -11,27 +11,25 @@ import '../../../core/widgets/widgets.dart';
     designLink:
         'https://www.figma.com/file/CCnX5Sh86ILqRn7ng6Shlr/DevFest-Jordan-Year---Mobile-App?node-id=1591%3A1213&mode=dev')
 Widget devfestSessionCatChip(BuildContext context) {
+  const selectedTab = 'All Speakers';
   return Material(
     color: DevFestTheme.of(context).backgroundColor,
     child: SizedBox(
       height: MediaQuery.sizeOf(context).height,
-      child: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
         child: Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ...[
-                'All Speakers',
-                'Mobile',
-                'Cloud',
-              ].map(
-                (tab) => SessionCategoryChip(
-                  selectedTab: 'All Speakers',
-                  tab: tab,
-                ),
-              )
+              SessionCategoryChip(
+                selectedTab: selectedTab,
+                tab: 'All Speakers',
+              ),
+              SizedBox(width: 8),
+              SessionCategoryChip(
+                selectedTab: selectedTab,
+                tab: 'Mobile Development',
+              ),
             ],
           ),
         ),
@@ -57,9 +55,9 @@ class SessionCategoryChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        height: 38,
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        margin: const EdgeInsets.only(right: Constants.horizontalGutter),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: ShapeDecoration(
           color: tab == selectedTab
               ? const Color(0xFF0F0E0E)
@@ -71,13 +69,15 @@ class SessionCategoryChip extends StatelessWidget {
             borderRadius: BorderRadius.circular(48),
           ),
         ),
-        child: Text(
-          tab,
-          style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
-                color: tab == selectedTab
-                    ? DevfestColors.grey90
-                    : DevfestColors.grey60,
-              ),
+        child: Center(
+          child: Text(
+            tab,
+            style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
+                  color: tab == selectedTab
+                      ? DevfestColors.grey90
+                      : DevfestColors.grey60,
+                ),
+          ),
         ),
       ),
     );
