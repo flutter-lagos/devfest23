@@ -293,25 +293,32 @@ class _FavouriteInfoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Icon(
-          Symbols.error,
-          color: DevfestColors.yellow,
-          weight: Constants.iconWeight,
-        ),
-        const SizedBox(width: Constants.horizontalGutter),
-        Expanded(
-          child: Text(
-            'Save your spot for this talk by adding it to favourites',
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body03
-                ?.copyWith(fontWeight: FontWeight.w500),
-          ),
-        ),
-      ],
+    return AnimatedSwitcher(
+      duration: Constants.kAnimationDur,
+      child: () {
+        if (isFavourite) return const SizedBox.shrink();
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Symbols.error,
+              color: DevfestColors.yellow,
+              weight: Constants.iconWeight,
+            ),
+            const SizedBox(width: Constants.horizontalGutter),
+            Expanded(
+              child: Text(
+                'Save your spot for this talk by adding it to favourites',
+                style: DevFestTheme.of(context)
+                    .textTheme
+                    ?.body03
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        );
+      }(),
     );
   }
 }

@@ -6,6 +6,7 @@ class RoutePaths {
   static const auth = 'auth';
   static const session = '/session';
   static const speakers = '/speakers';
+  static const profile = '/profile';
 }
 
 /// All route names
@@ -15,4 +16,5 @@ class RouteNames {
   static const auth = 'auth';
   static const session = 'session';
   static const speakers = 'speakers';
+  static const profile = 'profile';
 }
