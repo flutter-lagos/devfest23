@@ -161,7 +161,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go('/speakers/${TabItem.speakers.name}/$index');
+                  context.push('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },

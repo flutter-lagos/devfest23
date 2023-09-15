@@ -232,7 +232,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                        context.push(
                             '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}');
                       context
-                            .push('/speakers/${TabItem.speakers.name}/$index');
+                            .pushReplacement('/speakers/${TabItem.speakers.name}/$index');
                       },
                     );
                   },
