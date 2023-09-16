@@ -42,14 +42,15 @@ class SponsorsChip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(isDarkProvider);
-    return Container(
+    return AnimatedContainer(
+      duration: Constants.kAnimationDur,
       decoration: ShapeDecoration(
-        color: isDark ? const Color(0xFF1C1C1C) : const Color(0xFFFFFAEB),
+        color: isDark ? DevfestColors.darkbackground : const Color(0xFFFFFAEB),
         shape: RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: isDark ? const Color(0xFF1B1B1B) : const Color(0xFFE6E6E6),
+            color: isDark ? DevfestColors.grey10 : const Color(0xFFE6E6E6),
           ),
           borderRadius: BorderRadius.circular(16),
         ),

@@ -3,9 +3,12 @@ import 'package:devfest23/core/themes/colors.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+import '../providers/theme_providers.dart';
 
 @widgetbook.UseCase(name: 'Session Chips', type: DevfestChips)
 Widget devfestSessionChip(BuildContext context) {
@@ -22,6 +25,8 @@ Widget devfestSessionChip(BuildContext context) {
         const Align(child: SessionSlotsChip(slotsLeft: 100)),
         const SizedBox(height: Constants.verticalGutter),
         const Align(child: SessionSlotsChip(slotsLeft: 3)),
+        const SizedBox(height: Constants.verticalGutter),
+        const Align(child: SessionSlotsChip(slotsLeft: 0)),
         const SizedBox(height: Constants.verticalGutter),
         const Align(child: SessionStatusChip(isOngoing: true)),
         const SizedBox(height: Constants.verticalGutter),
@@ -55,18 +60,16 @@ class SessionTimeChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Symbols.alarm,
             weight: Constants.iconWeight,
-            color: DevFestTheme.of(context).onBackgroundColor,
+            color: DevfestColors.grey0,
           ),
           const SizedBox(width: Constants.horizontalGutter),
           Text(
             _timeOfDayFormat.format(sessionTime),
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body03
-                ?.copyWith(fontWeight: FontWeight.w500),
+            style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
+                fontWeight: FontWeight.w500, color: DevfestColors.grey0),
           ),
         ],
       ),
@@ -94,18 +97,16 @@ class SessionTimeLeftChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Symbols.hourglass_empty,
             weight: Constants.iconWeight,
-            color: DevFestTheme.of(context).onBackgroundColor,
+            color: DevfestColors.grey0,
           ),
           const SizedBox(width: Constants.horizontalGutter / 2),
           Text(
             '${minuteLeft}m',
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body03
-                ?.copyWith(fontWeight: FontWeight.w500),
+            style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
+                fontWeight: FontWeight.w500, color: DevfestColors.grey0),
           ),
         ],
       ),
@@ -133,18 +134,16 @@ class SessionVenueChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Symbols.pin_drop,
             weight: Constants.iconWeight,
-            color: DevFestTheme.of(context).onBackgroundColor,
+            color: DevfestColors.grey0,
           ),
           const SizedBox(width: Constants.horizontalGutter),
           Text(
             venue,
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body03
-                ?.copyWith(fontWeight: FontWeight.w500),
+            style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
+                fontWeight: FontWeight.w500, color: DevfestColors.grey0),
           ),
         ],
       ),
@@ -152,22 +151,32 @@ class SessionVenueChip extends StatelessWidget {
   }
 }
 
-class SessionSlotsChip extends StatelessWidget {
+class SessionSlotsChip extends ConsumerWidget {
   const SessionSlotsChip({super.key, required this.slotsLeft});
 
   final int slotsLeft;
 
   bool get _isSlotBookingEmergency {
-    return slotsLeft <= 5;
+    return slotsLeft <= 5 && slotsLeft > 0;
   }
 
   @override
-  Widget build(BuildContext context) {
-    final contentColor =
-        _isSlotBookingEmergency ? DevfestColors.red : DevfestColors.grey30;
-    final chipColor = _isSlotBookingEmergency
-        ? DevfestColors.redSecondary.withOpacity(0.2)
-        : DevfestColors.grey90;
+  Widget build(BuildContext context, ref) {
+    final contentColor = () {
+      if (_isSlotBookingEmergency) return DevfestColors.red;
+
+      if (ref.watch(isDarkProvider)) return DevfestColors.grey100;
+      return DevfestColors.grey30;
+    }();
+    final chipColor = () {
+      if (_isSlotBookingEmergency) {
+        return DevfestColors.redSecondary.withOpacity(0.2);
+      }
+
+      if (ref.watch(isDarkProvider)) return DevfestColors.grey30;
+
+      return DevfestColors.grey90;
+    }();
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
@@ -188,7 +197,9 @@ class SessionSlotsChip extends StatelessWidget {
           ),
           const SizedBox(width: Constants.horizontalGutter / 2),
           Text(
-            '$slotsLeft Slot${slotsLeft > 1 ? 's' : ''} Left',
+            slotsLeft <= 0
+                ? 'No slots left'
+                : '$slotsLeft Slot${slotsLeft > 1 ? 's' : ''} Left',
             style: DevFestTheme.of(context)
                 .textTheme
                 ?.body03
@@ -200,17 +211,23 @@ class SessionSlotsChip extends StatelessWidget {
   }
 }
 
-class SessionStatusChip extends StatelessWidget {
+class SessionStatusChip extends ConsumerWidget {
   const SessionStatusChip({super.key, required this.isOngoing});
 
   final bool isOngoing;
 
   @override
-  Widget build(BuildContext context) {
-    final chipColor = isOngoing
-        ? DevfestColors.greenSecondary.withOpacity(0.2)
-        : DevfestColors.grey90;
-    final contentColor = isOngoing ? DevfestColors.green : DevfestColors.grey30;
+  Widget build(BuildContext context, ref) {
+    final chipColor = () {
+      if (isOngoing) return DevfestColors.greenSecondary.withOpacity(0.2);
+      if (ref.watch(isDarkProvider)) return DevfestColors.grey30;
+      return DevfestColors.grey90;
+    }();
+    final contentColor = () {
+      if (isOngoing) return DevfestColors.green;
+      if (ref.watch(isDarkProvider)) return DevfestColors.grey100;
+      return DevfestColors.grey30;
+    }();
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,

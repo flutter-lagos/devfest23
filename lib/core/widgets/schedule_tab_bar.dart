@@ -164,7 +164,7 @@ class _TabTile extends ConsumerWidget {
                 color: () {
                   if (selected) {
                     return ref.watch(isDarkProvider)
-                        ? DevfestColors.grey30
+                        ? DevfestColors.grey100
                         : DevfestColors.grey0;
                   }
                 }(),

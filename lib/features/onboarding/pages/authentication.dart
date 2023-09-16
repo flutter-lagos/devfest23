@@ -59,10 +59,10 @@ class _AuthenticationHome extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleTile(
+        const TitleTile(
           emoji: '🛡️',
           title: 'Authentication',
-          backgroundColor: const Color(0xfffde293).withOpacity(0.2),
+          backgroundColor: Color(0xfffde293),
         ),
         const SizedBox(height: Constants.largeVerticalGutter),
         Text(
@@ -116,10 +116,10 @@ class _AuthenticationSuccess extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleTile(
+        const TitleTile(
           emoji: '🥳',
           title: 'Authentication Successful!',
-          backgroundColor: const Color(0xff81c995).withOpacity(0.2),
+          backgroundColor: Color(0xff81c995),
         ),
         const SizedBox(height: Constants.largeVerticalGutter),
         Text(
@@ -162,10 +162,10 @@ class _AuthenticationPending extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleTile(
+        const TitleTile(
           emoji: '⌛',
           title: 'Authentication Pending',
-          backgroundColor: const Color(0xfffde293).withOpacity(0.2),
+          backgroundColor: Color(0xfffde293),
         ),
         const SizedBox(height: Constants.largeVerticalGutter),
         Text(
@@ -213,10 +213,10 @@ class _AuthenticationFailure extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleTile(
+        const TitleTile(
           emoji: '🥲',
           title: 'Email Not Found',
-          backgroundColor: const Color(0xfff28b82).withOpacity(0.2),
+          backgroundColor: Color(0xfff28b82),
         ),
         const SizedBox(height: Constants.largeVerticalGutter),
         Text(
@@ -238,7 +238,7 @@ class _AuthenticationFailure extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: Constants.largeVerticalGutter * 2),
-        DevfestOutlinedButton(
+        DevfestFilledButton(
           title: const Text('Proceed to App'),
           onPressed: () {
             context.go('/app/${TabItem.home.name}/${DevfestDay.day2.name}');

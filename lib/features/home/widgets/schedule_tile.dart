@@ -76,159 +76,146 @@ class _InActiveFavouriteSessionTileState
   @override
   Widget build(BuildContext context) {
     final isDark = ref.watch(isDarkProvider);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: ShapeDecoration(
-              color: DevFestTheme.of(context).backgroundColor,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 1, color: Color(0xFF4C4C4C)),
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-            padding: const EdgeInsets.all(Constants.verticalGutter),
-            child: Column(
+    return Container(
+      decoration: ShapeDecoration(
+        color: DevFestTheme.of(context).backgroundColor,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: isDark ? DevfestColors.grey10 : const Color(0xFF4C4C4C)),
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      padding: const EdgeInsets.all(Constants.verticalGutter),
+      child: Column(
+        children: [
+          if (!widget.isGeneral) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (!widget.isGeneral) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'MOBILE DEVELOPMENT',
-                        style: DevFestTheme.of(context)
-                            .textTheme
-                            ?.body04
-                            ?.copyWith(
-                                color: isDark
-                                    ? DevfestColors.grey70
-                                    : DevfestColors.grey30),
-                      ),
-                      const _FavouriteIcon(),
-                    ],
-                  ),
-                  const SizedBox(height: Constants.verticalGutter)
-                ],
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Text(
+                  'MOBILE DEVELOPMENT',
+                  style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
+                      color:
+                          isDark ? DevfestColors.grey80 : DevfestColors.grey30),
+                ),
+                const _FavouriteIcon(),
+              ],
+            ),
+            const SizedBox(height: Constants.verticalGutter)
+          ],
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Animations in Flutter and how to make them',
+                    Text(
+                      'Animations in Flutter and how to make them',
+                      style:
+                          DevFestTheme.of(context).textTheme?.title02?.copyWith(
+                                color: isDark
+                                    ? DevfestColors.grey100
+                                    : DevfestColors.grey0,
+                              ),
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                    ),
+                    const SizedBox(height: Constants.verticalGutter),
+                    Row(
+                      children: [
+                        Container(
+                          height: 32,
+                          width: 32,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              strokeAlign: BorderSide.strokeAlignOutside,
+                              color: DevfestColors.green,
+                              width: 2,
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage(AppImages.devfestLogoLight),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: Constants.horizontalGutter),
+                        Text.rich(
+                          TextSpan(
+                            text: 'Samuel Abada',
                             style: DevFestTheme.of(context)
                                 .textTheme
-                                ?.title02
+                                ?.body03
                                 ?.copyWith(
                                   color: isDark
-                                      ? DevfestColors.grey100
-                                      : DevfestColors.grey0,
+                                      ? DevfestColors.grey80
+                                      : DevfestColors.grey10,
                                 ),
-                            maxLines: 2,
-                            overflow: TextOverflow.fade,
-                          ),
-                          const SizedBox(height: Constants.verticalGutter),
-                          Row(
                             children: [
-                              Container(
-                                height: 32,
-                                width: 32,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    strokeAlign: BorderSide.strokeAlignOutside,
-                                    color: DevfestColors.green,
-                                    width: 2,
-                                  ),
-                                  image: const DecorationImage(
-                                    image:
-                                        AssetImage(AppImages.devfestLogoLight),
-                                    fit: BoxFit.fill,
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: Container(
+                                  height: 8,
+                                  width: 8,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: Constants.horizontalGutter),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? DevfestColors.grey100
+                                        : DevfestColors.grey70,
+                                    shape: BoxShape.circle,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: Constants.horizontalGutter),
-                              Text.rich(
-                                TextSpan(
-                                  text: 'Samuel Abada',
-                                  style: DevFestTheme.of(context)
-                                      .textTheme
-                                      ?.body03
-                                      ?.copyWith(
-                                        color: isDark
-                                            ? DevfestColors.grey100
-                                            : DevfestColors.grey10,
-                                      ),
-                                  children: [
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.middle,
-                                      child: Container(
-                                        height: 8,
-                                        width: 8,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal:
-                                                Constants.horizontalGutter),
-                                        decoration: BoxDecoration(
-                                          color: isDark
-                                              ? DevfestColors.grey30
-                                              : DevfestColors.grey70,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ),
-                                    const TextSpan(text: '10:00 AM'),
-                                    WidgetSpan(
-                                      alignment: PlaceholderAlignment.middle,
-                                      child: Container(
-                                        height: 8,
-                                        width: 8,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal:
-                                                Constants.horizontalGutter),
-                                        decoration: BoxDecoration(
-                                          color: isDark
-                                              ? DevfestColors.grey30
-                                              : DevfestColors.grey70,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ),
-                                    const TextSpan(text: 'Hall A'),
-                                  ],
+                              const TextSpan(text: '10:00 AM'),
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: Container(
+                                  height: 8,
+                                  width: 8,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: Constants.horizontalGutter),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? DevfestColors.grey100
+                                        : DevfestColors.grey70,
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
                               ),
+                              const TextSpan(text: 'Hall A'),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
 
-class _FavouriteIcon extends StatelessWidget {
+class _FavouriteIcon extends ConsumerWidget {
   const _FavouriteIcon();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Container(
       height: 30,
       width: 30,
       alignment: Alignment.center,
-      child: const Icon(
+      child: Icon(
         Icons.star_border_rounded,
-        color: DevfestColors.grey70,
+        color: ref.watch(isDarkProvider)
+            ? DevfestColors.grey90
+            : DevfestColors.grey70,
       ),
     );
   }
