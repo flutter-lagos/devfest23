@@ -106,36 +106,42 @@ class _InActiveFavouriteSessionTileState
       padding: const EdgeInsets.all(Constants.verticalGutter),
       child: Column(
         children: [
-          if (!widget.isGeneral|| widget.isOngoing) ...[
+          if (!widget.isGeneral || widget.isOngoing) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (widget.isOngoing) ...[
-                            const _OngoingIndicator(),
-                            const SizedBox(width: Constants.horizontalGutter),
-                          ],
-                          if (!widget.isGeneral) ...[Text(
-                  'MOBILE DEVELOPMENT',
-                  style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
-                      color:
-                          isDark ? DevfestColors.grey80 : DevfestColors.grey30,
-                ),
-                ),
-                          ]
-                        ],
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.isOngoing) ...[
+                      const _OngoingIndicator(),
+                      const SizedBox(width: Constants.horizontalGutter),
+                    ],
+                    if (!widget.isGeneral) ...[
+                      Text(
+                        'MOBILE DEVELOPMENT',
+                        style: DevFestTheme.of(context)
+                            .textTheme
+                            ?.body04
+                            ?.copyWith(
+                              color: isDark
+                                  ? DevfestColors.grey80
+                                  : DevfestColors.grey30,
+                            ),
                       ),
-                      if (!widget.isGeneral)const _FavouriteIcon(),
+                    ]
+                  ],
+                ),
+                if (!widget.isGeneral) const _FavouriteIcon(),
               ],
             ),
-             SizedBox(
-                    height: widget.isGeneral
-                        ? Constants.smallVerticalGutter
-                        : Constants.verticalGutter,
-          ),
-          ],Row(
+            SizedBox(
+              height: widget.isGeneral
+                  ? Constants.smallVerticalGutter
+                  : Constants.verticalGutter,
+            ),
+          ],
+          Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -189,7 +195,7 @@ class _InActiveFavouriteSessionTileState
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
                                 child: AnimatedContainer(
-                                        duration: Constants.kAnimationDur,
+                                  duration: Constants.kAnimationDur,
                                   height: 8,
                                   width: 8,
                                   margin: const EdgeInsets.symmetric(
@@ -206,7 +212,7 @@ class _InActiveFavouriteSessionTileState
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
                                 child: AnimatedContainer(
-                                        duration: Constants.kAnimationDur,
+                                  duration: Constants.kAnimationDur,
                                   height: 8,
                                   width: 8,
                                   margin: const EdgeInsets.symmetric(
