@@ -30,6 +30,17 @@ Widget devfestScheduleTile(BuildContext context) {
           ),
           const SizedBox(height: 8),
           ScheduleTile(onTap: () {}),
+          const SizedBox(height: Constants.verticalGutter),
+          ScheduleTile(
+            onTap: () {},
+            isGeneral: true,
+            isOngoing: true,
+          ),
+          const SizedBox(height: 8),
+          ScheduleTile(
+            onTap: () {},
+            isOngoing: true,
+          ),
         ],
       ),
     ),
@@ -41,12 +52,12 @@ class ScheduleTile extends StatelessWidget {
     super.key,
     this.onTap,
     this.isGeneral = false,
+    this.isOngoing = false,
   });
-
-  // TODO: Handle case for ongoing
 
   final VoidCallback? onTap;
   final bool isGeneral;
+  final bool isOngoing;
 
   static final timeFormat = DateFormat('hh:mm');
 
@@ -55,16 +66,23 @@ class ScheduleTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: const BorderRadius.all(Radius.circular(16)),
-      child: _InActiveFavouriteSessionTile(isGeneral: isGeneral),
+      child: _InActiveFavouriteSessionTile(
+        isGeneral: isGeneral,
+        isOngoing: isOngoing,
+      ),
     );
   }
 }
 
 class _InActiveFavouriteSessionTile extends ConsumerStatefulWidget {
-  const _InActiveFavouriteSessionTile({Key? key, this.isGeneral = false})
-      : super(key: key);
+  const _InActiveFavouriteSessionTile({
+    Key? key,
+    required this.isGeneral,
+    required this.isOngoing,
+  }) : super(key: key);
 
   final bool isGeneral;
+  final bool isOngoing;
 
   @override
   ConsumerState<_InActiveFavouriteSessionTile> createState() =>
@@ -88,22 +106,36 @@ class _InActiveFavouriteSessionTileState
       padding: const EdgeInsets.all(Constants.verticalGutter),
       child: Column(
         children: [
-          if (!widget.isGeneral) ...[
+          if (!widget.isGeneral|| widget.isOngoing) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (widget.isOngoing) ...[
+                            const _OngoingIndicator(),
+                            const SizedBox(width: Constants.horizontalGutter),
+                          ],
+                          if (!widget.isGeneral) ...[Text(
                   'MOBILE DEVELOPMENT',
                   style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
                       color:
-                          isDark ? DevfestColors.grey80 : DevfestColors.grey30),
+                          isDark ? DevfestColors.grey80 : DevfestColors.grey30,
                 ),
-                const _FavouriteIcon(),
+                ),
+                          ]
+                        ],
+                      ),
+                      if (!widget.isGeneral)const _FavouriteIcon(),
               ],
             ),
-            const SizedBox(height: Constants.verticalGutter)
-          ],
-          Row(
+             SizedBox(
+                    height: widget.isGeneral
+                        ? Constants.smallVerticalGutter
+                        : Constants.verticalGutter,
+          ),
+          ],Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -156,7 +188,8 @@ class _InActiveFavouriteSessionTileState
                             children: [
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
-                                child: Container(
+                                child: AnimatedContainer(
+                                        duration: Constants.kAnimationDur,
                                   height: 8,
                                   width: 8,
                                   margin: const EdgeInsets.symmetric(
@@ -172,7 +205,8 @@ class _InActiveFavouriteSessionTileState
                               const TextSpan(text: '10:00 AM'),
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
-                                child: Container(
+                                child: AnimatedContainer(
+                                        duration: Constants.kAnimationDur,
                                   height: 8,
                                   width: 8,
                                   margin: const EdgeInsets.symmetric(
@@ -197,6 +231,31 @@ class _InActiveFavouriteSessionTileState
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _OngoingIndicator extends StatelessWidget {
+  const _OngoingIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius:
+            const BorderRadius.all(Radius.circular(Constants.horizontalGutter)),
+        color: const Color(0xff81c995).withOpacity(0.2),
+      ),
+      child: Container(
+        height: 8,
+        width: 8,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xff24753a),
+        ),
       ),
     );
   }
