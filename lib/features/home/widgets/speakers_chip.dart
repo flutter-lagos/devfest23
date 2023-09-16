@@ -21,7 +21,29 @@ Widget devfestSpeakerChip(BuildContext context) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SpeakersChip(),
+          SpeakersChip(
+            name: 'Daniele Buffa',
+            shortInfo: 'CEO, Design Lead, O2 Labs',
+            moodColor: Color(0xfff6eeee),
+          ),
+          SizedBox(height: 10),
+          SpeakersChip(
+            name: 'Samuel Abada',
+            shortInfo: 'Senior Mobile Developer, Cruise Nation',
+            moodColor: DevfestColors.greenSecondary,
+          ),
+          SizedBox(height: 10),
+          SpeakersChip(
+            name: 'Aisosa Idahor',
+            shortInfo: 'Principal Designer, Meta',
+            moodColor: DevfestColors.blueSecondary,
+          ),
+          SizedBox(height: 10),
+          SpeakersChip(
+            name: 'Juwon Olagoke',
+            shortInfo: 'Senior Designer, Binance',
+            moodColor: Color(0xffffafff),
+          ),
         ],
       ),
     ),
@@ -29,26 +51,38 @@ Widget devfestSpeakerChip(BuildContext context) {
 }
 
 class SpeakersChip extends ConsumerWidget {
-  const SpeakersChip({super.key, this.onTap});
+  const SpeakersChip({
+    super.key,
+    this.name = '',
+    this.shortInfo = '',
+    this.moodColor,
+    this.onTap,
+  });
 
+  final String name;
+  final String shortInfo;
+  final Color? moodColor;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(isDarkProvider);
+    final accentColor = moodColor ?? const Color(0xFFA8A3A3);
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Constants.kAnimationDur,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(24)),
-          color: isDark ? const Color(0xFFA8A3A3) : const Color(0xFF211212),
+          color: isDark ? accentColor : const Color(0xFF211212),
         ),
         padding: const EdgeInsets.only(top: 2, bottom: 4, left: 2, right: 4),
-        child: Container(
+        child: AnimatedContainer(
+          duration: Constants.kAnimationDur,
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-          decoration: const BoxDecoration(
-            color: Color(0xFFF6EEEE),
-            borderRadius: BorderRadius.all(Radius.circular(24)),
+          decoration: BoxDecoration(
+            color: isDark ? DevfestColors.grey10 : accentColor,
+            borderRadius: const BorderRadius.all(Radius.circular(24)),
           ),
           child: Row(
             children: [
@@ -71,19 +105,24 @@ class SpeakersChip extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Samuel Abada',
-                      style: DevFestTheme.of(context)
-                          .textTheme
-                          ?.title02
-                          ?.copyWith(color: DevfestColors.grey0),
+                      name,
+                      style:
+                          DevFestTheme.of(context).textTheme?.title02?.copyWith(
+                                color: isDark
+                                    ? DevfestColors.grey100
+                                    : DevfestColors.grey0,
+                              ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Senior Mobile Developer, Cruise Nation',
+                      shortInfo,
                       style: DevFestTheme.of(context)
                           .textTheme
                           ?.body03
-                          ?.copyWith(color: DevfestColors.grey30),
+                          ?.copyWith(
+                              color: isDark
+                                  ? DevfestColors.grey80
+                                  : DevfestColors.grey30),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     )

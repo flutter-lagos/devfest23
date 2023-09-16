@@ -32,10 +32,10 @@ class OnboardingPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleTile(
+                  const TitleTile(
                     emoji: '🤭',
                     title: 'Welcome Back!',
-                    backgroundColor: const Color(0xff81c995).withOpacity(0.2),
+                    backgroundColor: DevfestColors.greenSecondary,
                   ),
                   Text(
                     'We are back and ready to awe',
