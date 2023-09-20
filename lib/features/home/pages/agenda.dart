@@ -227,6 +227,8 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) {
                     return SpeakersChip(
+                      name: 'Samuel Abada',
+                      shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                       onTap: () {
                        // context.go( '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
                        context.push(

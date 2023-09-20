@@ -160,6 +160,8 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return SpeakersChip(
+                name: 'Samuel Abada',
+                shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                 onTap: () {
                   context.push('/speakers/${TabItem.speakers.name}/$index');
                 },

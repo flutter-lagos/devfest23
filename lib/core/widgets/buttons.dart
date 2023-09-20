@@ -327,7 +327,7 @@ class DevfestFavouriteButton extends StatelessWidget {
       child: () {
         if (isFavourite) {
           return DevfestOutlinedButton(
-            title: title ?? const Text('Remove from Favourites'),
+            title: title ?? const Text('Un-Reserve this session'),
             prefixIcon: prefixIcon ??
                 const Icon(
                   Symbols.grade_rounded,
@@ -341,7 +341,7 @@ class DevfestFavouriteButton extends StatelessWidget {
         }
 
         return DevfestFilledButton(
-          title: title ?? const Text('Add to Favourites'),
+          title: title ?? const Text('Reserve this session'),
           prefixIcon: prefixIcon ??
               const Icon(Symbols.grade, weight: Constants.iconWeight),
           suffixIcon: suffixIcon,

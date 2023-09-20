@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
     name: 'Speaker action card',
@@ -49,7 +49,7 @@ class SpeakerActionCard extends ConsumerWidget {
           Text(
             'MOBILE DEVELOPMENT',
             style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
-                  color: isDark ? DevfestColors.grey70 : DevfestColors.grey30,
+                  color: isDark ? DevfestColors.grey80 : DevfestColors.grey30,
                 ),
           ),
           const SizedBox(height: Constants.smallVerticalGutter),
@@ -75,7 +75,7 @@ class SpeakerActionCard extends ConsumerWidget {
                 margin: const EdgeInsets.symmetric(
                     horizontal: Constants.horizontalGutter),
                 decoration: BoxDecoration(
-                  color: isDark ? DevfestColors.grey30 : DevfestColors.grey70,
+                  color: isDark ? DevfestColors.grey100 : DevfestColors.grey70,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -83,14 +83,13 @@ class SpeakerActionCard extends ConsumerWidget {
                 'Hall A',
                 style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
                       color:
-                          isDark ? DevfestColors.grey100 : DevfestColors.grey10,
+                          isDark ? DevfestColors.grey80 : DevfestColors.grey10,
                     ),
               ),
             ],
           ),
           const SizedBox(height: Constants.verticalGutter),
-          DevfestFavouriteButton(
-              onPressed: () {}, title: const Text('Add Talk to Favourites')),
+          DevfestFavouriteButton(onPressed: () {}),
         ],
       ),
     );
