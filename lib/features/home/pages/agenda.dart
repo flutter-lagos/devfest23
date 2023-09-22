@@ -229,10 +229,8 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       name: 'Samuel Abada',
                       shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                       onTap: () {
-                        context.push(
-                            '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}');
-                        context.pushReplacement(
-                            '/speakers/${TabItem.speakers.name}/$index');
+                        context.go(
+                            '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
                       },
                     );
                   },
