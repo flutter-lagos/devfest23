@@ -1,4 +1,3 @@
-import 'package:devfest23/core/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -230,7 +229,6 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       name: 'Samuel Abada',
                       shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                       onTap: () {
-                        
                         context.push(
                             '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}');
                         context.pushReplacement(
