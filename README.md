@@ -1,9 +1,9 @@
-# Devfest Lagos 2023
+# DevFest Lagos 2023
 [![Codemagic build status](https://api.codemagic.io/apps/64da71850bfae33ab37b51d5/dev-android/status_badge.svg)](https://codemagic.io/apps/64da71850bfae33ab37b51d5/dev-android/latest_build)
 [![Test](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml/badge.svg?branch=dev&event=push)](https://github.com/Mastersam07/devfest-lagos-jordan-year/actions/workflows/ci.yaml)
 
 <p align="center">
-  <img src="./shots/gdg-logo.png" alt="Devfest Lagos 2023" width="50%" />
+  <img src="./shots/gdg-logo.png" alt="DevFest Lagos 2023" width="50%" />
 </p>
 <p align="center">
 <a target="_blank" href='#'><img alt='Get it on Google Play' src='https://goldtonemusicgroup.com/img/goldtone/main-page/news/playstore-badge.png' height='75px'/></a>
