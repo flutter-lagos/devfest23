@@ -1,16 +1,15 @@
 import 'package:devfest23/core/enums/devfest_day.dart';
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
-import '../widgets/schedule_tile.dart';
+import '../../home/widgets/schedule_tile.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key, required this.initialDay});
@@ -56,6 +55,7 @@ class _SchedulePageState extends State<SchedulePage> {
             elevation: 0,
             scrolledUnderElevation: 0,
             leadingWidth: 100,
+            toolbarHeight: 56,
             leading: Row(
               children: [
                 const SizedBox(width: Constants.horizontalMargin),
@@ -91,7 +91,7 @@ class _SchedulePageState extends State<SchedulePage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 80,
+            toolbarHeight: 56,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
@@ -124,10 +124,7 @@ class _SchedulePageState extends State<SchedulePage> {
               return ScheduleTile(
                 isGeneral: index % 2 == 0,
                 onTap: () {
-                  context.goNamed(RouteNames.session, pathParameters: {
-                    'tab': TabItem.schedule.name,
-                    // 'day': DevfestDay.day1.name,
-                  });
+                  context.go("${RoutePaths.session}/$index");
                 },
               );
             },
@@ -140,7 +137,11 @@ class _SchedulePageState extends State<SchedulePage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return const ScheduleTile();
+              return ScheduleTile(
+                onTap: () {
+                  context.go("${RoutePaths.session}/$index");
+                },
+              );
             },
             separatorBuilder: (_, __) => const SizedBox(height: 14),
             itemCount: 5,

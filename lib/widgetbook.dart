@@ -23,6 +23,12 @@ class WidgetbookApp extends ConsumerWidget {
       addons: [
         DeviceFrameAddon(
           devices: [
+            DeviceInfo.genericPhone(
+              platform: TargetPlatform.iOS,
+              id: 'custom-device',
+              name: 'Designer Frame',
+              screenSize: const Size(430, 960),
+            ),
             ...Devices.ios.all.where(
                 (element) => element.identifier.type == DeviceType.phone),
             ...Devices.android.all.where(

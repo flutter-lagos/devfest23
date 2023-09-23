@@ -1,8 +1,8 @@
 import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/images.dart';
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';

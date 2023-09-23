@@ -1,19 +1,19 @@
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
-import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/images.dart';
 import '../../../core/providers/providers.dart';
+import '../../../core/router/routes.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
-import '../widgets/schedule_tile.dart';
-import '../widgets/speakers_chip.dart';
-import '../widgets/sponsors_chip.dart';
+import '../../home/widgets/schedule_tile.dart';
+import '../../home/widgets/speakers_chip.dart';
+import '../../home/widgets/sponsors_chip.dart';
 
 class AgendaPage extends ConsumerStatefulWidget {
   const AgendaPage({super.key, required this.initialDay});
@@ -136,7 +136,12 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                             top: Constants.verticalGutter),
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return ScheduleTile(isGeneral: index == 0);
+                          return ScheduleTile(
+                            isGeneral: index == 0,
+                            onTap: () {
+                              context.go("${RoutePaths.session}/$index");
+                            },
+                          );
                         },
                         separatorBuilder: (_, __) => const SizedBox(height: 14),
                         itemCount: 4,
@@ -160,7 +165,12 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                             top: Constants.verticalGutter),
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return ScheduleTile(isGeneral: index == 0);
+                          return ScheduleTile(
+                            isGeneral: index == 0,
+                            onTap: () {
+                              context.go("${RoutePaths.session}/$index");
+                            },
+                          );
                         },
                         separatorBuilder: (_, __) => const SizedBox(height: 14),
                         itemCount: 4,
@@ -226,11 +236,8 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) {
                     return SpeakersChip(
-                      name: 'Samuel Abada',
-                      shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                       onTap: () {
-                        context.go(
-                            '/app/${TabItem.speakers.name}/${DevfestDay.day1.name}/speakers/$index');
+                        context.go('${RoutePaths.speakers}/$index');
                       },
                     );
                   },

@@ -59,6 +59,7 @@ class _SessionPageState extends State<SessionPage> {
         backgroundColor: DevFestTheme.of(context).backgroundColor,
         elevation: 0,
         leadingWidth: 120,
+        scrolledUnderElevation: 0,
         leading: const GoBackButton(),
       ),
       body: Padding(

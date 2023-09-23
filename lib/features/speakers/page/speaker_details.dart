@@ -1,12 +1,12 @@
 import 'package:devfest23/core/constants.dart';
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' hide Text, List, Radius;
 
 import '../../../core/providers/providers.dart';
-import '../widgets/speaker_action_card.dart';
+import '../../home/widgets/speaker_action_card.dart';
 
 class SpeakerDetailsPage extends ConsumerWidget {
   const SpeakerDetailsPage({super.key});
@@ -118,7 +118,7 @@ class SpeakerDetailsPage extends ConsumerWidget {
               const SizedBox(height: Constants.verticalGutter),
               Text(
                 'TALK',
-                style: DevFestTheme.of(context).textTheme?.body04,
+                style: theme.textTheme?.body04,
               ),
               const SizedBox(height: Constants.smallVerticalGutter),
               const SpeakerActionCard(),
@@ -139,22 +139,31 @@ class SpeakerAvatar extends StatelessWidget {
       width: 133,
       height: 148,
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: NetworkImage("https://via.placeholder.com/133x148"),
+          fit: BoxFit.fill,
+        ),
         borderRadius: BorderRadius.circular(16),
-        color: DevfestColors.yellowSecondary,
-      ),
-      alignment: Alignment.center,
-      padding: const EdgeInsets.only(left: 1, right: 6, top: 1, bottom: 6),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+        border: const Border(
+          left: BorderSide(
+            width: 0.50,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
           ),
-          image: DecorationImage(
-            image: NetworkImage("https://via.placeholder.com/133x148"),
-            fit: BoxFit.fill,
+          top: BorderSide(
+            width: 0.50,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
+          ),
+          right: BorderSide(
+            width: 3,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
+          ),
+          bottom: BorderSide(
+            width: 3,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
           ),
         ),
       ),

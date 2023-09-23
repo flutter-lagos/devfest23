@@ -1,13 +1,12 @@
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/colors.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/enums/devfest_day.dart';
 import '../../../core/enums/tab_item.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
@@ -86,8 +85,7 @@ class OnboardingPage extends StatelessWidget {
                   DevfestOutlinedButton(
                     title: const Text('Continue Without Login'),
                     onPressed: () {
-                      context.go(
-                          '/app/${TabItem.home.name}/${DevfestDay.day1.name}');
+                      context.pushNamedAndClear('/app/${TabItem.home.name}');
                     },
                   ),
                 ],

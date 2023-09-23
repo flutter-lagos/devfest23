@@ -1,17 +1,17 @@
+import 'package:devfest23/core/router/navigator.dart';
+import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/features/home/widgets/speakers_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
-import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
 import '../../../core/widgets/widgets.dart';
-import '../widgets/session_category_chip.dart';
+import '../../home/widgets/session_category_chip.dart';
 
 class SpeakersPage extends ConsumerStatefulWidget {
   const SpeakersPage({super.key, required this.initialDay});
@@ -67,6 +67,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             elevation: 0,
             scrolledUnderElevation: 0,
             leadingWidth: 100,
+            toolbarHeight: 56,
             leading: Row(
               children: [
                 const SizedBox(width: Constants.horizontalMargin),
@@ -129,7 +130,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 80,
+            toolbarHeight: 56,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Constants.horizontalMargin),
@@ -160,10 +161,8 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return SpeakersChip(
-                name: 'Samuel Abada',
-                shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                 onTap: () {
-                  context.go('/speakers/${TabItem.speakers.name}/$index');
+                  context.go('${RoutePaths.speakers}/$index');
                 },
               );
             },
@@ -178,7 +177,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             itemBuilder: (context, index) {
               return SpeakersChip(
                 onTap: () {
-                  context.go('/speakers/${TabItem.speakers.name}/$index');
+                  context.go('${RoutePaths.speakers}/$index');
                 },
               );
             },
