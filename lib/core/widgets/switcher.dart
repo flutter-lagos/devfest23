@@ -1,6 +1,7 @@
 import 'package:devfest23/core/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../themes/themes.dart';
 
@@ -17,7 +18,7 @@ class DevfestSwitcher extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return SizedBox(
-      height: 24,
+      height: 24.w,
       child: Switch.adaptive(
         value: value,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

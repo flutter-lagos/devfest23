@@ -2,6 +2,7 @@ import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'More Tile', type: DevfestTiles)
@@ -60,11 +61,11 @@ class MoreTile extends StatelessWidget {
               children: [
                 if (leading case final widget?) ...[
                   widget,
-                  const SizedBox(width: Constants.horizontalGutter),
+                  Constants.horizontalGutter.horizontalSpace,
                 ],
                 Expanded(child: title),
                 if (trailing case final widget?) ...[
-                  const SizedBox(width: Constants.horizontalGutter),
+                  Constants.horizontalGutter.horizontalSpace,
                   widget,
                 ],
               ],
