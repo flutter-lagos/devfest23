@@ -67,7 +67,7 @@ class SpeakersChip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(isDarkProvider);
-    final accentColor = moodColor ?? const Color(0xFFA8A3A3);
+    final accentColor = moodColor ?? const Color(0xfff6eeee);
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(

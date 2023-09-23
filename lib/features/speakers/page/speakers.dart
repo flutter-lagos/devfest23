@@ -160,7 +160,16 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              var color = [
+                const Color(0xfff6eeee),
+                DevfestColors.greenSecondary,
+                DevfestColors.blueSecondary,
+                const Color(0xffffafff)
+              ].elementAt(index > 3 ? index % 2 : index);
               return SpeakersChip(
+                moodColor: color,
+                name: 'Daniele Buffa',
+                shortInfo: 'CEO, Design Lead, O2 Labs',
                 onTap: () {
                   context.go('${RoutePaths.speakers}/$index');
                 },
@@ -175,7 +184,16 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              var color = [
+                const Color(0xfff6eeee),
+                DevfestColors.greenSecondary,
+                DevfestColors.blueSecondary,
+                const Color(0xffffafff)
+              ].elementAt(index > 3 ? 3 : index);
               return SpeakersChip(
+                moodColor: color,
+                name: 'Daniele Buffa',
+                shortInfo: 'CEO, Design Lead, O2 Labs',
                 onTap: () {
                   context.go('${RoutePaths.speakers}/$index');
                 },

@@ -63,12 +63,7 @@ class _MorePageState extends ConsumerState<MorePage> {
               title: const Text('Profile'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onPressed: () {
-                // TODO:
                 context.go(RoutePaths.profile);
-                // context.goNamed(
-                //   RouteNames.profile,
-                //   pathParameters: {'tab': TabItem.more.name},
-                // );
               },
             ),
             const _MoreDivider(),

@@ -11,6 +11,8 @@ import '../../more/pages/more_base.dart';
 import '../../schedule/pages/schedule_base.dart';
 import '../../speakers/page/speakers_base.dart';
 
+late final TabController pageController;
+
 class AppHome extends ConsumerStatefulWidget {
   const AppHome({
     super.key,
@@ -25,8 +27,6 @@ class AppHome extends ConsumerStatefulWidget {
 
 class _AppHomeState extends ConsumerState<AppHome>
     with SingleTickerProviderStateMixin {
-  late final TabController pageController;
-
   @override
   void initState() {
     pageController =

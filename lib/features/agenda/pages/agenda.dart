@@ -7,10 +7,12 @@ import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
 import '../../../core/icons.dart';
 import '../../../core/images.dart';
+import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
+import '../../home/pages/home.dart';
 import '../../home/widgets/schedule_tile.dart';
 import '../../home/widgets/speakers_chip.dart';
 import '../../home/widgets/sponsors_chip.dart';
@@ -180,7 +182,12 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                 ].elementAt(day.index),
                 Center(
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref
+                          .watch(appCurrentTab.notifier)
+                          .update((state) => state = 1);
+                      pageController.animateTo(1);
+                    },
                     label: const Icon(
                       Icons.arrow_forward,
                       color: DevfestColors.blue,
@@ -235,7 +242,16 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) {
+                    var color = [
+                      const Color(0xfff6eeee),
+                      DevfestColors.greenSecondary,
+                      DevfestColors.blueSecondary,
+                      const Color(0xffffafff)
+                    ].elementAt(index > 3 ? 3 : index);
                     return SpeakersChip(
+                      moodColor: color,
+                      name: 'Daniele Buffa',
+                      shortInfo: 'CEO, Design Lead, O2 Labs',
                       onTap: () {
                         context.go('${RoutePaths.speakers}/$index');
                       },
@@ -247,7 +263,12 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                 ),
                 Center(
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref
+                          .watch(appCurrentTab.notifier)
+                          .update((state) => state = 2);
+                      pageController.animateTo(2);
+                    },
                     label: const Icon(
                       Icons.arrow_forward,
                       color: DevfestColors.blue,
