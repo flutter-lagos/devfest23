@@ -3,8 +3,24 @@ name: CI
 on:
   push:
     branches: [master, dev]
+    paths:
+      - 'lib/**'
+      - 'pubspec.yaml'
+      - '.github/**'
+      - 'android/**'
+      - 'ios/**'
+      - 'assets/**'
+      - 'web/**'
   pull_request:
     branches: [master, dev]
+    paths:
+      - 'lib/**'
+      - 'pubspec.yaml'
+      - '.github/**'
+      - 'android/**'
+      - 'ios/**'
+      - 'assets/**'
+      - 'web/**'
 
 jobs:
   test:
@@ -48,6 +64,7 @@ jobs:
       - name: Generate release build
         run: flutter build web --release -t lib/widgetbook.dart --web-renderer canvaskit
       - name: Deploy widgetbook
+        if: ${{ github.event_name == 'pull_request' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.ALFRED }}
@@ -59,6 +76,7 @@ jobs:
           full_commit_message: 'feat: publish widgetbook'
           commit_message: 'feat: publish widgetbook'
       - name: Comment Widgetbook status
+        if: ${{ github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
           GITHUB_TOKEN: ${{secrets.ALFRED}}
