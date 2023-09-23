@@ -10,7 +10,7 @@ import '../../../core/constants.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
-import '../widgets/header_delegate.dart';
+import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/schedule_tile.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -79,7 +79,10 @@ class _SchedulePageState extends State<SchedulePage> {
                 TextSpan(
                   text: '🕧',
                   style: DevFestTheme.of(context).textTheme?.title01,
-                  children: [WidgetSpan(child: 4.horizontalSpace), const TextSpan(text: 'Schedule')],
+                  children: [
+                    WidgetSpan(child: 4.horizontalSpace),
+                    const TextSpan(text: 'Schedule')
+                  ],
                 ),
               ),
             ),
@@ -91,7 +94,9 @@ class _SchedulePageState extends State<SchedulePage> {
               child: Container(
                 height: 100.w,
                 color: DevFestTheme.of(context).backgroundColor,
-                padding: const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
+                padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.horizontalMargin)
+                    .w,
                 child: ScheduleTabBar(
                   index: day.index,
                   onTap: (tab) {
@@ -132,7 +137,9 @@ class _SchedulePageState extends State<SchedulePage> {
           ),
           ListView.separated(
             key: const PageStorageKey<String>('Day2'),
-            padding: const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
+            padding: const EdgeInsets.symmetric(
+                    horizontal: Constants.horizontalMargin)
+                .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ScheduleTile(
@@ -149,4 +156,3 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 }
-

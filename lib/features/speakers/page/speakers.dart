@@ -12,7 +12,7 @@ import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
 import '../../../core/widgets/widgets.dart';
-import '../widgets/header_delegate.dart';
+import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/session_category_chip.dart';
 
 class SpeakersPage extends ConsumerStatefulWidget {

@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
-import '../widgets/header_delegate.dart';
 import '../../../core/router/routes.dart';
+import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/schedule_tile.dart';
 
 class FavouritesPage extends StatefulWidget {
