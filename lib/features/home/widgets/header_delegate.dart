@@ -20,6 +20,8 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    if (oldDelegate is! HeaderDelegate) return false;
+    if (oldDelegate == this) return false;
     return true;
   }
 }
