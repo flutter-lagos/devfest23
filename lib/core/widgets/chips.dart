@@ -4,6 +4,7 @@ import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -51,7 +52,7 @@ class SessionTimeChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
         horizontal: Constants.horizontalGutter,
-      ),
+      ).w,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
         color: DevfestColors.yellowSecondary,
@@ -65,7 +66,7 @@ class SessionTimeChip extends StatelessWidget {
             weight: Constants.iconWeight,
             color: DevfestColors.grey0,
           ),
-          const SizedBox(width: Constants.horizontalGutter),
+          Constants.horizontalGutter.horizontalSpace,
           Text(
             _timeOfDayFormat.format(sessionTime),
             style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
@@ -88,7 +89,7 @@ class SessionTimeLeftChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
         horizontal: Constants.horizontalGutter,
-      ),
+      ).w,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
         color: DevfestColors.greenSecondary,
@@ -102,7 +103,7 @@ class SessionTimeLeftChip extends StatelessWidget {
             weight: Constants.iconWeight,
             color: DevfestColors.grey0,
           ),
-          const SizedBox(width: Constants.horizontalGutter / 2),
+          (Constants.horizontalGutter / 2).horizontalSpace,
           Text(
             '${minuteLeft}m',
             style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
@@ -125,7 +126,7 @@ class SessionVenueChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
         horizontal: Constants.horizontalGutter,
-      ),
+      ).w,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
         color: DevfestColors.yellowSecondary,
@@ -139,7 +140,7 @@ class SessionVenueChip extends StatelessWidget {
             weight: Constants.iconWeight,
             color: DevfestColors.grey0,
           ),
-          const SizedBox(width: Constants.horizontalGutter),
+          Constants.horizontalGutter.horizontalSpace,
           Text(
             venue,
             style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
@@ -181,7 +182,7 @@ class SessionSlotsChip extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
         horizontal: Constants.horizontalGutter,
-      ),
+      ).w,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(24)),
         color: chipColor,
@@ -195,7 +196,7 @@ class SessionSlotsChip extends ConsumerWidget {
             weight: Constants.iconWeight,
             color: contentColor,
           ),
-          const SizedBox(width: Constants.horizontalGutter / 2),
+          (Constants.horizontalGutter / 2).horizontalSpace,
           Text(
             slotsLeft <= 0
                 ? 'No slots left'
@@ -232,7 +233,7 @@ class SessionStatusChip extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(
         vertical: Constants.smallVerticalGutter / 2,
         horizontal: Constants.horizontalGutter,
-      ),
+      ).w,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(24)),
         color: chipColor,
@@ -243,12 +244,12 @@ class SessionStatusChip extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 8,
-                  width: 8,
+                  height: 8.w,
+                  width: 8.w,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: contentColor),
                 ),
-                const SizedBox(width: Constants.horizontalGutter / 2),
+                (Constants.horizontalGutter / 2).horizontalSpace,
                 Text(
                   'Ongoing',
                   style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
