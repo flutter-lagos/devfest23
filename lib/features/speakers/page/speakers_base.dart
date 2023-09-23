@@ -31,18 +31,28 @@ class _SpeakersViewState extends State<SpeakersView>
     super.build(context);
     return ModuleProvider(
       module: Module.speakers,
-      child: Navigator(
-        key: AppNavigator.getKey(Module.speakers),
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          settings: settings,
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No speaker route defined for ${settings.name}'),
+      child: WillPopScope(
+        onWillPop: () async {
+          final navState = AppNavigator.getKey(Module.speakers).currentState;
+          if (navState != null && navState.canPop()) {
+            navState.pop();
+            return false; // We handled the popping manually
+          }
+          return true; // Allow default behavior
+        },
+        child: Navigator(
+          key: AppNavigator.getKey(Module.speakers),
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            settings: settings,
+            builder: (_) => Scaffold(
+              body: Center(
+                child: Text('No speaker route defined for ${settings.name}'),
+              ),
             ),
           ),
+          onGenerateRoute:
+              speakerRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
         ),
-        onGenerateRoute:
-            speakerRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
       ),
     );
   }

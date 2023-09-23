@@ -35,18 +35,28 @@ class _AgendaViewState extends State<AgendaView>
     super.build(context);
     return ModuleProvider(
       module: Module.home,
-      child: Navigator(
-        key: AppNavigator.getKey(Module.home),
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          settings: settings,
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No home route defined for ${settings.name}'),
+      child: WillPopScope(
+        onWillPop: () async {
+          final navState = AppNavigator.getKey(Module.home).currentState;
+          if (navState != null && navState.canPop()) {
+            navState.pop();
+            return false; // We handled the popping manually
+          }
+          return true; // Allow default behavior
+        },
+        child: Navigator(
+          key: AppNavigator.getKey(Module.home),
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            settings: settings,
+            builder: (_) => Scaffold(
+              body: Center(
+                child: Text('No home route defined for ${settings.name}'),
+              ),
             ),
           ),
+          onGenerateRoute:
+              agendaRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
         ),
-        onGenerateRoute:
-            agendaRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
       ),
     );
   }

@@ -31,18 +31,28 @@ class _ScheduleViewState extends State<ScheduleView>
     super.build(context);
     return ModuleProvider(
       module: Module.schedule,
-      child: Navigator(
-        key: AppNavigator.getKey(Module.schedule),
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          settings: settings,
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No home route defined for ${settings.name}'),
+      child: WillPopScope(
+        onWillPop: () async {
+          final navState = AppNavigator.getKey(Module.schedule).currentState;
+          if (navState != null && navState.canPop()) {
+            navState.pop();
+            return false; // We handled the popping manually
+          }
+          return true; // Allow default behavior
+        },
+        child: Navigator(
+          key: AppNavigator.getKey(Module.schedule),
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            settings: settings,
+            builder: (_) => Scaffold(
+              body: Center(
+                child: Text('No home route defined for ${settings.name}'),
+              ),
             ),
           ),
+          onGenerateRoute: scheduleRouter(widget.initialDay ?? DevfestDay.day1)
+              .generateRoute,
         ),
-        onGenerateRoute:
-            scheduleRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
       ),
     );
   }

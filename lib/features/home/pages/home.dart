@@ -43,43 +43,48 @@ class _AppHomeState extends ConsumerState<AppHome>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: const [
-          AgendaView(),
-          ScheduleView(),
-          SpeakersView(),
-          FavouritesView(),
-          MoreView(),
-        ],
-      ),
-      bottomNavigationBar: DevfestBottomNav(
-        index: ref.watch(appCurrentTab),
-        items: const [
-          DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_filled)),
-          DevfestBottomNavItem(
-            label: 'Schedule',
-            icon: Icon(Icons.checklist_rtl_rounded),
-          ),
-          DevfestBottomNavItem(
-              label: 'Speakers', icon: Icon(Icons.person_2_rounded)),
-          DevfestBottomNavItem(
-            label: 'Favourites',
-            icon: Icon(Icons.star_border_rounded),
-          ),
-          DevfestBottomNavItem(
-            label: 'More',
-            icon: Icon(Icons.more_rounded, size: 18),
-            inactiveIcon: Icon(Icons.more_rounded),
-          ),
-        ],
-        onTap: (page) {
-          pageController.index = page;
-          ref.watch(appCurrentTab.notifier).update((state) => state = page);
-        },
+    return WillPopScope(
+      onWillPop: () async {
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: DevFestTheme.of(context).backgroundColor,
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: const [
+            AgendaView(),
+            ScheduleView(),
+            SpeakersView(),
+            FavouritesView(),
+            MoreView(),
+          ],
+        ),
+        bottomNavigationBar: DevfestBottomNav(
+          index: ref.watch(appCurrentTab),
+          items: const [
+            DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_filled)),
+            DevfestBottomNavItem(
+              label: 'Schedule',
+              icon: Icon(Icons.checklist_rtl_rounded),
+            ),
+            DevfestBottomNavItem(
+                label: 'Speakers', icon: Icon(Icons.person_2_rounded)),
+            DevfestBottomNavItem(
+              label: 'Favourites',
+              icon: Icon(Icons.star_border_rounded),
+            ),
+            DevfestBottomNavItem(
+              label: 'More',
+              icon: Icon(Icons.more_rounded, size: 18),
+              inactiveIcon: Icon(Icons.more_rounded),
+            ),
+          ],
+          onTap: (page) {
+            pageController.index = page;
+            ref.watch(appCurrentTab.notifier).update((state) => state = page);
+          },
+        ),
       ),
     );
   }

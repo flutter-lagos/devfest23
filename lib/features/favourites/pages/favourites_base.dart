@@ -31,18 +31,28 @@ class _FavouritesViewState extends State<FavouritesView>
     super.build(context);
     return ModuleProvider(
       module: Module.favourites,
-      child: Navigator(
-        key: AppNavigator.getKey(Module.favourites),
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          settings: settings,
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No favourite route defined for ${settings.name}'),
+      child: WillPopScope(
+        onWillPop: () async {
+          final navState = AppNavigator.getKey(Module.favourites).currentState;
+          if (navState != null && navState.canPop()) {
+            navState.pop();
+            return false; // We handled the popping manually
+          }
+          return true; // Allow default behavior
+        },
+        child: Navigator(
+          key: AppNavigator.getKey(Module.favourites),
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            settings: settings,
+            builder: (_) => Scaffold(
+              body: Center(
+                child: Text('No favourite route defined for ${settings.name}'),
+              ),
             ),
           ),
+          onGenerateRoute: favouriteRouter(widget.initialDay ?? DevfestDay.day1)
+              .generateRoute,
         ),
-        onGenerateRoute:
-            favouriteRouter(widget.initialDay ?? DevfestDay.day1).generateRoute,
       ),
     );
   }
