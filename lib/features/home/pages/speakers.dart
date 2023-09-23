@@ -165,7 +165,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                 name: 'Samuel Abada',
                 shortInfo: 'Senior Mobile Engineer, Cruise Nation',
                 onTap: () {
-                  context.push('/speakers/${TabItem.speakers.name}/$index');
+                  context.go('/speakers/${TabItem.speakers.name}/$index');
                 },
               );
             },
