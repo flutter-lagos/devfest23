@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart' hide DeviceType;
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'core/providers/providers.dart';
+import 'core/size_util.dart';
 import 'core/themes/themes.dart';
 import 'widgetbook.directories.g.dart';
 
@@ -46,7 +48,7 @@ class WidgetbookApp extends ConsumerWidget {
                 extensions: const <ThemeExtension<dynamic>>[
                   /// Use the below format for raw theme data
                   /// DevFestTheme(textTheme: DevfestTextTheme()),
-                  DevFestTheme.light(),
+                  // DevFestTheme.light(),
                 ],
               ),
             ),
@@ -64,7 +66,7 @@ class WidgetbookApp extends ConsumerWidget {
                 extensions: const <ThemeExtension<dynamic>>[
                   /// Use the below format for raw theme data
                   /// DevFestTheme(textTheme: DevfestTextTheme()),
-                  DevFestTheme.dark(),
+                  // DevFestTheme.dark(),
                 ],
               ),
             ),
@@ -74,10 +76,20 @@ class WidgetbookApp extends ConsumerWidget {
             ref
                 .read(themeManagerProvider.notifier)
                 .updateThemeMode(isDark ? ThemeMode.dark : ThemeMode.light);
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: theme,
-              home: Material(child: child),
+            return ScreenUtilInit(
+              designSize: designSize,
+              minTextAdapt: true,
+              useInheritedMediaQuery: true,
+              builder: (context, child) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: theme.copyWith(extensions: [
+                    isDark ? DevFestTheme.dark() : DevFestTheme.light()
+                  ]),
+                  home: Material(child: child),
+                );
+              },
+              child: child,
             );
           },
         )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
@@ -34,7 +35,7 @@ class SpeakerActionCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(isDarkProvider);
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16).w,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: DevFestTheme.of(context).backgroundColor,
@@ -52,14 +53,14 @@ class SpeakerActionCard extends ConsumerWidget {
                   color: isDark ? DevfestColors.grey80 : DevfestColors.grey30,
                 ),
           ),
-          const SizedBox(height: Constants.smallVerticalGutter),
+          Constants.smallVerticalGutter.verticalSpace,
           Text(
             'Animations in Flutter and how to make them',
             style: DevFestTheme.of(context).textTheme?.title02?.copyWith(
                   color: isDark ? DevfestColors.grey100 : DevfestColors.grey0,
                 ),
           ),
-          const SizedBox(height: Constants.smallVerticalGutter),
+          Constants.smallVerticalGutter.verticalSpace,
           Row(
             children: [
               Text(
@@ -70,8 +71,8 @@ class SpeakerActionCard extends ConsumerWidget {
                     ),
               ),
               Container(
-                height: 8,
-                width: 8,
+                height: 8.w,
+                width: 8.w,
                 margin: const EdgeInsets.symmetric(
                     horizontal: Constants.horizontalGutter),
                 decoration: BoxDecoration(

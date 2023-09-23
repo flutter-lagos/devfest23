@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/providers/providers.dart';
 import '../../../core/themes/themes.dart';
@@ -22,8 +23,8 @@ class TitleTile extends ConsumerWidget {
         ? backgroundColor
         : backgroundColor.withOpacity(0.2);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      margin: const EdgeInsets.only(top: 20, bottom: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4).w,
+      margin: const EdgeInsets.only(top: 20, bottom: 16).w,
       decoration: ShapeDecoration(
         color: color,
         shape: const RoundedRectangleBorder(
@@ -38,7 +39,7 @@ class TitleTile extends ConsumerWidget {
               ?.body03
               ?.copyWith(color: DevfestColors.grey0),
           children: [
-            const WidgetSpan(child: SizedBox(width: 4)),
+            WidgetSpan(child: SizedBox(width: 4.w)),
             TextSpan(text: title)
           ],
         ),

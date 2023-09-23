@@ -1,6 +1,7 @@
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
@@ -76,10 +77,10 @@ class SpeakersChip extends ConsumerWidget {
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           color: isDark ? accentColor : const Color(0xFF211212),
         ),
-        padding: const EdgeInsets.only(top: 2, bottom: 4, left: 2, right: 4),
+        padding: const EdgeInsets.only(top: 2, bottom: 4, left: 2, right: 4).w,
         child: AnimatedContainer(
           duration: Constants.kAnimationDur,
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16).w,
           decoration: BoxDecoration(
             color: isDark ? DevfestColors.grey10 : accentColor,
             borderRadius: const BorderRadius.all(Radius.circular(24)),

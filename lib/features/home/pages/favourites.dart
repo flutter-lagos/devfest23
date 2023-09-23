@@ -4,6 +4,7 @@ import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/animated_indexed_stack.dart';
 import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
@@ -55,10 +56,10 @@ class _FavouritesPageState extends State<FavouritesPage> {
             leadingWidth: 100,
             leading: Row(
               children: [
-                const SizedBox(width: Constants.horizontalMargin),
+                Constants.horizontalMargin.horizontalSpace,
                 SvgPicture.asset(
                   AppIcons.devfestLogo,
-                  height: 16,
+                  height: 16.h,
                   fit: BoxFit.contain,
                 ),
               ],
@@ -69,7 +70,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               left: Constants.horizontalMargin,
               right: Constants.horizontalMargin,
               bottom: Constants.largeVerticalGutter,
-            ),
+            ).w,
             sliver: SliverToBoxAdapter(
               child: Text.rich(
                 TextSpan(
@@ -78,9 +79,9 @@ class _FavouritesPageState extends State<FavouritesPage> {
                       .textTheme
                       ?.title01
                       ?.copyWith(fontWeight: FontWeight.w500),
-                  children: const [
-                    WidgetSpan(child: SizedBox(width: 4)),
-                    TextSpan(text: 'Favourites')
+                  children: [
+                    WidgetSpan(child: 4.horizontalSpace),
+                    const TextSpan(text: 'Favourites')
                   ],
                 ),
               ),
@@ -91,9 +92,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
+            toolbarHeight: 90.h,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
+                      horizontal: Constants.horizontalMargin)
+                  .w,
               child: ScheduleTabBar(
                 index: day.index,
                 onTap: (tab) {
@@ -117,23 +120,25 @@ class _FavouritesPageState extends State<FavouritesPage> {
           ListView.separated(
             key: const PageStorageKey<String>('Day1'),
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+                    horizontal: Constants.horizontalMargin)
+                .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return const ScheduleTile();
             },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,
           ),
           ListView.separated(
             key: const PageStorageKey<String>('Day2'),
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+                    horizontal: Constants.horizontalMargin)
+                .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return const ScheduleTile();
             },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,
           ),
         ],

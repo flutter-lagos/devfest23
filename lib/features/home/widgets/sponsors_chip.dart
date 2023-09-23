@@ -1,6 +1,7 @@
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
@@ -55,8 +56,8 @@ class SponsorsChip extends ConsumerWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(right: 8),
+      padding: const EdgeInsets.all(16).w,
+      margin: const EdgeInsets.only(right: 8).w,
       child: Image(image: AssetImage(image)),
     );
   }

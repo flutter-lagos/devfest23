@@ -1,5 +1,6 @@
 import 'package:devfest23/core/widgets/chips.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/constants.dart';
@@ -63,7 +64,8 @@ class _SessionPageState extends State<SessionPage> {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
+                .w,
         child: session.isGeneralSession
             ? GeneralSessionPage(info: session)
             : SpeakerSessionPage(info: session),
@@ -85,17 +87,18 @@ class GeneralSessionPage extends StatelessWidget {
         children: [
           if (info.status != SessionStatus.notStarted) ...[
             _SessionStatus(status: info.status),
-            const SizedBox(height: Constants.largeVerticalGutter),
+            Constants.largeVerticalGutter.verticalSpace,
           ],
           _TitleSection(info: info),
           Padding(
             padding: const EdgeInsets.symmetric(
-                vertical: Constants.largeVerticalGutter),
+                    vertical: Constants.largeVerticalGutter)
+                .w,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SessionTimeChip(sessionTime: info.sessionTime),
-                const SizedBox(width: Constants.horizontalGutter),
+                Constants.horizontalGutter.verticalSpace,
                 SessionVenueChip(venue: info.venue),
               ],
             ),
@@ -140,19 +143,20 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
                     SessionSlotsChip(slotsLeft: widget.info.slotsLeft),
                   ],
                 ),
-                const SizedBox(height: Constants.largeVerticalGutter),
+                Constants.largeVerticalGutter.verticalSpace,
                 _TitleSection(info: widget.info),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: Constants.largeVerticalGutter),
+                          vertical: Constants.largeVerticalGutter)
+                      .w,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SessionTimeChip(sessionTime: widget.info.sessionTime),
-                      const SizedBox(width: Constants.horizontalGutter),
+                      Constants.horizontalGutter.horizontalSpace,
                       SessionVenueChip(venue: widget.info.venue),
                       if (widget.info.status != SessionStatus.notStarted) ...[
-                        const SizedBox(width: Constants.horizontalGutter),
+                        Constants.horizontalGutter.horizontalSpace,
                         _SessionStatus(status: widget.info.status),
                       ],
                     ],
@@ -165,7 +169,7 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
         ),
         Padding(
           padding:
-              const EdgeInsets.symmetric(vertical: Constants.verticalGutter),
+              const EdgeInsets.symmetric(vertical: Constants.verticalGutter).w,
           child: _FavouriteInfoText(isFavourite: isFavourite),
         ),
         DevfestFavouriteButton(
@@ -176,7 +180,7 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
             });
           },
         ),
-        const SizedBox(height: Constants.largeVerticalGutter),
+        Constants.largeVerticalGutter.verticalSpace,
       ],
     );
   }
@@ -203,7 +207,7 @@ class _TitleSection extends StatelessWidget {
         ),
         Padding(
           padding:
-              const EdgeInsets.symmetric(vertical: Constants.verticalGutter),
+              const EdgeInsets.symmetric(vertical: Constants.verticalGutter).w,
           child: Text(
             'HOST',
             style:
@@ -214,14 +218,14 @@ class _TitleSection extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 32,
-              width: 32,
+              height: 32.w,
+              width: 32.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: DevfestColors.green, width: 2),
               ),
             ),
-            const SizedBox(width: Constants.horizontalGutter),
+            Constants.horizontalGutter.horizontalSpace,
             Text(
               info.host,
               style: DevFestTheme.of(context)
@@ -254,7 +258,7 @@ class _DescriptionSection extends StatelessWidget {
               ?.body04
               ?.copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: Constants.smallVerticalGutter),
+        Constants.smallVerticalGutter.verticalSpace,
         Text(
           info.description,
           textAlign: TextAlign.start,
@@ -306,7 +310,7 @@ class _FavouriteInfoText extends StatelessWidget {
               color: DevfestColors.yellow,
               weight: Constants.iconWeight,
             ),
-            const SizedBox(width: Constants.horizontalGutter),
+            Constants.horizontalGutter.horizontalSpace,
             Expanded(
               child: Text(
                 'Save your spot for this talk by adding it to favourites',
