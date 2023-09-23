@@ -10,6 +10,7 @@ import '../../../core/constants.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
+import '../widgets/header_delegate.dart';
 import '../../home/widgets/schedule_tile.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -56,7 +57,6 @@ class _SchedulePageState extends State<SchedulePage> {
             elevation: 0,
             scrolledUnderElevation: 0,
             leadingWidth: 100,
-            toolbarHeight: 56,
             leading: Row(
               children: [
                 Constants.horizontalMargin.horizontalSpace,
@@ -79,36 +79,32 @@ class _SchedulePageState extends State<SchedulePage> {
                 TextSpan(
                   text: '🕧',
                   style: DevFestTheme.of(context).textTheme?.title01,
-                  children: [
-                    WidgetSpan(child: 4.horizontalSpace),
-                    const TextSpan(text: 'Schedule')
-                  ],
+                  children: [WidgetSpan(child: 4.horizontalSpace), const TextSpan(text: 'Schedule')],
                 ),
               ),
             ),
           ),
-          SliverAppBar(
+          SliverPersistentHeader(
             pinned: true,
-            backgroundColor: DevFestTheme.of(context).backgroundColor,
-            elevation: 0,
-            scrolledUnderElevation: 0,
-            toolbarHeight: 90.h,
-            flexibleSpace: Padding(
-              padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.horizontalMargin)
-                  .w,
-              child: ScheduleTabBar(
-                index: day.index,
-                onTap: (tab) {
-                  setState(() {
-                    day = DevfestDay.values[tab];
-                    if (scrollOffsets.containsKey(day.index)) {
-                      _scrollController.jumpTo(scrollOffsets[day.index]!);
-                    } else {
-                      _scrollController.jumpTo(0);
-                    }
-                  });
-                },
+            delegate: HeaderDelegate(
+              height: 100.w,
+              child: Container(
+                height: 100.w,
+                color: DevFestTheme.of(context).backgroundColor,
+                padding: const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
+                child: ScheduleTabBar(
+                  index: day.index,
+                  onTap: (tab) {
+                    setState(() {
+                      day = DevfestDay.values[tab];
+                      if (scrollOffsets.containsKey(day.index)) {
+                        _scrollController.jumpTo(scrollOffsets[day.index]!);
+                      } else {
+                        _scrollController.jumpTo(0);
+                      }
+                    });
+                  },
+                ),
               ),
             ),
           ),
@@ -136,9 +132,7 @@ class _SchedulePageState extends State<SchedulePage> {
           ),
           ListView.separated(
             key: const PageStorageKey<String>('Day2'),
-            padding: const EdgeInsets.symmetric(
-                    horizontal: Constants.horizontalMargin)
-                .w,
+            padding: const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ScheduleTile(
@@ -155,3 +149,4 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 }
+
