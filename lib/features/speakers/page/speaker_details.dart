@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' hide Text, List, Radius;
 
 import '../../../core/providers/providers.dart';
-import '../widgets/speaker_action_card.dart';
+import '../../home/widgets/speaker_action_card.dart';
 
 class SpeakerDetailsPage extends ConsumerWidget {
   const SpeakerDetailsPage({super.key});
@@ -112,7 +112,7 @@ class SpeakerDetailsPage extends ConsumerWidget {
               Constants.verticalGutter.verticalSpace,
               Text(
                 'TALK',
-                style: DevFestTheme.of(context).textTheme?.body04,
+                style: theme.textTheme?.body04,
               ),
               Constants.smallVerticalGutter.verticalSpace,
               const SpeakerActionCard(),
@@ -133,22 +133,31 @@ class SpeakerAvatar extends StatelessWidget {
       width: 133.w,
       height: 148.w,
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: NetworkImage("https://via.placeholder.com/133x148"),
+          fit: BoxFit.fill,
+        ),
         borderRadius: BorderRadius.circular(16),
-        color: DevfestColors.yellowSecondary,
-      ),
-      alignment: Alignment.center,
-      padding: const EdgeInsets.only(left: 1, right: 6, top: 1, bottom: 6).w,
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+        border: const Border(
+          left: BorderSide(
+            width: 0.50,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
           ),
-          image: DecorationImage(
-            image: NetworkImage("https://via.placeholder.com/133x148"),
-            fit: BoxFit.fill,
+          top: BorderSide(
+            width: 0.50,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
+          ),
+          right: BorderSide(
+            width: 3,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
+          ),
+          bottom: BorderSide(
+            width: 3,
+            strokeAlign: BorderSide.strokeAlignOutside,
+            color: Color(0xFF331B00),
           ),
         ),
       ),
