@@ -123,7 +123,7 @@ class _DevfestBottomNavTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomNavItemTheme = DevFestTheme.of(context).bottomNavTheme ??
-        const DevfestBottomNavTheme.light();
+        DevfestBottomNavTheme.light();
 
     final itemColor = selected
         ? bottomNavItemTheme.selectedColor

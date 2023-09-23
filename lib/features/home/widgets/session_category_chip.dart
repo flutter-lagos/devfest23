@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
@@ -91,9 +92,9 @@ class SessionCategoryChip extends ConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        height: 38,
+        height: 38.h,
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12).w,
         decoration: ShapeDecoration(
           color: tileColor,
           shape: RoundedRectangleBorder(

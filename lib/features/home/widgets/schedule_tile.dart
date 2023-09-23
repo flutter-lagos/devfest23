@@ -5,6 +5,7 @@ import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -103,7 +104,7 @@ class _InActiveFavouriteSessionTileState
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      padding: const EdgeInsets.all(Constants.verticalGutter),
+      padding: const EdgeInsets.all(Constants.verticalGutter).w,
       child: Column(
         children: [
           if (!widget.isGeneral || widget.isOngoing) ...[
@@ -115,7 +116,7 @@ class _InActiveFavouriteSessionTileState
                   children: [
                     if (widget.isOngoing) ...[
                       const _OngoingIndicator(),
-                      const SizedBox(width: Constants.horizontalGutter),
+                      Constants.horizontalGutter.horizontalSpace,
                     ],
                     if (!widget.isGeneral) ...[
                       Text(
@@ -135,11 +136,9 @@ class _InActiveFavouriteSessionTileState
                 if (!widget.isGeneral) const _FavouriteIcon(),
               ],
             ),
-            SizedBox(
-              height: widget.isGeneral
-                  ? Constants.smallVerticalGutter
-                  : Constants.verticalGutter,
-            ),
+            widget.isGeneral
+                ? Constants.smallVerticalGutter.verticalSpace
+                : Constants.verticalGutter.verticalSpace,
           ],
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -160,12 +159,12 @@ class _InActiveFavouriteSessionTileState
                       maxLines: 2,
                       overflow: TextOverflow.fade,
                     ),
-                    const SizedBox(height: Constants.verticalGutter),
+                    Constants.verticalGutter.verticalSpace,
                     Row(
                       children: [
                         Container(
-                          height: 32,
-                          width: 32,
+                          height: 32.w,
+                          width: 32.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -196,8 +195,8 @@ class _InActiveFavouriteSessionTileState
                                 alignment: PlaceholderAlignment.middle,
                                 child: AnimatedContainer(
                                   duration: Constants.kAnimationDur,
-                                  height: 8,
-                                  width: 8,
+                                  height: 8.w,
+                                  width: 8.w,
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: Constants.horizontalGutter),
                                   decoration: BoxDecoration(
@@ -213,8 +212,8 @@ class _InActiveFavouriteSessionTileState
                                 alignment: PlaceholderAlignment.middle,
                                 child: AnimatedContainer(
                                   duration: Constants.kAnimationDur,
-                                  height: 8,
-                                  width: 8,
+                                  height: 8.w,
+                                  width: 8.w,
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: Constants.horizontalGutter),
                                   decoration: BoxDecoration(

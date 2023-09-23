@@ -29,26 +29,26 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
     this.buttonTheme,
   });
 
-  const DevFestTheme.light()
+  DevFestTheme.light()
       : this(
           backgroundColor: DevfestColors.background,
           onBackgroundColor: DevfestColors.grey0,
           inverseBackgroundColor: DevfestColors.grey30,
           buttonTheme: const DevfestButtonTheme.light(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.light(),
-          bottomNavTheme: const DevfestBottomNavTheme.light(),
-          textTheme: const DevfestTextTheme.fallback(),
+          bottomNavTheme: DevfestBottomNavTheme.light(),
+          textTheme: DevfestTextTheme.responsive(),
         );
 
-  const DevFestTheme.dark()
+  DevFestTheme.dark()
       : this(
           backgroundColor: DevfestColors.darkbackground,
           onBackgroundColor: DevfestColors.background,
           inverseBackgroundColor: DevfestColors.grey70,
           buttonTheme: const DevfestButtonTheme.dark(),
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.dark(),
-          bottomNavTheme: const DevfestBottomNavTheme.dark(),
-          textTheme: const DevfestTextTheme.fallback(),
+          bottomNavTheme: DevfestBottomNavTheme.dark(),
+          textTheme: DevfestTextTheme.responsive(),
         );
 
   @override
