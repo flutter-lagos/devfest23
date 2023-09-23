@@ -3,6 +3,7 @@ import 'package:devfest23/core/images.dart';
 import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
@@ -22,7 +23,8 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
+                .w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -30,18 +32,20 @@ class ProfilePage extends StatelessWidget {
               TextSpan(
                 text: '🙂',
                 style: DevFestTheme.of(context).textTheme?.title01,
-                children: const [
-                  WidgetSpan(child: SizedBox(width: 4)),
-                  TextSpan(text: 'Profile')
+                children: [
+                  WidgetSpan(child: 4.horizontalSpace),
+                  const TextSpan(text: 'Profile')
                 ],
               ),
             ),
-            const SizedBox(height: Constants.verticalGutter),
+            Constants.verticalGutter.verticalSpace,
             const ProfileAvatar(),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: Constants.largeVerticalGutter, horizontal: 40),
-              child: UserInfo(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: Constants.largeVerticalGutter,
+                horizontal: 40,
+              ).w,
+              child: const UserInfo(),
             ),
             const Spacer(),
             DevfestOutlinedButton(
@@ -50,7 +54,7 @@ class ProfilePage extends StatelessWidget {
                 context.go(RoutePaths.onboarding);
               },
             ),
-            const SizedBox(height: Constants.smallVerticalGutter),
+            Constants.smallVerticalGutter.verticalSpace,
           ],
         ),
       ),
@@ -138,7 +142,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 232,
+      height: 232.w,
       width: double.infinity,
       child: Stack(
         children: [
@@ -146,7 +150,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
             top: 0,
             left: 0,
             right: 0,
-            bottom: 40,
+            bottom: 40.w,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(24)),
@@ -157,8 +161,8 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 80,
-              width: 80,
+              height: 80.w,
+              width: 80.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: DevfestColors.blue,

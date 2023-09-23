@@ -3,6 +3,7 @@ import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/features/home/widgets/speakers_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants.dart';
@@ -70,10 +71,10 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             toolbarHeight: 56,
             leading: Row(
               children: [
-                const SizedBox(width: Constants.horizontalMargin),
+                Constants.horizontalMargin.horizontalSpace,
                 SvgPicture.asset(
                   AppIcons.devfestLogo,
-                  height: 16,
+                  height: 16.h,
                   fit: BoxFit.contain,
                 ),
               ],
@@ -84,7 +85,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
               left: Constants.horizontalMargin,
               right: Constants.horizontalMargin,
               bottom: Constants.largeVerticalGutter,
-            ),
+            ).w,
             sliver: SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,15 +97,15 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                           .textTheme
                           ?.title01
                           ?.copyWith(fontWeight: FontWeight.w500),
-                      children: const [
-                        WidgetSpan(child: SizedBox(width: 4)),
-                        TextSpan(text: 'Speakers')
+                      children: [
+                        WidgetSpan(child: 4.horizontalSpace),
+                        const TextSpan(text: 'Speakers')
                       ],
                     ),
                   ),
                   const SizedBox(height: Constants.largeVerticalGutter),
                   SizedBox(
-                    height: 38,
+                    height: 38.h,
                     child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -117,8 +118,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                             selectedTab: activeTab,
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 8),
+                        separatorBuilder: (context, index) => 8.horizontalSpace,
                         itemCount: allCategories.length),
                   )
                 ],
@@ -130,10 +130,11 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 56,
+            toolbarHeight: 90.h,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
+                      horizontal: Constants.horizontalMargin)
+                  .w,
               child: ScheduleTabBar(
                 index: day.index,
                 onTap: (tab) {
@@ -157,7 +158,8 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
           ListView.separated(
             key: const PageStorageKey<String>('Day1'),
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+              horizontal: Constants.horizontalMargin,
+            ).w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               var color = [

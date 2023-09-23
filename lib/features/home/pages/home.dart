@@ -46,7 +46,7 @@ class _AppHomeState extends ConsumerState<AppHome>
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
       body: TabBarView(
-        // physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         children: const [
           AgendaView(),

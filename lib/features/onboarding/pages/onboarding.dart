@@ -5,6 +5,7 @@ import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/enums/tab_item.dart';
@@ -27,7 +28,8 @@ class OnboardingPage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
+                      horizontal: Constants.horizontalMargin)
+                  .w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -47,7 +49,7 @@ class OnboardingPage extends StatelessWidget {
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 50),
+                    padding: const EdgeInsets.only(right: 50).w,
                     child: Consumer(
                       builder: (context, ref, child) {
                         return Text(
@@ -81,7 +83,7 @@ class OnboardingPage extends StatelessWidget {
                       context.go('${RoutePaths.onboarding}/${RoutePaths.auth}');
                     },
                   ),
-                  const SizedBox(height: 13),
+                  13.verticalSpace,
                   DevfestOutlinedButton(
                     title: const Text('Continue Without Login'),
                     onPressed: () {
@@ -91,7 +93,7 @@ class OnboardingPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 26),
+            26.verticalSpace,
           ],
         ),
       ),
@@ -104,10 +106,10 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        InfiniteScrollCategoriesWidget(
+        const InfiniteScrollCategoriesWidget(
           children: [
             CategoryChip(
               chipColor: Color(0xffeee4dd),
@@ -126,8 +128,8 @@ class Categories extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8),
-        InfiniteScrollCategoriesWidget(
+        8.verticalSpace,
+        const InfiniteScrollCategoriesWidget(
           children: [
             CategoryChip(
               chipColor: Color(0xffeeebdd),
@@ -146,8 +148,8 @@ class Categories extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8),
-        InfiniteScrollCategoriesWidget(
+        8.verticalSpace,
+        const InfiniteScrollCategoriesWidget(
           children: [
             CategoryChip(
               chipColor: Color(0xffe6ddee),
@@ -161,8 +163,8 @@ class Categories extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8),
-        InfiniteScrollCategoriesWidget(
+        8.verticalSpace,
+        const InfiniteScrollCategoriesWidget(
           children: [
             CategoryChip(
               chipColor: Color(0xfffdccff),
@@ -233,7 +235,7 @@ class _InfiniteScrollCategoriesWidgetState
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      height: 48.w,
       child: ListView.builder(
         controller: _listController,
         scrollDirection: Axis.horizontal,
@@ -242,7 +244,7 @@ class _InfiniteScrollCategoriesWidgetState
           final page = index % widget.children.length;
 
           return Padding(
-            padding: const EdgeInsets.only(right: 8),
+            padding: const EdgeInsets.only(right: 8).w,
             child: widget.children[page],
           );
         },
@@ -266,7 +268,7 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8).w,
       decoration: BoxDecoration(
         color: chipColor,
         borderRadius: const BorderRadius.all(Radius.circular(48)),
@@ -279,7 +281,7 @@ class CategoryChip extends StatelessWidget {
               ?.body01
               ?.copyWith(color: DevfestColors.grey20),
           children: [
-            const WidgetSpan(child: SizedBox(width: 8)),
+            WidgetSpan(child: SizedBox(width: 8.w)),
             TextSpan(text: title),
           ],
         ),

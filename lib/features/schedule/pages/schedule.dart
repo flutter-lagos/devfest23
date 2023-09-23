@@ -3,6 +3,7 @@ import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants.dart';
@@ -58,10 +59,10 @@ class _SchedulePageState extends State<SchedulePage> {
             toolbarHeight: 56,
             leading: Row(
               children: [
-                const SizedBox(width: Constants.horizontalMargin),
+                Constants.horizontalMargin.horizontalSpace,
                 SvgPicture.asset(
                   AppIcons.devfestLogo,
-                  height: 16,
+                  height: 16.h,
                   fit: BoxFit.contain,
                 ),
               ],
@@ -72,15 +73,15 @@ class _SchedulePageState extends State<SchedulePage> {
               left: Constants.horizontalMargin,
               right: Constants.horizontalMargin,
               bottom: Constants.largeVerticalGutter,
-            ),
+            ).w,
             sliver: SliverToBoxAdapter(
               child: Text.rich(
                 TextSpan(
                   text: '🕧',
                   style: DevFestTheme.of(context).textTheme?.title01,
-                  children: const [
-                    WidgetSpan(child: SizedBox(width: 4)),
-                    TextSpan(text: 'Schedule')
+                  children: [
+                    WidgetSpan(child: 4.horizontalSpace),
+                    const TextSpan(text: 'Schedule')
                   ],
                 ),
               ),
@@ -91,10 +92,11 @@ class _SchedulePageState extends State<SchedulePage> {
             backgroundColor: DevFestTheme.of(context).backgroundColor,
             elevation: 0,
             scrolledUnderElevation: 0,
-            toolbarHeight: 56,
+            toolbarHeight: 90.h,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
+                      horizontal: Constants.horizontalMargin)
+                  .w,
               child: ScheduleTabBar(
                 index: day.index,
                 onTap: (tab) {
@@ -118,7 +120,8 @@ class _SchedulePageState extends State<SchedulePage> {
           ListView.separated(
             key: const PageStorageKey<String>('Day1'),
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+              horizontal: Constants.horizontalMargin,
+            ).w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ScheduleTile(
@@ -128,13 +131,14 @@ class _SchedulePageState extends State<SchedulePage> {
                 },
               );
             },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,
           ),
           ListView.separated(
             key: const PageStorageKey<String>('Day2'),
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+                    horizontal: Constants.horizontalMargin)
+                .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ScheduleTile(
@@ -143,7 +147,7 @@ class _SchedulePageState extends State<SchedulePage> {
                 },
               );
             },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,
           ),
         ],

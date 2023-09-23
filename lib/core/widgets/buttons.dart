@@ -2,6 +2,7 @@ import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/themes.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -156,7 +157,7 @@ class DevfestFilledButton extends StatelessWidget {
   final Widget? suffixIcon;
   final VoidCallback? onPressed;
 
-  static const _space = SizedBox(width: 8);
+  static final _space = 8.horizontalSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +175,7 @@ class DevfestFilledButton extends StatelessWidget {
             data: IconThemeData(color: buttonTheme.iconColor),
             child: AnimatedContainer(
               duration: Constants.kAnimationDur,
-              height: 67,
+              height: 67.h,
               width: double.infinity,
               decoration: ShapeDecoration(
                 shape: buttonTheme.shape,
@@ -237,7 +238,7 @@ class DevfestOutlinedButton extends StatelessWidget {
   final Widget? suffixIcon;
   final VoidCallback? onPressed;
 
-  static const _space = SizedBox(width: 8);
+  static final _space = 8.horizontalSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +256,7 @@ class DevfestOutlinedButton extends StatelessWidget {
             data: IconThemeData(color: outlinedButtonTheme.iconColor),
             child: AnimatedContainer(
               duration: Constants.kAnimationDur,
-              height: 67,
+              height: 67.h,
               width: double.infinity,
               decoration: ShapeDecoration(
                 shape: outlinedButtonTheme.shape.copyWith(

@@ -1,8 +1,10 @@
 import 'package:devfest23/core/router/module_provider.dart';
 import 'package:devfest23/core/router/router.dart';
+import 'package:devfest23/core/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/providers/providers.dart';
 import 'core/router/navigator.dart';
@@ -29,50 +31,56 @@ class _DevfestAppState extends ConsumerState<DevfestApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      themeMode: ref.watch(themeManagerProvider),
-      navigatorKey: AppNavigator.getKey(Module.general),
-      onGenerateRoute: AppRouter.generateRoutes,
-      onUnknownRoute: (settings) => MaterialPageRoute(
-        settings: settings,
-        builder: (_) => Scaffold(
-          body: Center(
-            child: Text('No route defined for ${settings.name}'),
+    return ScreenUtilInit(
+      designSize: designSize,
+      minTextAdapt: true,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: ref.watch(themeManagerProvider),
+          navigatorKey: AppNavigator.getKey(Module.general),
+          onGenerateRoute: AppRouter.generateRoutes,
+          onUnknownRoute: (settings) => MaterialPageRoute(
+            settings: settings,
+            builder: (_) => Scaffold(
+              body: Center(
+                child: Text('No route defined for ${settings.name}'),
+              ),
+            ),
           ),
-        ),
-      ),
-      routes: AppRouter.routes,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'Google Sans',
-            color: ref.watch(textColorProvider),
+          routes: AppRouter.routes,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(
+                fontFamily: 'Google Sans',
+                color: ref.watch(textColorProvider),
+              ),
+            ),
+            extensions: <ThemeExtension<dynamic>>[
+              /// Use the below format for raw theme data
+              /// DevFestTheme(textTheme: DevfestTextTheme()),
+              DevFestTheme.light(),
+            ],
           ),
-        ),
-        extensions: const <ThemeExtension<dynamic>>[
-          /// Use the below format for raw theme data
-          /// DevFestTheme(textTheme: DevfestTextTheme()),
-          DevFestTheme.light(),
-        ],
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'Google Sans',
-            color: ref.watch(textColorProvider),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(
+                fontFamily: 'Google Sans',
+                color: ref.watch(textColorProvider),
+              ),
+            ),
+            extensions: <ThemeExtension<dynamic>>[
+              /// Use the below format for raw theme data
+              /// DevFestTheme(textTheme: DevfestTextTheme()),
+              DevFestTheme.dark(),
+            ],
           ),
-        ),
-        extensions: const <ThemeExtension<dynamic>>[
-          /// Use the below format for raw theme data
-          /// DevFestTheme(textTheme: DevfestTextTheme()),
-          DevFestTheme.dark(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

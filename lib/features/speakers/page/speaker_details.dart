@@ -1,8 +1,9 @@
 import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/themes.dart';
+import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconoir_flutter/iconoir_flutter.dart' hide Text, List, Radius;
 
 import '../../../core/providers/providers.dart';
@@ -23,15 +24,8 @@ class SpeakerDetailsPage extends ConsumerWidget {
         surfaceTintColor: theme.backgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          padding: EdgeInsets.zero,
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: Text(
-          'Go Back',
-          style: theme.textTheme?.button,
-        ),
+        leadingWidth: 120,
+        leading: const GoBackButton(),
         iconTheme: IconThemeData(
             color: isDark ? DevfestColors.background : DevfestColors.grey0),
         titleTextStyle: theme.textTheme?.button
@@ -41,16 +35,16 @@ class SpeakerDetailsPage extends ConsumerWidget {
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 24).w,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 148,
+                height: 148.h,
                 child: Row(
                   children: [
                     const SpeakerAvatar(),
-                    const SizedBox(width: 12),
+                    12.horizontalSpace,
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +55,7 @@ class SpeakerDetailsPage extends ConsumerWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 8),
+                          8.verticalSpace,
                           Text(
                             'Mobile Developer, Skype',
                             style: theme.textTheme?.body03?.copyWith(
@@ -71,7 +65,7 @@ class SpeakerDetailsPage extends ConsumerWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 16),
+                          16.verticalSpace,
                           Row(
                             children: <StatelessWidget>[
                               const Twitter(),
@@ -80,10 +74,10 @@ class SpeakerDetailsPage extends ConsumerWidget {
                             ]
                                 .map(
                                   (icon) => Container(
-                                    width: 40,
-                                    height: 40,
-                                    padding: const EdgeInsets.all(8),
-                                    margin: const EdgeInsets.only(right: 8),
+                                    width: 32.w,
+                                    height: 32.w,
+                                    padding: const EdgeInsets.all(8).w,
+                                    margin: const EdgeInsets.only(right: 8).w,
                                     clipBehavior: Clip.antiAlias,
                                     decoration: ShapeDecoration(
                                       color: const Color(0xFFFDE293),
@@ -103,24 +97,24 @@ class SpeakerDetailsPage extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: Constants.largeVerticalGutter),
+              Constants.largeVerticalGutter.verticalSpace,
               Text(
                 'SPEAKER BIO',
                 style: theme.textTheme?.body04,
               ),
-              const SizedBox(height: Constants.smallVerticalGutter),
+              Constants.smallVerticalGutter.verticalSpace,
               Text(
                 'Wake up to reality! Nothing ever goes as planned in this accursed world. The longer you live, the more you realize that the only things that truly exist in this reality are merely pain, suffering and futility. Listen, everywhere you look in this world, wherever there is light, there will always be shadows to be found as well. As long as there is a concept of victors, the vanquished will also exist. The selfish intent of wanting to preserve peace, initiates war and hatred is born in order to protect love. There are nexuses causal relationships that cannot be separated.',
                 style: theme.textTheme?.body03?.copyWith(
                   color: isDark ? DevfestColors.grey80 : DevfestColors.grey10,
                 ),
               ),
-              const SizedBox(height: Constants.verticalGutter),
+              Constants.verticalGutter.verticalSpace,
               Text(
                 'TALK',
                 style: theme.textTheme?.body04,
               ),
-              const SizedBox(height: Constants.smallVerticalGutter),
+              Constants.smallVerticalGutter.verticalSpace,
               const SpeakerActionCard(),
             ],
           ),
@@ -136,8 +130,8 @@ class SpeakerAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 133,
-      height: 148,
+      width: 133.w,
+      height: 148.w,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: NetworkImage("https://via.placeholder.com/133x148"),

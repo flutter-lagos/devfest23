@@ -4,6 +4,7 @@ import 'package:devfest23/core/widgets/switcher.dart';
 import 'package:devfest23/features/home/widgets/more_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:material_symbols_icons/symbols.dart';
@@ -32,10 +33,10 @@ class _MorePageState extends ConsumerState<MorePage> {
         leadingWidth: 100,
         leading: Row(
           children: [
-            const SizedBox(width: Constants.horizontalMargin),
+            Constants.horizontalMargin.horizontalSpace,
             SvgPicture.asset(
               AppIcons.devfestLogo,
-              height: 16,
+              height: 16.h,
               fit: BoxFit.contain,
             ),
           ],
@@ -43,7 +44,8 @@ class _MorePageState extends ConsumerState<MorePage> {
       ),
       body: Padding(
         padding:
-            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
+                .w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -57,7 +59,7 @@ class _MorePageState extends ConsumerState<MorePage> {
                 ],
               ),
             ),
-            const SizedBox(height: Constants.verticalGutter),
+            Constants.verticalGutter.verticalSpace,
             MoreTile(
               leading: const Icon(Symbols.account_circle),
               title: const Text('Profile'),
@@ -112,7 +114,7 @@ class _MoreDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 2,
+      height: 2.h,
       width: double.infinity,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(32)),

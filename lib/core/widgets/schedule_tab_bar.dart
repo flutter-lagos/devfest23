@@ -5,6 +5,7 @@ import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -76,7 +77,7 @@ class ScheduleTabBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: Constants.verticalGutter),
+        Constants.verticalGutter.verticalSpace,
         _DateTile(index == 0 ? DateTime(2023, 11, 24) : DateTime(2023, 11, 25)),
       ],
     );
@@ -97,7 +98,7 @@ class _DateTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: Constants.horizontalGutter * 2,
         vertical: 6,
-      ),
+      ).w,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24)),
         color: DevfestColors.yellowSecondary,
@@ -155,10 +156,10 @@ class _TabTile extends ConsumerWidget {
               text,
               style: DevFestTheme.of(context).textTheme?.title02,
             ),
-            const SizedBox(height: Constants.smallVerticalGutter),
+            Constants.smallVerticalGutter.verticalSpace,
             AnimatedContainer(
               duration: Constants.kAnimationDur,
-              height: 3,
+              height: 3.h,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 color: () {

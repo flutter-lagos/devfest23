@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @immutable
 class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
@@ -97,6 +98,75 @@ class DevfestTextTheme extends ThemeExtension<DevfestTextTheme> {
           button: const TextStyle(
             fontFamily: 'Google Sans',
             fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        );
+
+  DevfestTextTheme.responsive()
+      : this(
+          headline01: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 52.sp,
+            fontWeight: FontWeight.w700,
+          ),
+          headline02: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 40.sp,
+            fontWeight: FontWeight.w700,
+          ),
+          headline03: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 32.sp,
+            fontWeight: FontWeight.w700,
+          ),
+          headline04: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          headline05: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          title01: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 26.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          title02: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          body01: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          body02: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          body03: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          body04: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          body05: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          button: TextStyle(
+            fontFamily: 'Google Sans',
+            fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
         );

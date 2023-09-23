@@ -6,6 +6,7 @@ import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -63,7 +64,7 @@ class _AuthenticationHome extends ConsumerWidget {
           title: 'Authentication',
           backgroundColor: Color(0xfffde293),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter),
+        Constants.largeVerticalGutter.verticalSpace,
         Text(
           'We need your email to RSVP',
           style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
@@ -71,7 +72,7 @@ class _AuthenticationHome extends ConsumerWidget {
                 height: 1.2,
               ),
         ),
-        const SizedBox(height: Constants.smallVerticalGutter),
+        Constants.smallVerticalGutter.verticalSpace,
         Padding(
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
@@ -82,7 +83,7 @@ class _AuthenticationHome extends ConsumerWidget {
                 ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter * 2),
+        (Constants.largeVerticalGutter * 2).verticalSpace,
         DevfestOutlinedButton(
           title: const Text('Continue with Gmail'),
           prefixIcon: SvgPicture.asset(
@@ -120,7 +121,7 @@ class _AuthenticationSuccess extends ConsumerWidget {
           title: 'Authentication Successful!',
           backgroundColor: Color(0xff81c995),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter),
+        Constants.largeVerticalGutter.verticalSpace,
         Text(
           'We have confirmed your email!',
           style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
@@ -128,7 +129,7 @@ class _AuthenticationSuccess extends ConsumerWidget {
                 height: 1.2,
               ),
         ),
-        const SizedBox(height: Constants.smallVerticalGutter),
+        Constants.smallVerticalGutter.verticalSpace,
         Padding(
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
@@ -139,7 +140,7 @@ class _AuthenticationSuccess extends ConsumerWidget {
                 ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter * 2),
+        (Constants.largeVerticalGutter * 2).verticalSpace,
         DevfestFilledButton(
           title: const Text('Continue to App'),
           onPressed: () {
@@ -166,7 +167,7 @@ class _AuthenticationPending extends ConsumerWidget {
           title: 'Authentication Pending',
           backgroundColor: Color(0xfffde293),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter),
+        Constants.largeVerticalGutter.verticalSpace,
         Text(
           'It seems you have not registered',
           style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
@@ -174,7 +175,7 @@ class _AuthenticationPending extends ConsumerWidget {
                 height: 1.2,
               ),
         ),
-        const SizedBox(height: Constants.smallVerticalGutter),
+        Constants.smallVerticalGutter.verticalSpace,
         Padding(
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
@@ -185,7 +186,7 @@ class _AuthenticationPending extends ConsumerWidget {
                 ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter * 2),
+        (Constants.largeVerticalGutter * 2).verticalSpace,
         DevfestFilledButton(
           title: const Text('Register Now'),
           onPressed: () {
@@ -194,7 +195,7 @@ class _AuthenticationPending extends ConsumerWidget {
             );
           },
         ),
-        const SizedBox(height: Constants.verticalGutter),
+        Constants.verticalGutter.verticalSpace,
         DevfestOutlinedButton(
           title: const Text('Maybe Later'),
           onPressed: () {},
@@ -217,7 +218,7 @@ class _AuthenticationFailure extends ConsumerWidget {
           title: 'Email Not Found',
           backgroundColor: Color(0xfff28b82),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter),
+        Constants.largeVerticalGutter.verticalSpace,
         Text(
           'It seems you did not register',
           style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
@@ -225,7 +226,7 @@ class _AuthenticationFailure extends ConsumerWidget {
                 height: 1.2,
               ),
         ),
-        const SizedBox(height: Constants.smallVerticalGutter),
+        Constants.smallVerticalGutter.verticalSpace,
         Padding(
           padding: const EdgeInsets.only(right: 50.0),
           child: Text(
@@ -236,7 +237,7 @@ class _AuthenticationFailure extends ConsumerWidget {
                 ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
           ),
         ),
-        const SizedBox(height: Constants.largeVerticalGutter * 2),
+        (Constants.largeVerticalGutter * 2).verticalSpace,
         DevfestFilledButton(
           title: const Text('Proceed to App'),
           onPressed: () {

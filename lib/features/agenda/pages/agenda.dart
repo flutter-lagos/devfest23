@@ -1,6 +1,7 @@
 import 'package:devfest23/core/router/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants.dart';
@@ -50,10 +51,10 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
               leadingWidth: 100,
               leading: Row(
                 children: [
-                  const SizedBox(width: Constants.horizontalMargin),
+                  Constants.horizontalMargin.horizontalSpace,
                   SvgPicture.asset(
                     AppIcons.devfestLogo,
-                    height: 16,
+                    height: 16.h,
                     fit: BoxFit.contain,
                   ),
                 ],
@@ -63,7 +64,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
               padding: const EdgeInsets.only(
                 left: Constants.horizontalMargin,
                 right: Constants.horizontalMargin,
-              ),
+              ).w,
               sliver: SliverToBoxAdapter(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -73,13 +74,13 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       TextSpan(
                         text: 'Hey Bruce',
                         style: DevFestTheme.of(context).textTheme?.title01,
-                        children: const [
-                          WidgetSpan(child: SizedBox(width: 4)),
-                          TextSpan(text: '🤭')
+                        children: [
+                          WidgetSpan(child: 4.horizontalSpace),
+                          const TextSpan(text: '🤭')
                         ],
                       ),
                     ),
-                    const SizedBox(height: Constants.smallVerticalGutter),
+                    Constants.smallVerticalGutter.verticalSpace,
                     Text(
                       'Welcome to Devfest Lagos 2023 🥳',
                       style:
@@ -100,18 +101,19 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
           physics: const NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
+                    horizontal: Constants.horizontalMargin)
+                .w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: Constants.verticalGutter),
+                Constants.verticalGutter.verticalSpace,
                 Text(
                   'SCHEDULE',
                   style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
                         color: DevfestColors.grey30,
                       ),
                 ),
-                const SizedBox(height: Constants.verticalGutter),
+                Constants.verticalGutter.verticalSpace,
                 ScheduleTabBar(
                   index: day.index,
                   onTap: (tab) {
@@ -134,8 +136,9 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       child: ListView.separated(
                         shrinkWrap: true,
                         key: const PageStorageKey<String>('Day1'),
-                        padding: const EdgeInsets.only(
-                            top: Constants.verticalGutter),
+                        padding:
+                            const EdgeInsets.only(top: Constants.verticalGutter)
+                                .w,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ScheduleTile(
@@ -145,7 +148,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                             },
                           );
                         },
-                        separatorBuilder: (_, __) => const SizedBox(height: 14),
+                        separatorBuilder: (_, __) => 14.verticalSpace,
                         itemCount: 4,
                       ),
                     ),
@@ -163,8 +166,9 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       child: ListView.separated(
                         shrinkWrap: true,
                         key: const PageStorageKey<String>('Day2'),
-                        padding: const EdgeInsets.only(
-                            top: Constants.verticalGutter),
+                        padding:
+                            const EdgeInsets.only(top: Constants.verticalGutter)
+                                .w,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ScheduleTile(
@@ -174,7 +178,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                             },
                           );
                         },
-                        separatorBuilder: (_, __) => const SizedBox(height: 14),
+                        separatorBuilder: (_, __) => 14.verticalSpace,
                         itemCount: 4,
                       ),
                     ),
@@ -204,7 +208,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 16).h,
                   child: Row(
                     children: [
                       ...[
@@ -240,7 +244,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                 ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.only(top: 16).h,
                   itemBuilder: (context, index) {
                     var color = [
                       const Color(0xfff6eeee),
@@ -258,7 +262,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     );
                   },
                   separatorBuilder: (context, index) =>
-                      const SizedBox(height: Constants.verticalGutter),
+                      Constants.verticalGutter.verticalSpace,
                   itemCount: 4,
                 ),
                 Center(
