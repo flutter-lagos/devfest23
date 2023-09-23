@@ -1,4 +1,5 @@
 import 'package:devfest23/core/providers/providers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,28 +19,23 @@ class DevfestSwitcher extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return SizedBox(
-      height: 24.w,
-      child: Switch.adaptive(
-        value: value,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        thumbColor: MaterialStateProperty.resolveWith(
-          (states) {
-            if (states.contains(MaterialState.selected)) {
-              return DevFestTheme.of(context).onBackgroundColor;
-            }
-
-            return ref.watch(isDarkProvider)
-                ? DevfestColors.grey80
-                : DevfestColors.grey20;
-          },
-        ),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          return ref.watch(isDarkProvider)
+      height: 24.h,
+      child: CupertinoTheme(
+        data: CupertinoThemeData(
+          primaryColor: ref.watch(isDarkProvider)
               ? DevfestColors.grey10
-              : DevfestColors.grey90;
-        }),
-        activeColor: DevFestTheme.of(context).onBackgroundColor,
-        onChanged: onChanged,
+              : DevfestColors.grey90,
+        ),
+        child: CupertinoSwitch(
+          value: value,
+          applyTheme: true,
+          thumbColor: DevfestColors.grey10,
+          // trackColor: ref.watch(isDarkProvider)
+          //     ? DevfestColors.grey10
+          //     : DevfestColors.grey90,
+          activeColor: DevFestTheme.of(context).onBackgroundColor,
+          onChanged: onChanged,
+        ),
       ),
     );
   }

@@ -73,65 +73,76 @@ class SpeakersChip extends ConsumerWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: Constants.kAnimationDur,
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16).w,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(24)),
-          color: isDark ? accentColor : const Color(0xFF211212),
-        ),
-        padding: const EdgeInsets.only(top: 2, bottom: 4, left: 2, right: 4).w,
-        child: AnimatedContainer(
-          duration: Constants.kAnimationDur,
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16).w,
-          decoration: BoxDecoration(
-            color: isDark ? DevfestColors.grey10 : accentColor,
-            borderRadius: const BorderRadius.all(Radius.circular(24)),
+          color: isDark ? DevfestColors.grey10 : accentColor,
+          borderRadius: BorderRadius.circular(24),
+          border: Border(
+            left: BorderSide(
+              width: 2,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: isDark ? accentColor : const Color(0xFF211212),
+            ),
+            top: BorderSide(
+              width: 2,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: isDark ? accentColor : const Color(0xFF211212),
+            ),
+            right: BorderSide(
+              width: 4,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: isDark ? accentColor : const Color(0xFF211212),
+            ),
+            bottom: BorderSide(
+              width: 4,
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color: isDark ? accentColor : const Color(0xFF211212),
+            ),
           ),
-          child: Row(
-            children: [
-              Container(
-                height: 54,
-                width: 54,
-                decoration: ShapeDecoration(
-                  image: const DecorationImage(
-                    image: AssetImage(AppImages.devfestLogoLight),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 54,
+              width: 54,
+              decoration: ShapeDecoration(
+                image: const DecorationImage(
+                  image: AssetImage(AppImages.devfestLogoLight),
+                  fit: BoxFit.fill,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              const SizedBox(width: Constants.horizontalGutter),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style:
-                          DevFestTheme.of(context).textTheme?.title02?.copyWith(
-                                color: isDark
-                                    ? DevfestColors.grey100
-                                    : DevfestColors.grey0,
-                              ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      shortInfo,
-                      style: DevFestTheme.of(context)
-                          .textTheme
-                          ?.body03
-                          ?.copyWith(
+            ),
+            const SizedBox(width: Constants.horizontalGutter),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style:
+                        DevFestTheme.of(context).textTheme?.title02?.copyWith(
                               color: isDark
-                                  ? DevfestColors.grey80
-                                  : DevfestColors.grey30),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                                  ? DevfestColors.grey100
+                                  : DevfestColors.grey0,
+                            ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    shortInfo,
+                    style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
+                        color: isDark
+                            ? DevfestColors.grey80
+                            : DevfestColors.grey30),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

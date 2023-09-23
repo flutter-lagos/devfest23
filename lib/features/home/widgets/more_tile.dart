@@ -46,6 +46,7 @@ class MoreTile extends StatelessWidget {
       style: titleStyle ??
           DevFestTheme.of(context).textTheme!.body02!.copyWith(
                 color: DevFestTheme.of(context).onBackgroundColor,
+                fontWeight: FontWeight.w500,
               ),
       child: IconTheme(
         data: IconThemeData(

@@ -24,10 +24,11 @@ class MorePage extends ConsumerStatefulWidget {
 class _MorePageState extends ConsumerState<MorePage> {
   @override
   Widget build(BuildContext context) {
+    var theme = DevFestTheme.of(context);
     return Scaffold(
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
-        backgroundColor: DevFestTheme.of(context).backgroundColor,
+        backgroundColor: theme.backgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         leadingWidth: 100,
