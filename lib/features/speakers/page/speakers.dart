@@ -1,18 +1,18 @@
+import 'package:devfest23/core/router/navigator.dart';
+import 'package:devfest23/core/router/routes.dart';
 import 'package:devfest23/features/home/widgets/speakers_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
-import '../../../core/enums/tab_item.dart';
 import '../../../core/icons.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
 import '../../../core/widgets/widgets.dart';
-import '../widgets/session_category_chip.dart';
+import '../../home/widgets/session_category_chip.dart';
 
 class SpeakersPage extends ConsumerStatefulWidget {
   const SpeakersPage({super.key, required this.initialDay});
@@ -68,6 +68,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             elevation: 0,
             scrolledUnderElevation: 0,
             leadingWidth: 100,
+            toolbarHeight: 56,
             leading: Row(
               children: [
                 Constants.horizontalMargin.horizontalSpace,
@@ -161,11 +162,18 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
             ).w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              var color = [
+                const Color(0xfff6eeee),
+                DevfestColors.greenSecondary,
+                DevfestColors.blueSecondary,
+                const Color(0xffffafff)
+              ].elementAt(index > 3 ? index % 2 : index);
               return SpeakersChip(
-                name: 'Samuel Abada',
-                shortInfo: 'Senior Mobile Engineer, Cruise Nation',
+                moodColor: color,
+                name: 'Daniele Buffa',
+                shortInfo: 'CEO, Design Lead, O2 Labs',
                 onTap: () {
-                  context.go('/speakers/${TabItem.speakers.name}/$index');
+                  context.go('${RoutePaths.speakers}/$index');
                 },
               );
             },
@@ -178,9 +186,18 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                 horizontal: Constants.horizontalMargin),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              var color = [
+                const Color(0xfff6eeee),
+                DevfestColors.greenSecondary,
+                DevfestColors.blueSecondary,
+                const Color(0xffffafff)
+              ].elementAt(index > 3 ? 3 : index);
               return SpeakersChip(
+                moodColor: color,
+                name: 'Daniele Buffa',
+                shortInfo: 'CEO, Design Lead, O2 Labs',
                 onTap: () {
-                  context.go('/speakers/${TabItem.speakers.name}/$index');
+                  context.go('${RoutePaths.speakers}/$index');
                 },
               );
             },

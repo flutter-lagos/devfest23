@@ -384,14 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: "2aa884667eeda3a1c461f31e72af1f77984ab0f29450d8fb12ec1f7bc53eea14"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.1.0"
   graphs:
     dependency: transitive
     description:
@@ -640,6 +632,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  regex_router:
+    dependency: "direct main"
+    description:
+      name: regex_router
+      sha256: e68f2edb25712e72d9ec0a18c7dbeb67193bbed18f1ae4c5520e649641799bb3
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   resizable_widget:
     dependency: transitive
     description:

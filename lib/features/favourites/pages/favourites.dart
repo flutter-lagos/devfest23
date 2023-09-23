@@ -1,5 +1,6 @@
 import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/icons.dart';
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/theme_data.dart';
 import 'package:devfest23/core/widgets/animated_indexed_stack.dart';
 import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
@@ -8,7 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
-import '../widgets/schedule_tile.dart';
+import '../../../core/router/routes.dart';
+import '../../home/widgets/schedule_tile.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key, required this.initialDay});
@@ -54,6 +56,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
             elevation: 0,
             scrolledUnderElevation: 0,
             leadingWidth: 100,
+            toolbarHeight: 56,
             leading: Row(
               children: [
                 Constants.horizontalMargin.horizontalSpace,
@@ -124,7 +127,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return const ScheduleTile();
+              return ScheduleTile(
+                onTap: () {
+                  context.go("${RoutePaths.session}/$index");
+                },
+              );
             },
             separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,
@@ -136,7 +143,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 .w,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return const ScheduleTile();
+              return ScheduleTile(
+                onTap: () {
+                  context.go("${RoutePaths.session}/$index");
+                },
+              );
             },
             separatorBuilder: (_, __) => 14.verticalSpace,
             itemCount: 5,

@@ -1,6 +1,6 @@
 import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/enums/devfest_day.dart';
 import 'package:devfest23/core/icons.dart';
+import 'package:devfest23/core/router/navigator.dart';
 import 'package:devfest23/core/themes/themes.dart';
 import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/enums/tab_item.dart';
 import '../../../core/providers/providers.dart';
@@ -94,7 +93,7 @@ class _AuthenticationHome extends ConsumerWidget {
           ),
           onPressed: () {
             context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.success.name}',
+              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.success.name}',
             );
           },
         ),
@@ -146,7 +145,7 @@ class _AuthenticationSuccess extends ConsumerWidget {
           title: const Text('Continue to App'),
           onPressed: () {
             context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.pending.name}',
+              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.pending.name}',
             );
           },
         ),
@@ -192,7 +191,7 @@ class _AuthenticationPending extends ConsumerWidget {
           title: const Text('Register Now'),
           onPressed: () {
             context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}/?result=${AuthState.failed.name}',
+              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.failed.name}',
             );
           },
         ),
@@ -242,7 +241,7 @@ class _AuthenticationFailure extends ConsumerWidget {
         DevfestFilledButton(
           title: const Text('Proceed to App'),
           onPressed: () {
-            context.go('/app/${TabItem.home.name}/${DevfestDay.day2.name}');
+            context.pushNamedAndClear('/app/${TabItem.home.name}');
           },
         ),
       ],
