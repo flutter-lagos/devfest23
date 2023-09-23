@@ -48,6 +48,7 @@ jobs:
   widgetbook:
     name: Build widgetbook
     needs: test
+    if: github.event_name == 'pull_request'
     env:
       ALFRED: ${{secrets.ALFRED}}
     runs-on: ubuntu-latest
