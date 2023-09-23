@@ -1,5 +1,5 @@
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/features/favourites/pages/favourites.dart';
+import '../../../core/router/routes.dart';
+import 'favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:regex_router/regex_router.dart';
 

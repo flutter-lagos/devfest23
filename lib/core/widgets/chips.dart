@@ -1,7 +1,7 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/colors.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../constants.dart';
+import '../themes/colors.dart';
+import '../themes/theme_data.dart';
+import 'widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

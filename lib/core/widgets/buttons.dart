@@ -1,5 +1,5 @@
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/themes/themes.dart';
+import '../router/navigator.dart';
+import '../themes/themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';

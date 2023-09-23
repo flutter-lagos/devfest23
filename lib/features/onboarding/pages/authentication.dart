@@ -1,9 +1,9 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/icons.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/themes/themes.dart';
-import 'package:devfest23/core/widgets/buttons.dart';
-import 'package:devfest23/features/onboarding/widgets/title_tile.dart';
+import '../../../core/constants.dart';
+import '../../../core/icons.dart';
+import '../../../core/router/navigator.dart';
+import '../../../core/themes/themes.dart';
+import '../../../core/widgets/buttons.dart';
+import '../widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

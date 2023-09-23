@@ -1,4 +1,4 @@
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

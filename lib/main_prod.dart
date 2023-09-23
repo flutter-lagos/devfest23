@@ -1,4 +1,4 @@
-import 'package:devfest23/app.dart';
+import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';

@@ -1,6 +1,6 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/themes.dart';
-import 'package:devfest23/core/widgets/buttons.dart';
+import '../../../core/constants.dart';
+import '../../../core/themes/themes.dart';
+import '../../../core/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

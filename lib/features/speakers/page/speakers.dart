@@ -1,6 +1,6 @@
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/features/home/widgets/speakers_chip.dart';
+import '../../../core/router/navigator.dart';
+import '../../../core/router/routes.dart';
+import '../../home/widgets/speakers_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

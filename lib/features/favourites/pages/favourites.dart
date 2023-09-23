@@ -1,9 +1,9 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/icons.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
-import 'package:devfest23/core/widgets/animated_indexed_stack.dart';
-import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
+import '../../../core/constants.dart';
+import '../../../core/icons.dart';
+import '../../../core/router/navigator.dart';
+import '../../../core/themes/theme_data.dart';
+import '../../../core/widgets/animated_indexed_stack.dart';
+import '../../../core/widgets/schedule_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

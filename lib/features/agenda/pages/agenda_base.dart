@@ -1,7 +1,7 @@
-import 'package:devfest23/core/enums/devfest_day.dart';
-import 'package:devfest23/core/router/module_provider.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/features/agenda/pages/agenda.dart';
+import '../../../core/enums/devfest_day.dart';
+import '../../../core/router/module_provider.dart';
+import '../../../core/router/navigator.dart';
+import 'agenda.dart';
 import 'package:flutter/material.dart';
 import 'package:regex_router/regex_router.dart';
 

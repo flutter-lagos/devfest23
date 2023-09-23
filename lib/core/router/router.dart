@@ -1,8 +1,8 @@
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/features/agenda/pages/agenda_base.dart';
-import 'package:devfest23/features/favourites/pages/favourites_base.dart';
-import 'package:devfest23/features/schedule/pages/schedule_base.dart';
-import 'package:devfest23/features/splash/splash.dart';
+import 'routes.dart';
+import '../../features/agenda/pages/agenda_base.dart';
+import '../../features/favourites/pages/favourites_base.dart';
+import '../../features/schedule/pages/schedule_base.dart';
+import '../../features/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:regex_router/regex_router.dart';
 import '../../features/home/pages/home.dart';

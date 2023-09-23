@@ -1,4 +1,4 @@
-import 'package:devfest23/core/themes/theme_data.dart';
+import 'theme_data.dart';
 import 'package:flutter/material.dart';
 
 class DevfestTheme extends StatelessWidget {

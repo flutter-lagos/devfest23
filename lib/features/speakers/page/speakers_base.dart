@@ -1,5 +1,5 @@
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/features/speakers/page/speakers.dart';
+import '../../../core/router/routes.dart';
+import 'speakers.dart';
 import 'package:flutter/material.dart';
 import 'package:regex_router/regex_router.dart';
 

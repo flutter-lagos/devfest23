@@ -1,6 +1,6 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../../../core/constants.dart';
+import '../../../core/themes/theme_data.dart';
+import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
