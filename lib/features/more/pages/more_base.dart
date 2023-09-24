@@ -1,7 +1,7 @@
-import 'package:devfest23/core/router/module_provider.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/features/more/pages/more.dart';
-import 'package:devfest23/features/profile/pages/profile.dart';
+import '../../../core/router/module_provider.dart';
+import '../../../core/router/navigator.dart';
+import 'more.dart';
+import '../../profile/pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class MoreView extends StatelessWidget {

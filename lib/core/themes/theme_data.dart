@@ -1,6 +1,6 @@
-import 'package:devfest23/core/themes/bottom_nav_theme.dart';
-import 'package:devfest23/core/themes/button_theme.dart';
-import 'package:devfest23/core/themes/outlined_button_theme.dart';
+import 'bottom_nav_theme.dart';
+import 'button_theme.dart';
+import 'outlined_button_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';

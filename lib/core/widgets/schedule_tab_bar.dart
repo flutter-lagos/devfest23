@@ -1,7 +1,7 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/colors.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../constants.dart';
+import '../themes/colors.dart';
+import '../themes/theme_data.dart';
+import 'widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,7 +106,10 @@ class _DateTile extends StatelessWidget {
       ),
       child: Text(
         '${_dayFormat.format(date)}${nthNumber(date.day)} ${_dateFormat.format(date)}',
-        style: DevFestTheme.of(context).textTheme?.body04?.copyWith(color: DevfestColors.grey10),
+        style: DevFestTheme.of(context)
+            .textTheme
+            ?.body04
+            ?.copyWith(color: DevfestColors.grey10),
       ),
     );
   }
@@ -139,7 +142,9 @@ class _TabTile extends ConsumerWidget {
       style: DevFestTheme.of(context).textTheme!.title01!.copyWith(
         color: () {
           if (selected) return DevFestTheme.of(context).onBackgroundColor;
-          return ref.watch(isDarkProvider) ? DevfestColors.grey70 : DevfestColors.grey40;
+          return ref.watch(isDarkProvider)
+              ? DevfestColors.grey70
+              : DevfestColors.grey40;
         }(),
       ),
       duration: Constants.kAnimationDur,
@@ -160,7 +165,9 @@ class _TabTile extends ConsumerWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 color: () {
                   if (selected) {
-                    return ref.watch(isDarkProvider) ? DevfestColors.grey100 : DevfestColors.grey0;
+                    return ref.watch(isDarkProvider)
+                        ? DevfestColors.grey100
+                        : DevfestColors.grey0;
                   }
                 }(),
               ),

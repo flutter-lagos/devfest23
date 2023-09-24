@@ -1,7 +1,7 @@
-import 'package:devfest23/core/enums/devfest_day.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../../../core/enums/devfest_day.dart';
+import '../../../core/router/navigator.dart';
+import '../../../core/router/routes.dart';
+import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

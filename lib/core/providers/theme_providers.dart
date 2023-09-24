@@ -1,4 +1,4 @@
-import 'package:devfest23/core/providers/theme_manager.dart';
+import 'theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,6 +1,6 @@
-import 'package:devfest23/core/router/module_provider.dart';
-import 'package:devfest23/core/router/router.dart';
-import 'package:devfest23/core/size_util.dart';
+import 'core/router/module_provider.dart';
+import 'core/router/router.dart';
+import 'core/size_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

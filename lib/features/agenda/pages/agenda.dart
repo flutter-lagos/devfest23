@@ -1,4 +1,4 @@
-import 'package:devfest23/core/router/navigator.dart';
+import '../../../core/router/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,7 +82,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     ),
                     Constants.smallVerticalGutter.verticalSpace,
                     Text(
-                      'Welcome to Devfest Lagos 2023 🥳',
+                      'Welcome to DevFest Lagos 2023 🥳',
                       style:
                           DevFestTheme.of(context).textTheme?.body02?.copyWith(
                                 fontWeight: FontWeight.w500,

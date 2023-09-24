@@ -1,6 +1,6 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/themes.dart';
-import 'package:devfest23/core/widgets/buttons.dart';
+import '../../../core/constants.dart';
+import '../../../core/themes/themes.dart';
+import '../../../core/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,11 +124,14 @@ class SpeakerDetailsPage extends ConsumerWidget {
   }
 }
 
-class SpeakerAvatar extends StatelessWidget {
+class SpeakerAvatar extends ConsumerWidget {
   const SpeakerAvatar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(isDarkProvider);
+    var borderColor =
+        isDark ? const Color(0xFFFDE293) : const Color(0xFF331B00);
     return Container(
       width: 133.w,
       height: 148.w,
@@ -138,26 +141,26 @@ class SpeakerAvatar extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         borderRadius: BorderRadius.circular(16),
-        border: const Border(
+        border: Border(
           left: BorderSide(
-            width: 0.50,
+            width: 1,
             strokeAlign: BorderSide.strokeAlignOutside,
-            color: Color(0xFF331B00),
+            color: borderColor,
           ),
           top: BorderSide(
-            width: 0.50,
+            width: 1,
             strokeAlign: BorderSide.strokeAlignOutside,
-            color: Color(0xFF331B00),
+            color: borderColor,
           ),
           right: BorderSide(
-            width: 3,
+            width: 6,
             strokeAlign: BorderSide.strokeAlignOutside,
-            color: Color(0xFF331B00),
+            color: borderColor,
           ),
           bottom: BorderSide(
-            width: 3,
+            width: 6,
             strokeAlign: BorderSide.strokeAlignOutside,
-            color: Color(0xFF331B00),
+            color: borderColor,
           ),
         ),
       ),

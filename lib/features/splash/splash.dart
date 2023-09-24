@@ -1,7 +1,7 @@
-import 'package:devfest23/core/images.dart';
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
+import '../../core/images.dart';
+import '../../core/router/navigator.dart';
+import '../../core/router/routes.dart';
+import '../../core/themes/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

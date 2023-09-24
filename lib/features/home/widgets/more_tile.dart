@@ -1,6 +1,6 @@
-import 'package:devfest23/core/constants.dart';
-import 'package:devfest23/core/themes/theme_data.dart';
-import 'package:devfest23/core/widgets/widgets.dart';
+import '../../../core/constants.dart';
+import '../../../core/themes/theme_data.dart';
+import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -46,6 +46,7 @@ class MoreTile extends StatelessWidget {
       style: titleStyle ??
           DevFestTheme.of(context).textTheme!.body02!.copyWith(
                 color: DevFestTheme.of(context).onBackgroundColor,
+                fontWeight: FontWeight.w500,
               ),
       child: IconTheme(
         data: IconThemeData(

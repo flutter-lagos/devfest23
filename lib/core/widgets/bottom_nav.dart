@@ -5,7 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import '../constants.dart';
 import '../themes/themes.dart';
 
-@widgetbook.UseCase(name: 'Devfest Bottom Nav', type: DevfestBottomNav)
+@widgetbook.UseCase(name: 'DevFest Bottom Nav', type: DevfestBottomNav)
 Widget devfestBottomNav(BuildContext context) {
   int index = 0;
   return StatefulBuilder(builder: (context, setState) {

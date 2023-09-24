@@ -1,5 +1,5 @@
 name: devfest23
-description: iOS and Android app for Devfest Lagos 2023, built with Flutter.
+description: iOS and Android app for DevFest Lagos 2023, built with Flutter.
 publish_to: 'none'
 
 version: 1.0.0+1

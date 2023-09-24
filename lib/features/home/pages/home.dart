@@ -63,21 +63,22 @@ class _AppHomeState extends ConsumerState<AppHome>
         bottomNavigationBar: DevfestBottomNav(
           index: ref.watch(appCurrentTab),
           items: const [
-            DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_filled)),
+            DevfestBottomNavItem(
+                label: 'Home', icon: Icon(Icons.home_outlined)),
             DevfestBottomNavItem(
               label: 'Schedule',
-              icon: Icon(Icons.checklist_rtl_rounded),
+              icon: Icon(Icons.checklist_rtl_outlined),
             ),
             DevfestBottomNavItem(
-                label: 'Speakers', icon: Icon(Icons.person_2_rounded)),
+                label: 'Speakers', icon: Icon(Icons.person_2_outlined)),
             DevfestBottomNavItem(
               label: 'Favourites',
-              icon: Icon(Icons.star_border_rounded),
+              icon: Icon(Icons.star_border_outlined),
             ),
             DevfestBottomNavItem(
               label: 'More',
               icon: Icon(Icons.more_rounded, size: 18),
-              inactiveIcon: Icon(Icons.more_rounded),
+              inactiveIcon: Icon(Icons.more_outlined),
             ),
           ],
           onTap: (page) {

@@ -1,7 +1,7 @@
-import 'package:devfest23/core/router/navigator.dart';
-import 'package:devfest23/core/router/routes.dart';
-import 'package:devfest23/core/widgets/switcher.dart';
-import 'package:devfest23/features/home/widgets/more_tile.dart';
+import '../../../core/router/navigator.dart';
+import '../../../core/router/routes.dart';
+import '../../../core/widgets/switcher.dart';
+import '../../home/widgets/more_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,10 +24,11 @@ class MorePage extends ConsumerStatefulWidget {
 class _MorePageState extends ConsumerState<MorePage> {
   @override
   Widget build(BuildContext context) {
+    var theme = DevFestTheme.of(context);
     return Scaffold(
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
-        backgroundColor: DevFestTheme.of(context).backgroundColor,
+        backgroundColor: theme.backgroundColor,
         elevation: 0,
         scrolledUnderElevation: 0,
         leadingWidth: 100,
