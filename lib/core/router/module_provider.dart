@@ -8,8 +8,8 @@ class ModuleProvider extends InheritedWidget {
   const ModuleProvider({
     super.key,
     required this.module,
-    required Widget child,
-  }) : super(child: child);
+    required super.child,
+  });
 
   @override
   bool updateShouldNotify(ModuleProvider oldWidget) {
