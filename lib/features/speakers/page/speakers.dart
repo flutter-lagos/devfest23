@@ -1,3 +1,7 @@
+import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
+import 'package:devfest23/features/speakers/application/controllers.dart';
+import 'package:devfest23/features/speakers/application/view_model.dart';
+
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
 import '../../home/widgets/speakers_chip.dart';
@@ -48,6 +52,10 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
       });
 
     day = widget.initialDay;
+
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+      ref.read(speakersViewModelProvider.notifier).fetchSpeakers();
+    });
   }
 
   @override
@@ -153,60 +161,97 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
           ),
         ];
       },
-      body: AnimatedIndexedStack(
-        index: day.index,
-        children: [
-          ListView.separated(
-            key: const PageStorageKey<String>('Day1'),
-            padding: const EdgeInsets.symmetric(
-              horizontal: Constants.horizontalMargin,
-            ).w,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              var color = [
-                const Color(0xfff6eeee),
-                DevfestColors.greenSecondary,
-                DevfestColors.blueSecondary,
-                const Color(0xffffafff)
-              ].elementAt(index > 3 ? index % 2 : index);
-              return SpeakersChip(
-                moodColor: color,
-                name: 'Daniele Buffa',
-                shortInfo: 'CEO, Design Lead, O2 Labs',
-                onTap: () {
-                  context.go('${RoutePaths.speakers}/$index');
-                },
-              );
-            },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
-            itemCount: 5,
-          ),
-          ListView.separated(
-            key: const PageStorageKey<String>('Day2'),
-            padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              var color = [
-                const Color(0xfff6eeee),
-                DevfestColors.greenSecondary,
-                DevfestColors.blueSecondary,
-                const Color(0xffffafff)
-              ].elementAt(index > 3 ? 3 : index);
-              return SpeakersChip(
-                moodColor: color,
-                name: 'Daniele Buffa',
-                shortInfo: 'CEO, Design Lead, O2 Labs',
-                onTap: () {
-                  context.go('${RoutePaths.speakers}/$index');
-                },
-              );
-            },
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
-            itemCount: 5,
-          ),
-        ],
-      ),
+      body: () {
+        if (ref.watch(
+                speakersViewModelProvider.select((value) => value.viewState)) ==
+            ViewState.loading) {
+          return const FetchingSpeakers();
+        }
+
+        return AnimatedIndexedStack(
+          index: day.index,
+          children: [
+            ListView.separated(
+              key: const PageStorageKey<String>('Day1'),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Constants.horizontalMargin,
+              ).w,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                var color = [
+                  const Color(0xfff6eeee),
+                  DevfestColors.greenSecondary,
+                  DevfestColors.blueSecondary,
+                  const Color(0xffffafff)
+                ].elementAt(index > 3 ? index % 2 : index);
+
+                final speaker = ref.watch(speakersProvider)[index];
+                return SpeakersChip(
+                  moodColor: color,
+                  name: speaker.name,
+                  shortInfo: speaker.role,
+                  avatarImageUrl: speaker.avatar,
+                  onTap: () {
+                    context.go('${RoutePaths.speakers}/$index');
+                  },
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(height: 14),
+              itemCount: ref.watch(speakersProvider).length,
+            ),
+            ListView.separated(
+              key: const PageStorageKey<String>('Day2'),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.horizontalMargin),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                var color = [
+                  const Color(0xfff6eeee),
+                  DevfestColors.greenSecondary,
+                  DevfestColors.blueSecondary,
+                  const Color(0xffffafff)
+                ].elementAt(index > 3 ? index % 2 : index);
+
+                final speaker = ref.watch(speakersProvider)[index];
+                return SpeakersChip(
+                  moodColor: color,
+                  name: speaker.name,
+                  shortInfo: speaker.role,
+                  avatarImageUrl: speaker.avatar,
+                  onTap: () {
+                    context.go('${RoutePaths.speakers}/$index');
+                  },
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(height: 14),
+              itemCount: ref.watch(speakersProvider).length,
+            ),
+          ],
+        );
+      }(),
+    );
+  }
+}
+
+class FetchingSpeakers extends StatelessWidget {
+  const FetchingSpeakers({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding:
+          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+      itemBuilder: (context, index) {
+        var color = [
+          const Color(0xfff6eeee),
+          DevfestColors.greenSecondary,
+          DevfestColors.blueSecondary,
+          const Color(0xffffafff)
+        ].elementAt(index > 3 ? 3 : index);
+        return SpeakerShimmerChip(moodColor: color);
+      },
+      separatorBuilder: (_, __) => const SizedBox(height: 14),
+      itemCount: 5,
     );
   }
 }
