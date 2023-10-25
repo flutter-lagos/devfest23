@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
+
 import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
-import '../../../core/images.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/themes/themes.dart';
 
@@ -45,6 +47,10 @@ Widget devfestSpeakerChip(BuildContext context) {
             shortInfo: 'Senior Designer, Binance',
             moodColor: Color(0xffffafff),
           ),
+          SizedBox(height: 10),
+          SpeakerShimmerChip(
+            moodColor: DevfestColors.blueSecondary,
+          ),
         ],
       ),
     ),
@@ -58,12 +64,14 @@ class SpeakersChip extends ConsumerWidget {
     this.shortInfo = '',
     this.moodColor,
     this.onTap,
+    this.avatarImageUrl = '',
   });
 
   final String name;
   final String shortInfo;
   final Color? moodColor;
   final void Function()? onTap;
+  final String avatarImageUrl;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -102,17 +110,14 @@ class SpeakersChip extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            Container(
-              height: 54,
-              width: 54,
-              decoration: ShapeDecoration(
-                image: const DecorationImage(
-                  image: AssetImage(AppImages.devfestLogoLight),
-                  fit: BoxFit.fill,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+            ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: avatarImageUrl,
+                height: 54,
+                width: 54,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             const SizedBox(width: Constants.horizontalGutter),
@@ -142,6 +147,85 @@ class SpeakersChip extends ConsumerWidget {
                 ],
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SpeakerShimmerChip extends ConsumerWidget {
+  const SpeakerShimmerChip({super.key, this.moodColor});
+
+  final Color? moodColor;
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final isDark = ref.watch(isDarkProvider);
+    final accentColor = moodColor ?? const Color(0xfff6eeee);
+    return AnimatedContainer(
+      duration: Constants.kAnimationDur,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16).w,
+      decoration: BoxDecoration(
+        color: isDark ? DevfestColors.grey10 : accentColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border(
+          left: BorderSide(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: isDark ? accentColor : const Color(0xFF211212),
+          ),
+          top: BorderSide(
+            width: 2,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: isDark ? accentColor : const Color(0xFF211212),
+          ),
+          right: BorderSide(
+            width: 4,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: isDark ? accentColor : const Color(0xFF211212),
+          ),
+          bottom: BorderSide(
+            width: 4,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: isDark ? accentColor : const Color(0xFF211212),
+          ),
+        ),
+      ),
+      child: Shimmer.fromColors(
+        baseColor: isDark ? DevfestColors.grey10 : accentColor,
+        highlightColor: isDark ? accentColor : const Color(0xFF211212),
+        period: Constants.kShimmerDur,
+        child: Row(
+          children: [
+            Container(
+              height: 54,
+              width: 54,
+              decoration: ShapeDecoration(
+                color: isDark ? accentColor : const Color(0xFF211212),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+            ),
+            const SizedBox(width: Constants.horizontalGutter),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 22,
+                    width: double.infinity,
+                    color: isDark ? accentColor : const Color(0xFF211212),
+                  ),
+                  const SizedBox(height: 4),
+                  Container(
+                    height: 16,
+                    color: isDark ? accentColor : const Color(0xFF211212),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

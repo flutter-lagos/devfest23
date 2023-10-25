@@ -216,11 +216,9 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                         AppImages.spotifyLogo,
                         AppImages.uberLogo,
                         AppImages.lyftLogo
-                      ]
-                          .map(
-                            (sponsorImage) => SponsorsChip(image: sponsorImage),
-                          )
-                          .toList()
+                      ].map(
+                        (sponsorImage) => SponsorsChip(image: sponsorImage),
+                      )
                     ],
                   ),
                 ),

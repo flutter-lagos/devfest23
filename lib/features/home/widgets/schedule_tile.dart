@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
+
 import '../../../core/constants.dart';
-import '../../../core/images.dart';
 import '../../../core/themes/colors.dart';
 import '../../../core/themes/theme_data.dart';
 import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/providers/providers.dart';
@@ -22,27 +23,53 @@ Widget devfestScheduleTile(BuildContext context) {
     child: Padding(
       padding:
           const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ScheduleTile(
-            onTap: () {},
-            isGeneral: true,
-          ),
-          const SizedBox(height: 8),
-          ScheduleTile(onTap: () {}),
-          const SizedBox(height: Constants.verticalGutter),
-          ScheduleTile(
-            onTap: () {},
-            isGeneral: true,
-            isOngoing: true,
-          ),
-          const SizedBox(height: 8),
-          ScheduleTile(
-            onTap: () {},
-            isOngoing: true,
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ScheduleTile(
+              onTap: () {},
+              isGeneral: true,
+              title: 'Animations in Flutter and how to make them',
+              speaker: 'Samuel Abada',
+              time: '10:00 AM',
+              venue: 'Hall A',
+              category: 'MOBILE DEVELOPMENT',
+            ),
+            const SizedBox(height: 8),
+            ScheduleTile(
+              onTap: () {},
+              title: 'Animations in Flutter and how to make them',
+              speaker: 'Samuel Abada',
+              time: '10:00 AM',
+              venue: 'Hall A',
+              category: 'MOBILE DEVELOPMENT',
+            ),
+            const SizedBox(height: Constants.verticalGutter),
+            ScheduleTile(
+              onTap: () {},
+              isGeneral: true,
+              isOngoing: true,
+              title: 'Animations in Flutter and how to make them',
+              speaker: 'Samuel Abada',
+              time: '10:00 AM',
+              venue: 'Hall A',
+              category: 'MOBILE DEVELOPMENT',
+            ),
+            const SizedBox(height: 8),
+            ScheduleTile(
+              onTap: () {},
+              isOngoing: true,
+              title: 'Animations in Flutter and how to make them',
+              speaker: 'Samuel Abada',
+              time: '10:00 AM',
+              venue: 'Hall A',
+              category: 'MOBILE DEVELOPMENT',
+            ),
+            const SizedBox(height: 8),
+            const ScheduleTileShimmer(),
+          ],
+        ),
       ),
     ),
   );
@@ -54,13 +81,23 @@ class ScheduleTile extends StatelessWidget {
     this.onTap,
     this.isGeneral = false,
     this.isOngoing = false,
+    this.title = '',
+    this.speaker = '',
+    this.time = '',
+    this.venue = '',
+    this.category = '',
+    this.speakerImage = '',
   });
 
   final VoidCallback? onTap;
   final bool isGeneral;
   final bool isOngoing;
-
-  static final timeFormat = DateFormat('hh:mm');
+  final String title;
+  final String speaker;
+  final String time;
+  final String venue;
+  final String category;
+  final String speakerImage;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +107,12 @@ class ScheduleTile extends StatelessWidget {
       child: _InActiveFavouriteSessionTile(
         isGeneral: isGeneral,
         isOngoing: isOngoing,
+        title: title,
+        speaker: speaker,
+        time: time,
+        venue: venue,
+        category: category,
+        speakerImage: speakerImage,
       ),
     );
   }
@@ -77,13 +120,24 @@ class ScheduleTile extends StatelessWidget {
 
 class _InActiveFavouriteSessionTile extends ConsumerStatefulWidget {
   const _InActiveFavouriteSessionTile({
-    Key? key,
     required this.isGeneral,
     required this.isOngoing,
-  }) : super(key: key);
+    required this.title,
+    required this.speaker,
+    required this.time,
+    required this.venue,
+    required this.category,
+    required this.speakerImage,
+  });
 
   final bool isGeneral;
   final bool isOngoing;
+  final String title;
+  final String speaker;
+  final String time;
+  final String venue;
+  final String category;
+  final String speakerImage;
 
   @override
   ConsumerState<_InActiveFavouriteSessionTile> createState() =>
@@ -120,7 +174,7 @@ class _InActiveFavouriteSessionTileState
                     ],
                     if (!widget.isGeneral) ...[
                       Text(
-                        'MOBILE DEVELOPMENT',
+                        widget.category,
                         style: DevFestTheme.of(context)
                             .textTheme
                             ?.body04
@@ -149,7 +203,7 @@ class _InActiveFavouriteSessionTileState
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Animations in Flutter and how to make them',
+                      widget.title,
                       style:
                           DevFestTheme.of(context).textTheme?.title02?.copyWith(
                                 color: isDark
@@ -162,26 +216,35 @@ class _InActiveFavouriteSessionTileState
                     Constants.verticalGutter.verticalSpace,
                     Row(
                       children: [
-                        Container(
-                          height: 32.w,
-                          width: 32.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              strokeAlign: BorderSide.strokeAlignOutside,
-                              color: DevfestColors.green,
-                              width: 2,
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage(AppImages.devfestLogoLight),
-                              fit: BoxFit.fill,
+                        CachedNetworkImage(
+                          imageUrl: widget.speakerImage,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          imageBuilder: (context, imageProvider) => Container(
+                            height: 32.w,
+                            width: 32.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: DevfestColors.green,
+                                width: 2,
+                              ),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: Constants.horizontalGutter),
                         Text.rich(
                           TextSpan(
-                            text: 'Samuel Abada',
+                            text: widget.speaker,
                             style: DevFestTheme.of(context)
                                 .textTheme
                                 ?.body03
@@ -207,7 +270,7 @@ class _InActiveFavouriteSessionTileState
                                   ),
                                 ),
                               ),
-                              const TextSpan(text: '10:00 AM'),
+                              TextSpan(text: widget.time),
                               WidgetSpan(
                                 alignment: PlaceholderAlignment.middle,
                                 child: AnimatedContainer(
@@ -224,7 +287,7 @@ class _InActiveFavouriteSessionTileState
                                   ),
                                 ),
                               ),
-                              const TextSpan(text: 'Hall A'),
+                              TextSpan(text: widget.venue),
                             ],
                           ),
                         ),
@@ -280,6 +343,131 @@ class _FavouriteIcon extends ConsumerWidget {
         color: ref.watch(isDarkProvider)
             ? DevfestColors.grey90
             : DevfestColors.grey70,
+      ),
+    );
+  }
+}
+
+class ScheduleTileShimmer extends ConsumerWidget {
+  const ScheduleTileShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final isDark = ref.watch(isDarkProvider);
+    return Container(
+      decoration: ShapeDecoration(
+        color: DevFestTheme.of(context).backgroundColor,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: isDark ? DevfestColors.grey10 : const Color(0xFF4C4C4C)),
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      padding: const EdgeInsets.all(Constants.verticalGutter).w,
+      child: Shimmer.fromColors(
+        baseColor: isDark ? DevfestColors.grey90 : DevfestColors.grey30,
+        highlightColor: isDark ? DevfestColors.grey100 : DevfestColors.grey20,
+        period: Constants.kShimmerDur,
+        child: Column(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        height: 32,
+                        color: isDark
+                            ? DevfestColors.grey80
+                            : DevfestColors.grey10,
+                      ),
+                      Constants.verticalGutter.verticalSpace,
+                      Row(
+                        children: [
+                          Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isDark
+                                  ? DevfestColors.grey80
+                                  : DevfestColors.grey10,
+                              border: Border.all(
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: DevfestColors.green,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: Constants.horizontalGutter),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    height: 16,
+                                    color: isDark
+                                        ? DevfestColors.grey80
+                                        : DevfestColors.grey10,
+                                  ),
+                                ),
+                                AnimatedContainer(
+                                  duration: Constants.kAnimationDur,
+                                  height: 8.w,
+                                  width: 8.w,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: Constants.horizontalGutter),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? DevfestColors.grey100
+                                        : DevfestColors.grey70,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    height: 16,
+                                    color: isDark
+                                        ? DevfestColors.grey80
+                                        : DevfestColors.grey10,
+                                  ),
+                                ),
+                                AnimatedContainer(
+                                  duration: Constants.kAnimationDur,
+                                  height: 8.w,
+                                  width: 8.w,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: Constants.horizontalGutter),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? DevfestColors.grey100
+                                        : DevfestColors.grey70,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    height: 16,
+                                    color: isDark
+                                        ? DevfestColors.grey80
+                                        : DevfestColors.grey10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
