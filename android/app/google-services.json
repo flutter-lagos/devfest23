@@ -1,0 +1,100 @@
+{
+  "project_info": {
+    "project_number": "163954857780",
+    "project_id": "devfestlagos-2022",
+    "storage_bucket": "devfestlagos-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163954857780:android:4d45af7f9a23b6c1ae3761",
+        "android_client_info": {
+          "package_name": "com.gdglagos.devfest22"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163954857780-9ijr6due97v02ilkcp42hncnuocfqcp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdglagos.devfest22",
+            "certificate_hash": "29faf42239b0f9b246501b3b49b9b87f162661d0"
+          }
+        },
+        {
+          "client_id": "163954857780-vieq7ei97tna2tc755to85l2dge5hfu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyucrDWB2TK6bLcne65YcihOBVBHLjMtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163954857780-vieq7ei97tna2tc755to85l2dge5hfu3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "163954857780-guggkvl3euja9qm3l3op70h19prpffj1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gdglagos.devfest22",
+                "app_store_id": "6444653663"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163954857780:android:8f28e8d1eac80d7cae3761",
+        "android_client_info": {
+          "package_name": "com.gdglagos.devfestlg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163954857780-4o1eqfetdrv3j6u6lc8ke1ik6ksv1cqs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdglagos.devfestlg",
+            "certificate_hash": "b11a16a6650a4e6f793620bc9f8a630f27406d3e"
+          }
+        },
+        {
+          "client_id": "163954857780-vieq7ei97tna2tc755to85l2dge5hfu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyucrDWB2TK6bLcne65YcihOBVBHLjMtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163954857780-vieq7ei97tna2tc755to85l2dge5hfu3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "163954857780-guggkvl3euja9qm3l3op70h19prpffj1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gdglagos.devfest22",
+                "app_store_id": "6444653663"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

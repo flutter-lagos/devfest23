@@ -1,3 +1,6 @@
+import 'package:devfest23/features/onboarding/pages/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../../core/router/navigator.dart';
 import '../../../core/themes/colors.dart';
 import '../../../core/themes/theme_data.dart';
@@ -17,87 +20,101 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
-      appBar: AppBar(
-        backgroundColor: DevFestTheme.of(context).backgroundColor,
-        toolbarHeight: 0,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.horizontalMargin)
-                  .w,
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go(
+                '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.success.name}',
+              );
+            });
+          }
+          return Scaffold(
+            backgroundColor: DevFestTheme.of(context).backgroundColor,
+            appBar: AppBar(
+              backgroundColor: DevFestTheme.of(context).backgroundColor,
+              toolbarHeight: 0,
+            ),
+            body: SafeArea(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TitleTile(
-                    emoji: '🤭',
-                    title: 'Welcome Back!',
-                    backgroundColor: DevfestColors.greenSecondary,
-                  ),
-                  Text(
-                    'We are back and ready to awe',
-                    style: DevFestTheme.of(context)
-                        .textTheme
-                        ?.headline02
-                        ?.copyWith(
-                          color: DevFestTheme.of(context).onBackgroundColor,
-                          height: 1.2,
-                        ),
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 50).w,
-                    child: Consumer(
-                      builder: (context, ref, child) {
-                        return Text(
-                          'We have great speakers and amazing sessions in place for this year’s DevFest! 🥳',
+                    padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.horizontalMargin)
+                        .w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TitleTile(
+                          emoji: '🤭',
+                          title: 'Welcome Back!',
+                          backgroundColor: DevfestColors.greenSecondary,
+                        ),
+                        Text(
+                          'We are back and ready to awe',
                           style: DevFestTheme.of(context)
                               .textTheme
-                              ?.body02
+                              ?.headline02
                               ?.copyWith(
-                                  color: ref.watch(isDarkProvider)
-                                      ? DevfestColors.grey70
-                                      : DevfestColors.grey30),
-                        );
-                      },
+                                color:
+                                    DevFestTheme.of(context).onBackgroundColor,
+                                height: 1.2,
+                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 50).w,
+                          child: Consumer(
+                            builder: (context, ref, child) {
+                              return Text(
+                                'We have great speakers and amazing sessions in place for this year’s DevFest! 🥳',
+                                style: DevFestTheme.of(context)
+                                    .textTheme
+                                    ?.body02
+                                    ?.copyWith(
+                                        color: ref.watch(isDarkProvider)
+                                            ? DevfestColors.grey70
+                                            : DevfestColors.grey30),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  const Spacer(),
+                  const Categories(),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.horizontalMargin),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        DevfestFilledButton(
+                          title: const Text('Login to RSVP'),
+                          onPressed: () {
+                            context.go(
+                                '${RoutePaths.onboarding}/${RoutePaths.auth}');
+                          },
+                        ),
+                        13.verticalSpace,
+                        DevfestOutlinedButton(
+                          title: const Text('Continue Without Login'),
+                          onPressed: () {
+                            context
+                                .pushNamedAndClear('/app/${TabItem.home.name}');
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  26.verticalSpace,
                 ],
               ),
             ),
-            const Spacer(),
-            const Categories(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  DevfestFilledButton(
-                    title: const Text('Login to RSVP'),
-                    onPressed: () {
-                      context.go('${RoutePaths.onboarding}/${RoutePaths.auth}');
-                    },
-                  ),
-                  13.verticalSpace,
-                  DevfestOutlinedButton(
-                    title: const Text('Continue Without Login'),
-                    onPressed: () {
-                      context.pushNamedAndClear('/app/${TabItem.home.name}');
-                    },
-                  ),
-                ],
-              ),
-            ),
-            26.verticalSpace,
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
 

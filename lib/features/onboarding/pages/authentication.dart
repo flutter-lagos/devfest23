@@ -1,3 +1,5 @@
+import 'package:devfest23/core/services/auth_service.dart';
+
 import '../../../core/constants.dart';
 import '../../../core/icons.dart';
 import '../../../core/router/navigator.dart';
@@ -56,6 +58,7 @@ class _AuthenticationHome extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    var auth = AuthService();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -92,9 +95,10 @@ class _AuthenticationHome extends ConsumerWidget {
             width: 24,
           ),
           onPressed: () {
-            context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.success.name}',
-            );
+            auth.googleSignIn();
+            // context.go(
+            //   '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.success.name}',
+            // );
           },
         ),
         const SizedBox(height: Constants.verticalGutter),
@@ -144,9 +148,10 @@ class _AuthenticationSuccess extends ConsumerWidget {
         DevfestFilledButton(
           title: const Text('Continue to App'),
           onPressed: () {
-            context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.pending.name}',
-            );
+            context.pushNamedAndClear('/app/${TabItem.home.name}');
+            // context.go(
+            //   '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.suc.name}',
+            // );
           },
         ),
       ],

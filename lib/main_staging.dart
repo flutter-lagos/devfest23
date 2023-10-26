@@ -1,8 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
+
 import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +26,7 @@ void main() async {
   ]);
 
   // TODO: Firebase initialization
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // TODO: Use firebase emulator on staging initialization
 
   runApp(const ProviderScope(child: DevfestApp()));
