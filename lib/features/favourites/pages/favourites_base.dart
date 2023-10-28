@@ -11,7 +11,8 @@ import '../../schedule/pages/session.dart';
 favouriteRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => FavouritesPage(initialDay: initialDay),
       "${RoutePaths.session}/:id": (context, args) {
-        return const SessionPage();
+        final id = int.parse(args.pathArgs['id']!);
+        return SessionPage(sessionIndex: id);
       }
     });
 

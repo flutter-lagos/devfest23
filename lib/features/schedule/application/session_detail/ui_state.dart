@@ -1,36 +1,35 @@
+import 'package:devfest23/core/data/data.dart';
 import 'package:devfest23/core/exceptions/exceptions.dart';
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 
-import '../../../core/data/data.dart';
+final class SessionDetailUiState extends DevfestUiState {
+  final Session session;
 
-final class SpeakersUiState extends DevfestUiState {
-  final List<Speaker> speakers;
-
-  const SpeakersUiState({
+  const SessionDetailUiState({
+    required this.session,
     super.viewState,
     super.exception,
-    required this.speakers,
   });
 
-  const SpeakersUiState.initial()
+  const SessionDetailUiState.initial()
       : this(
+          session: const Session.empty(),
           viewState: ViewState.idle,
           exception: const EmptyException(),
-          speakers: const [],
         );
 
-  SpeakersUiState copyWith({
+  SessionDetailUiState copyWith({
     ViewState? viewState,
     DevfestException? exception,
-    List<Speaker>? speakers,
+    Session? session,
   }) {
-    return SpeakersUiState(
+    return SessionDetailUiState(
+      session: session ?? this.session,
       viewState: viewState ?? this.viewState,
-      speakers: speakers ?? this.speakers,
       exception: exception ?? this.exception,
     );
   }
 
   @override
-  List<Object?> get props => [...super.props, speakers];
+  List<Object?> get props => [...super.props, session];
 }

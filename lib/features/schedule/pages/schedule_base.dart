@@ -11,7 +11,8 @@ import 'session.dart';
 scheduleRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => SchedulePage(initialDay: initialDay),
       "${RoutePaths.session}/:id": (context, args) {
-        return const SessionPage();
+        final id = int.parse(args.pathArgs['id']!);
+        return SessionPage(sessionIndex: id);
       }
     });
 

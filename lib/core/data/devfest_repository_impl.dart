@@ -10,6 +10,17 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
   ]);
 
   @override
+  Future<EitherExceptionOr> addMultipleRSVPs(
+      AddMultipleRSVPRequestDto dto) async {
+    final response = await client.call(
+      path: 'https://addmultipletousersessions-azqpniimiq-uc.a.run.app',
+      method: RequestMethod.get,
+    );
+
+    return await processData((data) => null, response);
+  }
+
+  @override
   Future<EitherExceptionOr> addToRSVP(AddToRSVPRequestDto dto) async {
     final response = await client.call(
       path: 'https://addtousersessions-azqpniimiq-uc.a.run.app',
@@ -27,18 +38,17 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
       method: RequestMethod.get,
     );
 
-    return await processData(
-        (data) => AgendaResponseDto.fromJson(data), response);
+    return await processData(AgendaResponseDto.fromJson, response);
   }
 
   @override
-  Future<EitherExceptionOr> fetchRSVP() async {
+  Future<EitherExceptionOr<SessionsResponseDto>> fetchRSVPSessions() async {
     final response = await client.call(
       path: 'https://getusersessions-azqpniimiq-uc.a.run.app',
       method: RequestMethod.get,
     );
 
-    return await processData((data) => null, response);
+    return await processData(SessionsResponseDto.fromJson, response);
   }
 
   @override
@@ -48,8 +58,7 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
       method: RequestMethod.get,
     );
 
-    return await processData(
-        (data) => SessionsResponseDto.fromJson(data), response);
+    return await processData(SessionsResponseDto.fromJson, response);
   }
 
   @override
@@ -59,7 +68,17 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
       method: RequestMethod.get,
     );
 
-    return await processData(
-        (data) => SpeakersResponseDto.fromJson(data), response);
+    return await processData(SpeakersResponseDto.fromJson, response);
+  }
+
+  @override
+  Future<EitherExceptionOr<CategoriesResponseDto>>
+      fetchSessionCategories() async {
+    final response = await client.call(
+      path: 'https://fetchcategories-azqpniimiq-uc.a.run.app',
+      method: RequestMethod.get,
+    );
+
+    return await processData(CategoriesResponseDto.fromJson, response);
   }
 }

@@ -12,11 +12,16 @@ import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/themes/themes.dart';
+import '../../../core/ui_state_model/ui_state_model.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
+import '../../../core/widgets/widgets.dart';
 import '../../home/pages/home.dart';
 import '../../home/widgets/schedule_tile.dart';
 import '../../home/widgets/speakers_chip.dart';
 import '../../home/widgets/sponsors_chip.dart';
+import '../../schedule/application/controllers.dart';
+import '../../schedule/application/sessions/view_model.dart';
+import '../../speakers/application/application.dart';
 
 class AgendaPage extends ConsumerStatefulWidget {
   const AgendaPage({super.key, required this.initialDay});
@@ -37,11 +42,14 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
     day = widget.initialDay;
   }
 
+  static const itemCount = 4;
+
   @override
   Widget build(BuildContext context) {
     final isDark = ref.watch(isDarkProvider);
     return SafeArea(
       child: NestedScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         headerSliverBuilder: (context, isScrolledUnder) {
           return [
             SliverAppBar(
@@ -83,13 +91,15 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     Constants.smallVerticalGutter.verticalSpace,
                     Text(
                       'Welcome to DevFest Lagos 2023 🥳',
-                      style:
-                          DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: isDark
-                                    ? DevfestColors.grey80
-                                    : DevfestColors.grey40,
-                              ),
+                      style: DevFestTheme.of(context)
+                          .textTheme
+                          ?.body02
+                          ?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: isDark
+                                ? DevfestColors.grey80
+                                : DevfestColors.grey40,
+                          ),
                     ),
                   ],
                 ),
@@ -128,60 +138,86 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     scale: day.index == 0 ? 1.0 : 0.98,
                     curve: Curves.easeIn,
                     duration: const Duration(milliseconds: 250),
-                    child: AnimatedOpacity(
-                      key: const Key('AnimatedOpacityDay1'),
-                      opacity: day.index == 0 ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.decelerate,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        key: const PageStorageKey<String>('Day1'),
-                        padding:
-                            const EdgeInsets.only(top: Constants.verticalGutter)
+                    child: switch (ref.watch(scheduleViewModelProvider
+                        .select((value) => value.viewState))) {
+                      ViewState.loading => const FetchingSessions(),
+                      ViewState.success => AnimatedOpacity(
+                          key: const Key('AnimatedOpacityDay1'),
+                          opacity: day.index == 0 ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.decelerate,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            key: const PageStorageKey<String>('Day1'),
+                            padding: const EdgeInsets.only(
+                                    top: Constants.verticalGutter)
                                 .w,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ScheduleTile(
-                            isGeneral: index == 0,
-                            onTap: () {
-                              context.go("${RoutePaths.session}/$index");
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final session =
+                                  ref.watch(sessionsProvider)[index];
+                              return ScheduleTile(
+                                isGeneral: session.category.isEmpty,
+                                title: session.title,
+                                speaker: session.owner,
+                                time: session.scheduledDuration,
+                                venue: session.hall,
+                                category: session.category,
+                                speakerImage: session.speakerImage,
+                                onTap: () {
+                                  context.go("${RoutePaths.session}/$index");
+                                },
+                              );
                             },
-                          );
-                        },
-                        separatorBuilder: (_, __) => 14.verticalSpace,
-                        itemCount: 4,
-                      ),
-                    ),
+                            separatorBuilder: (_, __) => 14.verticalSpace,
+                            itemCount: itemCount,
+                          ),
+                        ),
+                      _ => const SizedBox.shrink(),
+                    },
                   ),
                   AnimatedScale(
                     key: const Key('AnimatedScaleDay2'),
                     scale: day.index == 1 ? 1.0 : 0.98,
                     curve: Curves.easeIn,
                     duration: const Duration(milliseconds: 100),
-                    child: AnimatedOpacity(
-                      key: const Key('AnimatedOpacityDay2'),
-                      opacity: day.index == 1 ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 150),
-                      curve: Curves.decelerate,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        key: const PageStorageKey<String>('Day2'),
-                        padding:
-                            const EdgeInsets.only(top: Constants.verticalGutter)
+                    child: switch (ref.watch(scheduleViewModelProvider
+                        .select((value) => value.viewState))) {
+                      ViewState.loading => const FetchingSessions(),
+                      ViewState.success => AnimatedOpacity(
+                          key: const Key('AnimatedOpacityDay2'),
+                          opacity: day.index == 1 ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 150),
+                          curve: Curves.decelerate,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            key: const PageStorageKey<String>('Day2'),
+                            padding: const EdgeInsets.only(
+                                    top: Constants.verticalGutter)
                                 .w,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ScheduleTile(
-                            isGeneral: index == 0,
-                            onTap: () {
-                              context.go("${RoutePaths.session}/$index");
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final session =
+                                  ref.watch(sessionsProvider)[index];
+                              return ScheduleTile(
+                                isGeneral: session.category.isEmpty,
+                                title: session.title,
+                                speaker: session.owner,
+                                time: session.scheduledDuration,
+                                venue: session.hall,
+                                category: session.category,
+                                speakerImage: session.speakerImage,
+                                onTap: () {
+                                  context.go("${RoutePaths.session}/$index");
+                                },
+                              );
                             },
-                          );
-                        },
-                        separatorBuilder: (_, __) => 14.verticalSpace,
-                        itemCount: 4,
-                      ),
-                    ),
+                            separatorBuilder: (_, __) => 14.verticalSpace,
+                            itemCount: itemCount,
+                          ),
+                        ),
+                      _ => const SizedBox.shrink(),
+                    },
                   ),
                 ].elementAt(day.index),
                 Center(
@@ -239,30 +275,38 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   'SPEAKERS',
                   style: DevFestTheme.of(context).textTheme?.body04,
                 ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(top: 16).h,
-                  itemBuilder: (context, index) {
-                    var color = [
-                      const Color(0xfff6eeee),
-                      DevfestColors.greenSecondary,
-                      DevfestColors.blueSecondary,
-                      const Color(0xffffafff)
-                    ].elementAt(index > 3 ? 3 : index);
-                    return SpeakersChip(
-                      moodColor: color,
-                      name: 'Daniele Buffa',
-                      shortInfo: 'CEO, Design Lead, O2 Labs',
-                      onTap: () {
-                        context.go('${RoutePaths.speakers}/$index');
+                switch (ref.watch(speakersViewModelProvider
+                    .select((value) => value.viewState))) {
+                  ViewState.loading => const FetchingSpeakers(),
+                  ViewState.success => ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 16).h,
+                      itemBuilder: (context, index) {
+                        var color = [
+                          const Color(0xfff6eeee),
+                          DevfestColors.greenSecondary,
+                          DevfestColors.blueSecondary,
+                          const Color(0xffffafff)
+                        ].elementAt(index > 3 ? 3 : index);
+
+                        final speaker = ref.watch(allSpeakersProvider)[index];
+                        return SpeakersChip(
+                          moodColor: color,
+                          name: speaker.name,
+                          shortInfo: speaker.role,
+                          avatarImageUrl: speaker.avatar,
+                          onTap: () {
+                            context.go('${RoutePaths.speakers}/$index');
+                          },
+                        );
                       },
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      Constants.verticalGutter.verticalSpace,
-                  itemCount: 4,
-                ),
+                      separatorBuilder: (context, index) =>
+                          Constants.verticalGutter.verticalSpace,
+                      itemCount: itemCount,
+                    ),
+                  _ => const SizedBox.shrink(),
+                },
                 Center(
                   child: TextButton.icon(
                     onPressed: () {

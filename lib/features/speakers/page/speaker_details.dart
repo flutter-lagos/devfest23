@@ -1,3 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:devfest23/features/schedule/application/application.dart';
+import 'package:devfest23/features/speakers/application/application.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../../core/constants.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/buttons.dart';
@@ -9,11 +14,37 @@ import 'package:iconoir_flutter/iconoir_flutter.dart' hide Text, List, Radius;
 import '../../../core/providers/providers.dart';
 import '../../home/widgets/speaker_action_card.dart';
 
-class SpeakerDetailsPage extends ConsumerWidget {
-  const SpeakerDetailsPage({super.key});
+typedef SocialIconWithUrl = ({Widget icon, String url});
+
+class SpeakerDetailsPage extends ConsumerStatefulWidget {
+  const SpeakerDetailsPage({super.key, required this.speakerIndex});
+
+  final int speakerIndex;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SpeakerDetailsPage> createState() => _SpeakerDetailsPageState();
+}
+
+class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+      ref
+          .read(speakerDetailsViewModelProvider.notifier)
+          .initialiseSpeaker(ref.read(speakersProvider)[widget.speakerIndex]);
+
+      ref.read(speakerDetailsViewModelProvider.notifier).initialiseSession(
+            ref.read(sessionsProvider).firstWhere((element) =>
+                element.sessionId ==
+                ref.read(speakerProvider).currentSessionId),
+          );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isDark = ref.watch(isDarkProvider);
     final theme = DevFestTheme.of(context);
     return Scaffold(
@@ -50,14 +81,14 @@ class SpeakerDetailsPage extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Iyinoluwa Ogundairo',
+                            ref.watch(speakerProvider).name,
                             style: theme.textTheme?.title02,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           8.verticalSpace,
                           Text(
-                            'Mobile Developer, Skype',
+                            ref.watch(speakerProvider).role,
                             style: theme.textTheme?.body03?.copyWith(
                                 color: isDark
                                     ? DevfestColors.grey80
@@ -67,27 +98,61 @@ class SpeakerDetailsPage extends ConsumerWidget {
                           ),
                           16.verticalSpace,
                           Row(
-                            children: <StatelessWidget>[
-                              const Twitter(),
-                              const LinkedIn(),
-                              const Link()
+                            children: <SocialIconWithUrl>[
+                              (
+                                icon: const Twitter(),
+                                url: ref.watch(speakerProvider).twitter
+                              ),
+                              (
+                                icon: const LinkedIn(),
+                                url: ref.watch(speakerProvider).linkedIn
+                              ),
+                              (
+                                icon: const Link(),
+                                url: () {
+                                  if (ref
+                                      .watch(speakerProvider)
+                                      .github
+                                      .isNotEmpty) {
+                                    return ref.watch(speakerProvider).github;
+                                  }
+
+                                  if (ref
+                                      .watch(speakerProvider)
+                                      .email
+                                      .isNotEmpty) {
+                                    return 'mailto:${ref.watch(speakerProvider).email}';
+                                  }
+
+                                  return '';
+                                }(),
+                              ),
                             ]
                                 .map(
-                                  (icon) => Container(
-                                    width: 32.w,
-                                    height: 32.w,
-                                    padding: const EdgeInsets.all(8).w,
-                                    margin: const EdgeInsets.only(right: 8).w,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFFDE293),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(120),
-                                      ),
-                                    ),
-                                    child: icon,
-                                  ),
+                                  (icon) => icon.url.isEmpty
+                                      ? const SizedBox.shrink()
+                                      : GestureDetector(
+                                          onTap: () {
+                                            _launchUrl(icon.url);
+                                          },
+                                          child: Container(
+                                            width: 32.w,
+                                            height: 32.w,
+                                            padding: const EdgeInsets.all(8).w,
+                                            margin:
+                                                const EdgeInsets.only(right: 8)
+                                                    .w,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: ShapeDecoration(
+                                              color: const Color(0xFFFDE293),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(120),
+                                              ),
+                                            ),
+                                            child: icon.icon,
+                                          ),
+                                        ),
                                 )
                                 .toList(),
                           ),
@@ -104,7 +169,7 @@ class SpeakerDetailsPage extends ConsumerWidget {
               ),
               Constants.smallVerticalGutter.verticalSpace,
               Text(
-                'Wake up to reality! Nothing ever goes as planned in this accursed world. The longer you live, the more you realize that the only things that truly exist in this reality are merely pain, suffering and futility. Listen, everywhere you look in this world, wherever there is light, there will always be shadows to be found as well. As long as there is a concept of victors, the vanquished will also exist. The selfish intent of wanting to preserve peace, initiates war and hatred is born in order to protect love. There are nexuses causal relationships that cannot be separated.',
+                ref.watch(speakerProvider).bio,
                 style: theme.textTheme?.body03?.copyWith(
                   color: isDark ? DevfestColors.grey80 : DevfestColors.grey10,
                 ),
@@ -115,12 +180,22 @@ class SpeakerDetailsPage extends ConsumerWidget {
                 style: theme.textTheme?.body04,
               ),
               Constants.smallVerticalGutter.verticalSpace,
-              const SpeakerActionCard(),
+              SpeakerActionCard(
+                session: ref.watch(speakerDetailsViewModelProvider
+                    .select((value) => value.session)),
+                reserveSessionOnTap: ref
+                    .read(speakerDetailsViewModelProvider.notifier)
+                    .reserveSessionOnTap,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {}
   }
 }
 
@@ -132,38 +207,44 @@ class SpeakerAvatar extends ConsumerWidget {
     final isDark = ref.watch(isDarkProvider);
     var borderColor =
         isDark ? const Color(0xFFFDE293) : const Color(0xFF331B00);
-    return Container(
-      width: 133.w,
-      height: 148.w,
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: NetworkImage("https://via.placeholder.com/133x148"),
-          fit: BoxFit.fill,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border(
-          left: BorderSide(
-            width: 1,
-            strokeAlign: BorderSide.strokeAlignOutside,
-            color: borderColor,
+    return CachedNetworkImage(
+      imageUrl: ref
+          .watch(
+              speakerDetailsViewModelProvider.select((value) => value.speaker))
+          .avatar,
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          width: 133.w,
+          height: 148.w,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+            borderRadius: BorderRadius.circular(16),
+            border: Border(
+              left: BorderSide(
+                width: 1,
+                strokeAlign: BorderSide.strokeAlignOutside,
+                color: borderColor,
+              ),
+              top: BorderSide(
+                width: 1,
+                strokeAlign: BorderSide.strokeAlignOutside,
+                color: borderColor,
+              ),
+              right: BorderSide(
+                width: 6,
+                strokeAlign: BorderSide.strokeAlignOutside,
+                color: borderColor,
+              ),
+              bottom: BorderSide(
+                width: 6,
+                strokeAlign: BorderSide.strokeAlignOutside,
+                color: borderColor,
+              ),
+            ),
           ),
-          top: BorderSide(
-            width: 1,
-            strokeAlign: BorderSide.strokeAlignOutside,
-            color: borderColor,
-          ),
-          right: BorderSide(
-            width: 6,
-            strokeAlign: BorderSide.strokeAlignOutside,
-            color: borderColor,
-          ),
-          bottom: BorderSide(
-            width: 6,
-            strokeAlign: BorderSide.strokeAlignOutside,
-            color: borderColor,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
