@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants.dart';
 import '../../../core/enums/devfest_day.dart';
 import '../../../core/icons.dart';
-import '../../../core/images.dart';
 import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/providers/providers.dart';
 import '../../../core/router/routes.dart';
@@ -18,7 +17,6 @@ import '../../../core/widgets/widgets.dart';
 import '../../home/pages/home.dart';
 import '../../home/widgets/schedule_tile.dart';
 import '../../home/widgets/speakers_chip.dart';
-import '../../home/widgets/sponsors_chip.dart';
 import '../../schedule/application/controllers.dart';
 import '../../schedule/application/sessions/view_model.dart';
 import '../../speakers/application/application.dart';
@@ -91,15 +89,13 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     Constants.smallVerticalGutter.verticalSpace,
                     Text(
                       'Welcome to DevFest Lagos 2023 🥳',
-                      style: DevFestTheme.of(context)
-                          .textTheme
-                          ?.body02
-                          ?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: isDark
-                                ? DevfestColors.grey80
-                                : DevfestColors.grey40,
-                          ),
+                      style:
+                          DevFestTheme.of(context).textTheme?.body02?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: isDark
+                                    ? DevfestColors.grey80
+                                    : DevfestColors.grey40,
+                              ),
                     ),
                   ],
                 ),
@@ -234,39 +230,6 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                     ),
                     icon: const Text(
                       'View Full Agenda',
-                      style: TextStyle(color: DevfestColors.blue),
-                    ),
-                  ),
-                ),
-                Text(
-                  'SPONSORS',
-                  style: DevFestTheme.of(context).textTheme?.body04,
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(top: 16).h,
-                  child: Row(
-                    children: [
-                      ...[
-                        AppImages.googleLogo,
-                        AppImages.spotifyLogo,
-                        AppImages.uberLogo,
-                        AppImages.lyftLogo
-                      ].map(
-                        (sponsorImage) => SponsorsChip(image: sponsorImage),
-                      )
-                    ],
-                  ),
-                ),
-                Center(
-                  child: TextButton.icon(
-                    onPressed: () {},
-                    label: const Icon(
-                      Icons.arrow_forward,
-                      color: DevfestColors.blue,
-                    ),
-                    icon: const Text(
-                      'View All Sponsors',
                       style: TextStyle(color: DevfestColors.blue),
                     ),
                   ),
