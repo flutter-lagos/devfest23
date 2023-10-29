@@ -11,7 +11,8 @@ import 'speaker_details.dart';
 speakerRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => SpeakersPage(initialDay: initialDay),
       "${RoutePaths.speakers}/:id": (context, args) {
-        return const SpeakerDetailsPage();
+        final id = int.parse(args.pathArgs['id']!);
+        return SpeakerDetailsPage(speakerIndex: id);
       }
     });
 

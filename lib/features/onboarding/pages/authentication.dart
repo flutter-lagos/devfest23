@@ -66,7 +66,7 @@ class _AuthenticationHome extends ConsumerWidget {
         ),
         Constants.largeVerticalGutter.verticalSpace,
         Text(
-          'We need your email to RSVP',
+          'We need your ticket number to RSVP',
           style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
                 color: DevFestTheme.of(context).onBackgroundColor,
                 height: 1.2,

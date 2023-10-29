@@ -12,10 +12,12 @@ import '../../schedule/pages/session.dart';
 agendaRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => AgendaPage(initialDay: initialDay),
       "${RoutePaths.session}/:id": (context, args) {
-        return const SessionPage();
+        final id = int.parse(args.pathArgs['id']!);
+        return SessionPage(sessionIndex: id);
       },
       "${RoutePaths.speakers}/:id": (context, args) {
-        return const SpeakerDetailsPage();
+        final id = int.parse(args.pathArgs['id']!);
+        return SpeakerDetailsPage(speakerIndex: id);
       }
     });
 

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../../../core/constants.dart';
@@ -111,6 +114,51 @@ class SessionCategoryChip extends ConsumerWidget {
                 .textTheme
                 ?.body03
                 ?.copyWith(color: contentColor),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SessionCategoryShimmerChip extends ConsumerWidget {
+  const SessionCategoryShimmerChip({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tileColor = () {
+      return ref.watch(isDarkProvider)
+          ? DevfestColors.darkbackground
+          : DevfestColors.background;
+    }();
+
+    final contentColor = () {
+      return DevfestColors.grey60;
+    }();
+    return AnimatedContainer(
+      height: 38.h,
+      duration: const Duration(milliseconds: 200),
+      padding: const EdgeInsets.symmetric(horizontal: 12).w,
+      decoration: ShapeDecoration(
+        color: tileColor,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 0.50, color: DevfestColors.grey60),
+          borderRadius: BorderRadius.circular(48),
+        ),
+      ),
+      child: Shimmer.fromColors(
+        baseColor: contentColor,
+        highlightColor: tileColor,
+        period: Constants.kAnimationDur,
+        child: Center(
+          child: Container(
+            height: 16,
+            width: Random().nextInt(40) + 60, // random width from 60 to 80
+            decoration: BoxDecoration(
+              color: contentColor,
+              borderRadius: const BorderRadius.all(
+                  Radius.circular(Constants.smallVerticalGutter)),
+            ),
           ),
         ),
       ),

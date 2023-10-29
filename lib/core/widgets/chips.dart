@@ -19,7 +19,11 @@ Widget devfestSessionChip(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(child: SessionTimeChip(sessionTime: DateTime.now())),
+        Align(
+          child: SessionTimeChip(
+              sessionTime:
+                  SessionTimeChip._timeOfDayFormat.format(DateTime.now())),
+        ),
         const SizedBox(height: Constants.verticalGutter),
         const Align(child: SessionVenueChip(venue: 'Entrance')),
         const SizedBox(height: Constants.verticalGutter),
@@ -42,7 +46,7 @@ Widget devfestSessionChip(BuildContext context) {
 class SessionTimeChip extends StatelessWidget {
   const SessionTimeChip({super.key, required this.sessionTime});
 
-  final DateTime sessionTime;
+  final String sessionTime;
 
   static final _timeOfDayFormat = DateFormat.jm();
 
@@ -68,7 +72,7 @@ class SessionTimeChip extends StatelessWidget {
           ),
           Constants.horizontalGutter.horizontalSpace,
           Text(
-            _timeOfDayFormat.format(sessionTime),
+            sessionTime,
             style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
                 fontWeight: FontWeight.w500, color: DevfestColors.grey0),
           ),
