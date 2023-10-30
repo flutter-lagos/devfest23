@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../core/enums/tab_item.dart';
 import '../../core/images.dart';
 import '../../core/router/navigator.dart';
 import '../../core/router/routes.dart';
@@ -23,6 +26,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 2), () {
+        if (FirebaseAuth.instance.currentUser != null) {
+          context.pushNamedAndClear('/app/${TabItem.home.name}');
+          return;
+        }
         context.goReplace(RoutePaths.onboarding);
       });
     });

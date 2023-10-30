@@ -7,6 +7,10 @@ import '../network/network.dart';
 abstract interface class DevfestRepository {
   const DevfestRepository();
 
+  Future<EitherExceptionOr<void>> logout();
+
+  Future<EitherExceptionOr<String>> rsvpLogin(LoginRequestDto dto);
+
   Future<EitherExceptionOr<AgendaResponseDto>> fetchAgendas();
 
   Future<EitherExceptionOr<SpeakersResponseDto>> fetchSpeakers();

@@ -3,6 +3,7 @@ export 'bottom_nav.dart';
 export 'buttons.dart';
 export 'switcher.dart';
 export 'loading_widgets.dart';
+export 'on_screen_loader.dart';
 
 abstract final class DevfestButtons {}
 

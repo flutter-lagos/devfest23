@@ -104,7 +104,7 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
                                 url: ref.watch(speakerProvider).twitter
                               ),
                               (
-                                icon: const LinkedIn(),
+                                icon: const Linkedin(),
                                 url: ref.watch(speakerProvider).linkedIn
                               ),
                               (

@@ -73,15 +73,18 @@ class _AppHomeState extends ConsumerState<AppHome>
             MoreView(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'refresh button',
-          onPressed: _userInfoCalls,
-          backgroundColor: DevFestTheme.of(context).inverseBackgroundColor,
-          child: Icon(
-            Icons.refresh_rounded,
-            color: DevFestTheme.of(context).backgroundColor,
-          ),
-        ),
+        floatingActionButton: ref.watch(appCurrentTab) == 4
+            ? null
+            : FloatingActionButton(
+                tooltip: 'refresh button',
+                onPressed: _userInfoCalls,
+                backgroundColor:
+                    DevFestTheme.of(context).inverseBackgroundColor,
+                child: Icon(
+                  Icons.refresh_rounded,
+                  color: DevFestTheme.of(context).backgroundColor,
+                ),
+              ),
         bottomNavigationBar: DevfestBottomNav(
           index: ref.watch(appCurrentTab),
           items: const [
