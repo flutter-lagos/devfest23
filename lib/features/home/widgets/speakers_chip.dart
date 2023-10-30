@@ -133,6 +133,8 @@ class SpeakersChip extends ConsumerWidget {
                                   ? DevfestColors.grey100
                                   : DevfestColors.grey0,
                             ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(

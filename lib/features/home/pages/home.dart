@@ -1,3 +1,4 @@
+import 'package:devfest23/features/favourites/application/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,7 +9,9 @@ import '../../../core/widgets/widgets.dart';
 import '../../agenda/pages/agenda_base.dart';
 import '../../favourites/pages/favourites_base.dart';
 import '../../more/pages/more_base.dart';
+import '../../schedule/application/sessions/view_model.dart';
 import '../../schedule/pages/schedule_base.dart';
+import '../../speakers/application/application.dart';
 import '../../speakers/page/speakers_base.dart';
 
 late final TabController pageController;
@@ -36,9 +39,19 @@ class _AppHomeState extends ConsumerState<AppHome>
       ref
           .watch(appCurrentTab.notifier)
           .update((state) => state = widget.tab.index);
+      _userInfoCalls();
     });
 
     super.initState();
+  }
+
+  Future _userInfoCalls() {
+    return Future.wait([
+      ref.read(scheduleViewModelProvider.notifier).fetchSessions(),
+      ref.read(speakersViewModelProvider.notifier).fetchSpeakers(),
+      ref.read(speakersViewModelProvider.notifier).fetchSessionCategories(),
+      ref.read(rsvpSessionsViewModelProvider.notifier).fetchRSVPSessions(),
+    ]);
   }
 
   @override
@@ -59,6 +72,15 @@ class _AppHomeState extends ConsumerState<AppHome>
             FavouritesView(),
             MoreView(),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'refresh button',
+          onPressed: _userInfoCalls,
+          backgroundColor: DevFestTheme.of(context).inverseBackgroundColor,
+          child: Icon(
+            Icons.refresh_rounded,
+            color: DevFestTheme.of(context).backgroundColor,
+          ),
         ),
         bottomNavigationBar: DevfestBottomNav(
           index: ref.watch(appCurrentTab),

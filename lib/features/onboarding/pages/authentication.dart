@@ -103,6 +103,7 @@ class _AuthenticationHome extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+
     final color =
         ref.watch(isDarkProvider) ? DevfestColors.grey80 : DevfestColors.grey0;
     var auth = AuthService();

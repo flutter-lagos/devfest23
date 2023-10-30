@@ -1,3 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:devfest23/core/data/data.dart';
+import 'package:devfest23/features/schedule/application/application.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/widgets/chips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,51 +14,29 @@ import '../../../core/widgets/widgets.dart';
 
 enum SessionStatus { notStarted, ongoing, completed }
 
-class SessionInfo {
-  final String title;
-  final String host;
-  final int slotsLeft;
-  final String venue;
-  final DateTime sessionTime;
-  final bool isGeneralSession;
-  final String description;
-  final SessionStatus status;
+class SessionPage extends ConsumerStatefulWidget {
+  const SessionPage({super.key, required this.sessionIndex});
 
-  const SessionInfo({
-    required this.title,
-    required this.host,
-    required this.slotsLeft,
-    required this.venue,
-    required this.sessionTime,
-    required this.isGeneralSession,
-    required this.description,
-    required this.status,
-  });
-}
-
-class SessionPage extends StatefulWidget {
-  const SessionPage({super.key});
+  final int sessionIndex;
 
   @override
-  State<SessionPage> createState() => _SessionPageState();
+  ConsumerState<SessionPage> createState() => _SessionPageState();
 }
 
-class _SessionPageState extends State<SessionPage> {
-  static SessionInfo get _speakerSession => SessionInfo(
-        title: 'Understanding the importance of creativity',
-        host: 'Aise Idahor',
-        venue: 'Hall A',
-        slotsLeft: 100,
-        sessionTime: DateTime.now().subtract(const Duration(minutes: 30)),
-        isGeneralSession: false,
-        description:
-            'Wake up to reality! Nothing ever goes as planned in this accursed world. The longer you live, the more you realize that the only things that truly exist in this reality are merely pain, suffering and futility. Listen, everywhere you look in this world, wherever there is light, there will always be shadows to be found as well.',
-        status: SessionStatus.completed,
-      );
+class _SessionPageState extends ConsumerState<SessionPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+      ref
+          .read(sessionDetailsViewModelProvider.notifier)
+          .initialiseSession(ref.read(sessionsProvider)[widget.sessionIndex]);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final session = _speakerSession;
     return Scaffold(
       backgroundColor: DevFestTheme.of(context).backgroundColor,
       appBar: AppBar(
@@ -67,9 +50,9 @@ class _SessionPageState extends State<SessionPage> {
         padding:
             const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
                 .w,
-        child: session.isGeneralSession
-            ? GeneralSessionPage(info: session)
-            : SpeakerSessionPage(info: session),
+        child: ref.watch(sessionProvider).category.isEmpty
+            ? GeneralSessionPage(info: ref.watch(sessionProvider))
+            : SpeakerSessionPage(info: ref.watch(sessionProvider)),
       ),
     );
   }
@@ -78,7 +61,7 @@ class _SessionPageState extends State<SessionPage> {
 class GeneralSessionPage extends StatelessWidget {
   const GeneralSessionPage({super.key, required this.info});
 
-  final SessionInfo info;
+  final Session info;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +69,10 @@ class GeneralSessionPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (info.status != SessionStatus.notStarted) ...[
-            _SessionStatus(status: info.status),
-            Constants.largeVerticalGutter.verticalSpace,
-          ],
+          // if (info.status != SessionStatus.notStarted) ...[
+          //   _SessionStatus(status: info.status),
+          //   Constants.largeVerticalGutter.verticalSpace,
+          // ],
           _TitleSection(info: info),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -98,9 +81,9 @@ class GeneralSessionPage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SessionTimeChip(sessionTime: info.sessionTime),
+                // SessionTimeChip(sessionTime: info.sessionTime),
                 Constants.horizontalGutter.verticalSpace,
-                SessionVenueChip(venue: info.venue),
+                SessionVenueChip(venue: info.hall),
               ],
             ),
           ),
@@ -111,16 +94,16 @@ class GeneralSessionPage extends StatelessWidget {
   }
 }
 
-class SpeakerSessionPage extends StatefulWidget {
+class SpeakerSessionPage extends ConsumerStatefulWidget {
   const SpeakerSessionPage({super.key, required this.info});
 
-  final SessionInfo info;
+  final Session info;
 
   @override
-  State<SpeakerSessionPage> createState() => _SpeakerSessionPageState();
+  ConsumerState<SpeakerSessionPage> createState() => _SpeakerSessionPageState();
 }
 
-class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
+class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
   bool isFavourite = false;
 
   @override
@@ -136,12 +119,12 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SessionTimeLeftChip(
-                      minuteLeft: DateTime.now()
-                          .difference(widget.info.sessionTime)
-                          .inMinutes,
-                    ),
-                    SessionSlotsChip(slotsLeft: widget.info.slotsLeft),
+                    // SessionTimeLeftChip(
+                    //   minuteLeft: DateTime.now()
+                    //       .difference(widget.info.sessionTime)
+                    //       .inMinutes,
+                    // ),
+                    SessionSlotsChip(slotsLeft: widget.info.slot),
                   ],
                 ),
                 Constants.largeVerticalGutter.verticalSpace,
@@ -153,13 +136,13 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SessionTimeChip(sessionTime: widget.info.sessionTime),
+                      SessionTimeChip(sessionTime: widget.info.scheduledAt),
                       Constants.horizontalGutter.horizontalSpace,
-                      SessionVenueChip(venue: widget.info.venue),
-                      if (widget.info.status != SessionStatus.notStarted) ...[
-                        Constants.horizontalGutter.horizontalSpace,
-                        _SessionStatus(status: widget.info.status),
-                      ],
+                      SessionVenueChip(venue: widget.info.hall),
+                      // if (widget.info.status != SessionStatus.notStarted) ...[
+                      //   Constants.horizontalGutter.horizontalSpace,
+                      //   _SessionStatus(status: widget.info.status),
+                      // ],
                     ],
                   ),
                 ),
@@ -176,9 +159,9 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
         DevfestFavouriteButton(
           isFavourite: isFavourite,
           onPressed: () {
-            setState(() {
-              isFavourite = !isFavourite;
-            });
+            ref
+                .read(sessionDetailsViewModelProvider.notifier)
+                .reserveSessionOnTap();
           },
         ),
         Constants.largeVerticalGutter.verticalSpace,
@@ -190,7 +173,7 @@ class _SpeakerSessionPageState extends State<SpeakerSessionPage> {
 class _TitleSection extends StatelessWidget {
   const _TitleSection({required this.info});
 
-  final SessionInfo info;
+  final Session info;
 
   @override
   Widget build(BuildContext context) {
@@ -218,17 +201,31 @@ class _TitleSection extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: 32.w,
-              width: 32.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: DevfestColors.green, width: 2),
+            CachedNetworkImage(
+              imageUrl: info.speakerImage,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              imageBuilder: (context, imageProvider) => Container(
+                height: 32.w,
+                width: 32.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    color: DevfestColors.green,
+                    width: 2,
+                  ),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ),
             Constants.horizontalGutter.horizontalSpace,
             Text(
-              info.host,
+              info.owner,
               style: DevFestTheme.of(context)
                   .textTheme
                   ?.body02
@@ -244,7 +241,7 @@ class _TitleSection extends StatelessWidget {
 class _DescriptionSection extends StatelessWidget {
   const _DescriptionSection({required this.info});
 
-  final SessionInfo info;
+  final Session info;
 
   @override
   Widget build(BuildContext context) {
@@ -270,8 +267,8 @@ class _DescriptionSection extends StatelessWidget {
   }
 }
 
-class _SessionStatus extends StatelessWidget {
-  const _SessionStatus({required this.status});
+class SessionStatusWidget extends StatelessWidget {
+  const SessionStatusWidget({super.key, required this.status});
 
   final SessionStatus status;
 

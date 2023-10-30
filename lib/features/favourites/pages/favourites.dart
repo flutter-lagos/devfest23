@@ -1,3 +1,6 @@
+import 'package:devfest23/features/favourites/application/controllers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/constants.dart';
 import '../../../core/icons.dart';
 import '../../../core/router/navigator.dart';
@@ -13,16 +16,16 @@ import '../../../core/router/routes.dart';
 import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/schedule_tile.dart';
 
-class FavouritesPage extends StatefulWidget {
+class FavouritesPage extends ConsumerStatefulWidget {
   const FavouritesPage({super.key, required this.initialDay});
 
   final DevfestDay initialDay;
 
   @override
-  State<FavouritesPage> createState() => _FavouritesPageState();
+  ConsumerState<FavouritesPage> createState() => _FavouritesPageState();
 }
 
-class _FavouritesPageState extends State<FavouritesPage> {
+class _FavouritesPageState extends ConsumerState<FavouritesPage> {
   late DevfestDay day;
   late ScrollController _scrollController;
   Map<int, double> scrollOffsets = {};
@@ -135,7 +138,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               );
             },
             separatorBuilder: (_, __) => 14.verticalSpace,
-            itemCount: 5,
+            itemCount: ref.watch(rsvpSessionsProvider).length,
           ),
           ListView.separated(
             key: const PageStorageKey<String>('Day2'),
@@ -151,7 +154,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               );
             },
             separatorBuilder: (_, __) => 14.verticalSpace,
-            itemCount: 5,
+            itemCount: ref.watch(rsvpSessionsProvider).length,
           ),
         ],
       ),

@@ -1,6 +1,4 @@
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
-import 'package:devfest23/features/speakers/application/controllers.dart';
-import 'package:devfest23/features/speakers/application/view_model.dart';
 
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
@@ -18,6 +16,7 @@ import '../../../core/widgets/schedule_tab_bar.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/session_category_chip.dart';
+import '../application/application.dart';
 
 class SpeakersPage extends ConsumerStatefulWidget {
   const SpeakersPage({super.key, required this.initialDay});
@@ -32,16 +31,6 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
   late DevfestDay day;
   late ScrollController _scrollController;
   Map<int, double> scrollOffsets = {};
-  String activeTab = 'All Speakers';
-
-  List<String> allCategories = [
-    'All Speakers',
-    'Mobile Development',
-    'Product Design',
-    'Cloud',
-    'Backend',
-    'Frontend'
-  ];
 
   @override
   void initState() {
@@ -52,10 +41,6 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
       });
 
     day = widget.initialDay;
-
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
-      ref.read(speakersViewModelProvider.notifier).fetchSpeakers();
-    });
   }
 
   @override
@@ -114,20 +99,7 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                   const SizedBox(height: Constants.largeVerticalGutter),
                   SizedBox(
                     height: 38.h,
-                    child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final session = allCategories.elementAt(index);
-                          return SessionCategoryChip(
-                            onTap: () => setState(() {
-                              activeTab = session;
-                            }),
-                            tab: session,
-                            selectedTab: activeTab,
-                          );
-                        },
-                        separatorBuilder: (context, index) => 8.horizontalSpace,
-                        itemCount: allCategories.length),
+                    child: const _Categories(),
                   )
                 ],
               ),
@@ -233,25 +205,44 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
   }
 }
 
-class FetchingSpeakers extends StatelessWidget {
-  const FetchingSpeakers({super.key});
+class _Categories extends ConsumerWidget {
+  const _Categories();
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding:
-          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
-      itemBuilder: (context, index) {
-        var color = [
-          const Color(0xfff6eeee),
-          DevfestColors.greenSecondary,
-          DevfestColors.blueSecondary,
-          const Color(0xffffafff)
-        ].elementAt(index > 3 ? 3 : index);
-        return SpeakerShimmerChip(moodColor: color);
-      },
-      separatorBuilder: (_, __) => const SizedBox(height: 14),
-      itemCount: 5,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return switch (ref.watch(speakersViewModelProvider
+        .select((value) => value.categoriesUiState.viewState))) {
+      ViewState.loading => const FetchCategories(),
+      _ => ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return SessionCategoryChip(
+                selectedTab: ref.watch(speakersViewModelProvider
+                    .select((value) => value.selectedCategory)),
+                tab: 'All Speakers',
+                onTap: () {
+                  ref
+                      .read(speakersViewModelProvider.notifier)
+                      .filterSpeakersByCategory('All Speakers');
+                },
+              );
+            }
+            final category = ref.watch(categoriesProvider)[index - 1];
+            return SessionCategoryChip(
+              tab: category.name,
+              selectedTab: ref.watch(speakersViewModelProvider
+                  .select((value) => value.selectedCategory)),
+              onTap: () {
+                ref
+                    .read(speakersViewModelProvider.notifier)
+                    .filterSpeakersByCategory(category.name);
+              },
+            );
+          },
+          separatorBuilder: (context, index) => 8.horizontalSpace,
+          itemCount: ref.watch(categoriesProvider).length + 1,
+        ),
+    };
   }
 }
