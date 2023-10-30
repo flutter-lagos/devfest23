@@ -23,7 +23,7 @@ class AuthViewModel extends StateNotifier<AuthUiState> {
     );
   }
 
-  Future<void> continueLoginOnTap() async {
+  Future<void> loginOnTap() async {
     if (state.form.isValid) {
       await launch(state.ref, (model) async {
         state = model.setState(state.copyWith(viewState: ViewState.loading));
@@ -34,6 +34,8 @@ class AuthViewModel extends StateNotifier<AuthUiState> {
           (right) => state.copyWith(viewState: ViewState.success),
         ));
       }, displayError: false);
+
+      state = state.copyWith(viewState: ViewState.idle);
       return;
     }
 

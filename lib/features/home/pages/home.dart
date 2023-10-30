@@ -14,7 +14,7 @@ import '../../schedule/pages/schedule_base.dart';
 import '../../speakers/application/application.dart';
 import '../../speakers/page/speakers_base.dart';
 
-late final TabController pageController;
+late TabController pageController;
 
 class AppHome extends ConsumerStatefulWidget {
   const AppHome({
@@ -79,10 +79,10 @@ class _AppHomeState extends ConsumerState<AppHome>
                 tooltip: 'refresh button',
                 onPressed: _userInfoCalls,
                 backgroundColor:
-                    DevFestTheme.of(context).inverseBackgroundColor,
+                    DevFestTheme.of(context).buttonTheme?.backgroundColor,
                 child: Icon(
                   Icons.refresh_rounded,
-                  color: DevFestTheme.of(context).backgroundColor,
+                  color: DevFestTheme.of(context).buttonTheme?.iconColor,
                 ),
               ),
         bottomNavigationBar: DevfestBottomNav(

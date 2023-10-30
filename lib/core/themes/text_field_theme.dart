@@ -15,25 +15,26 @@ class DevfestTextFieldTheme extends ThemeExtension<DevfestTextFieldTheme> {
 
   const DevfestTextFieldTheme.light()
       : this._(
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              borderSide: BorderSide(color: DevfestColors.grey40),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              borderSide: BorderSide(color: DevfestColors.grey40),
-            ),
-            hintStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: DevfestColors.grey40,
-            ));
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderSide: BorderSide(color: DevfestColors.grey90, width: 1.5),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderSide: BorderSide(color: DevfestColors.grey40, width: 1.5),
+          ),
+          hintStyle: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: DevfestColors.grey40,
+          ),
+        );
 
   const DevfestTextFieldTheme.dark()
       : this._(
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16)),
-              borderSide: BorderSide(color: DevfestColors.grey100),
+              borderSide: BorderSide(color: DevfestColors.grey90),
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -44,18 +45,14 @@ class DevfestTextFieldTheme extends ThemeExtension<DevfestTextFieldTheme> {
               fontWeight: FontWeight.w500,
               color: DevfestColors.grey100,
             ));
-  @override
-  ThemeExtension<DevfestTextFieldTheme> copyWith({
-     InputBorder? border,
-   InputBorder? focusedBorder,
-   TextStyle? hintStyle
-  }) {
 
+  @override
+  ThemeExtension<DevfestTextFieldTheme> copyWith(
+      {InputBorder? border, InputBorder? focusedBorder, TextStyle? hintStyle}) {
     return DevfestTextFieldTheme._(
-    border: border??this.border,
-    focusedBorder: focusedBorder??this.focusedBorder,
-    hintStyle: hintStyle??this.hintStyle
-  );
+        border: border ?? this.border,
+        focusedBorder: focusedBorder ?? this.focusedBorder,
+        hintStyle: hintStyle ?? this.hintStyle);
   }
 
   @override

@@ -4,6 +4,7 @@ export 'buttons.dart';
 export 'switcher.dart';
 export 'loading_widgets.dart';
 export 'on_screen_loader.dart';
+export 'text_field.dart';
 
 abstract final class DevfestButtons {}
 

@@ -46,8 +46,7 @@ void main() {
       form = form.copyWith(emailAddress: EmailAddress('johndoe@gmail.com'));
 
       expect(form.isValid, false);
-      expect(
-          form.formValidationError, 'Password(Ticket Number) cannot be empty');
+      expect(form.formValidationError, 'Ticket Number cannot be empty');
       expect(form.emailAddress.value, 'johndoe@gmail.com');
 
       form = form.copyWith(password: Password('123456'));

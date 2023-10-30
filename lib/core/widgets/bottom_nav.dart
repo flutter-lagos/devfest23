@@ -70,8 +70,13 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
               unselectedColor: widget.unselectedColor,
             ),
       ),
-      child: SizedBox(
+      child: Container(
         height: 88,
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(color: DevfestColors.grey90, width: 2),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(

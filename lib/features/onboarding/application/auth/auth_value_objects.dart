@@ -95,7 +95,7 @@ final class Password extends Equatable {
     String failure = '';
 
     if (input.isEmpty) {
-      failure = 'Password(Ticket Number) cannot be empty';
+      failure = 'Ticket Number cannot be empty';
     }
 
     if (failure.isNotEmpty) return Password._(input, failure);

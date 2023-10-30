@@ -46,13 +46,13 @@ class _AuthenticationPageState extends ConsumerState<AuthenticationPage> {
         case (ViewState.error, final exception):
           if (exception is UserNotRegisteredException) {
             context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.pending.name}',
+              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.failed.name}',
             );
           }
 
           if (exception is InvalidTicketIdException) {
             context.go(
-              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.failed.name}',
+              '${RoutePaths.onboarding}/${RoutePaths.auth}?result=${AuthState.pending.name}',
             );
           }
         case _:
@@ -102,80 +102,95 @@ class _AuthenticationHome extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return SingleChildScrollView(
-      child: Form(
-        autovalidateMode: ref.watch(showFormErrorsProvider)
-            ? AutovalidateMode.always
-            : AutovalidateMode.disabled,
-        child: FocusTraversalGroup(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleTile(
-                emoji: '🛡️',
-                title: 'Authentication',
-                backgroundColor: Color(0xfffde293),
-              ),
-              Constants.largeVerticalGutter.verticalSpace,
-              Text(
-                'We need your ticket number to RSVP',
-                style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
-                      color: DevFestTheme.of(context).onBackgroundColor,
-                      height: 1.2,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const TitleTile(
+          emoji: '🛡️',
+          title: 'Authentication',
+          backgroundColor: Color(0xfffde293),
+        ),
+        Constants.largeVerticalGutter.verticalSpace,
+        Expanded(
+          child: SingleChildScrollView(
+            child: Form(
+              autovalidateMode: ref.watch(showFormErrorsProvider)
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    Text(
+                      'We need your ticket number to RSVP',
+                      style: DevFestTheme.of(context)
+                          .textTheme
+                          ?.headline02
+                          ?.copyWith(
+                            color: DevFestTheme.of(context).onBackgroundColor,
+                            height: 1.2,
+                          ),
                     ),
-              ),
-              Constants.smallVerticalGutter.verticalSpace,
-              Padding(
-                padding: const EdgeInsets.only(right: 50.0),
-                child: Text(
-                  'To continue using the app to RSVP for your favourite talks we need to check if you are registered for the event.',
-                  style: DevFestTheme.of(context).textTheme?.body02?.copyWith(
-                      color: ref.watch(authSubtitleTextColorProvider)),
+                    Constants.smallVerticalGutter.verticalSpace,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 50.0),
+                      child: Text(
+                        'To continue using the app to RSVP for your favourite talks we need to check if you are registered for the event.',
+                        style: DevFestTheme.of(context)
+                            .textTheme
+                            ?.body02
+                            ?.copyWith(
+                                color:
+                                    ref.watch(authSubtitleTextColorProvider)),
+                      ),
+                    ),
+                    Constants.verticalGutter.verticalSpace,
+                    DevfestTextFormField(
+                      title: 'Email Address',
+                      info: 'Use the email you used to register',
+                      hint: 'Enter your email address',
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onChanged: ref
+                          .read(authViewModelProvider.notifier)
+                          .emailAddressOnChanged,
+                      validator: (_) => ref
+                          .read(authViewModelProvider)
+                          .form
+                          .emailAddress
+                          .validationError,
+                    ),
+                    Constants.smallVerticalGutter.verticalSpace,
+                    DevfestTextFormField(
+                      title: 'Ticket Number',
+                      info: 'Ticket number came with the email we sent',
+                      hint: 'Enter your ticket number',
+                      textInputAction: TextInputAction.done,
+                      onChanged: ref
+                          .read(authViewModelProvider.notifier)
+                          .passwordOnChanged,
+                      validator: (_) => ref
+                          .read(authViewModelProvider)
+                          .form
+                          .password
+                          .validationError,
+                    ),
+                  ],
                 ),
               ),
-              Constants.verticalGutter.verticalSpace,
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                onChanged: ref
-                    .read(authViewModelProvider.notifier)
-                    .emailAddressOnChanged,
-                validator: (_) => ref
-                    .read(authViewModelProvider)
-                    .form
-                    .emailAddress
-                    .validationError,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-              ),
-              Constants.verticalGutter.verticalSpace,
-              TextFormField(
-                textInputAction: TextInputAction.done,
-                onChanged:
-                    ref.read(authViewModelProvider.notifier).passwordOnChanged,
-                validator: (_) => ref
-                    .read(authViewModelProvider)
-                    .form
-                    .password
-                    .validationError,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: 'This is your ticket ID',
-                ),
-              ),
-              (Constants.largeVerticalGutter * 2).verticalSpace,
-              DevfestOutlinedButton(
-                title: const Text('Continue Login'),
-                onPressed: ref //
-                    .read(authViewModelProvider.notifier) //
-                    .continueLoginOnTap,
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        DevfestFilledButton(
+          title: const Text('Login'),
+          onPressed: () {
+            FocusScope.of(context).unfocus();
+            ref //
+                .read(authViewModelProvider.notifier) //
+                .loginOnTap();
+          },
+        ),
+        (MediaQuery.viewPaddingOf(context).bottom + 10).verticalSpace,
+      ],
     );
   }
 }
@@ -185,41 +200,43 @@ class _AuthenticationSuccess extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const TitleTile(
-          emoji: '🥳',
-          title: 'Authentication Successful!',
-          backgroundColor: Color(0xff81c995),
-        ),
-        Constants.largeVerticalGutter.verticalSpace,
-        Text(
-          'We have confirmed your email!',
-          style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
-                color: DevFestTheme.of(context).onBackgroundColor,
-                height: 1.2,
-              ),
-        ),
-        Constants.smallVerticalGutter.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.only(right: 50.0),
-          child: Text(
-            'We are really glad to have you here with us at another DevFest! Make memories and have fun 🤩',
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body02
-                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleTile(
+            emoji: '🥳',
+            title: 'Authentication Successful!',
+            backgroundColor: Color(0xff81c995),
           ),
-        ),
-        (Constants.largeVerticalGutter * 2).verticalSpace,
-        DevfestFilledButton(
-          title: const Text('Continue to App'),
-          onPressed: () {
-            context.pushNamedAndClear('/app/${TabItem.home.name}');
-          },
-        ),
-      ],
+          Constants.largeVerticalGutter.verticalSpace,
+          Text(
+            'We have confirmed your email!',
+            style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
+                  color: DevFestTheme.of(context).onBackgroundColor,
+                  height: 1.2,
+                ),
+          ),
+          Constants.smallVerticalGutter.verticalSpace,
+          Padding(
+            padding: const EdgeInsets.only(right: 50.0),
+            child: Text(
+              'We are really glad to have you here with us at another DevFest! Make memories and have fun 🤩',
+              style: DevFestTheme.of(context)
+                  .textTheme
+                  ?.body02
+                  ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+            ),
+          ),
+          const Spacer(),
+          DevfestFilledButton(
+            title: const Text('Continue to App'),
+            onPressed: () {
+              context.pushNamedAndClear('/app/${TabItem.home.name}');
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -229,48 +246,50 @@ class _AuthenticationPending extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const TitleTile(
-          emoji: '⌛',
-          title: 'Authentication Pending',
-          backgroundColor: Color(0xfffde293),
-        ),
-        Constants.largeVerticalGutter.verticalSpace,
-        Text(
-          'It seems you have not registered',
-          style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
-                color: DevFestTheme.of(context).onBackgroundColor,
-                height: 1.2,
-              ),
-        ),
-        Constants.smallVerticalGutter.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.only(right: 50.0),
-          child: Text(
-            'Your email is not in our database for now, but registration is still ongoing oh! Register now 😍',
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body02
-                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleTile(
+            emoji: '⌛',
+            title: 'Authentication Pending',
+            backgroundColor: Color(0xfffde293),
           ),
-        ),
-        (Constants.largeVerticalGutter * 2).verticalSpace,
-        DevfestFilledButton(
-          title: const Text('Register Now'),
-          onPressed: () {
-            // TODO: register now
-          },
-        ),
-        Constants.verticalGutter.verticalSpace,
-        DevfestOutlinedButton(
-          title: const Text('Maybe Later'),
-          onPressed: () {
-            context.pushNamedAndClear('/app/${TabItem.home.name}');
-          },
-        ),
-      ],
+          Constants.largeVerticalGutter.verticalSpace,
+          Text(
+            'It seems you have not registered',
+            style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
+                  color: DevFestTheme.of(context).onBackgroundColor,
+                  height: 1.2,
+                ),
+          ),
+          Constants.smallVerticalGutter.verticalSpace,
+          Padding(
+            padding: const EdgeInsets.only(right: 50.0),
+            child: Text(
+              'Your email is not in our database for now, but registration is still ongoing oh! Register now 😍',
+              style: DevFestTheme.of(context)
+                  .textTheme
+                  ?.body02
+                  ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+            ),
+          ),
+          const Spacer(),
+          DevfestFilledButton(
+            title: const Text('Register Now'),
+            onPressed: () {
+              // TODO: register now
+            },
+          ),
+          Constants.verticalGutter.verticalSpace,
+          DevfestOutlinedButton(
+            title: const Text('Maybe Later'),
+            onPressed: () {
+              context.pushNamedAndClear('/app/${TabItem.home.name}');
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -280,41 +299,43 @@ class _AuthenticationFailure extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const TitleTile(
-          emoji: '🥲',
-          title: 'Email Not Found',
-          backgroundColor: Color(0xfff28b82),
-        ),
-        Constants.largeVerticalGutter.verticalSpace,
-        Text(
-          'It seems you did not register',
-          style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
-                color: DevFestTheme.of(context).onBackgroundColor,
-                height: 1.2,
-              ),
-        ),
-        Constants.smallVerticalGutter.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.only(right: 50.0),
-          child: Text(
-            'Your email was not in our data base and sadly registration is closed. But, hey! Have an amazing DevFest 2023! 🥳',
-            style: DevFestTheme.of(context)
-                .textTheme
-                ?.body02
-                ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleTile(
+            emoji: '🥲',
+            title: 'Email Not Found',
+            backgroundColor: Color(0xfff28b82),
           ),
-        ),
-        (Constants.largeVerticalGutter * 2).verticalSpace,
-        DevfestFilledButton(
-          title: const Text('Proceed to App'),
-          onPressed: () {
-            context.pushNamedAndClear('/app/${TabItem.home.name}');
-          },
-        ),
-      ],
+          Constants.largeVerticalGutter.verticalSpace,
+          Text(
+            'It seems you did not register',
+            style: DevFestTheme.of(context).textTheme?.headline02?.copyWith(
+                  color: DevFestTheme.of(context).onBackgroundColor,
+                  height: 1.2,
+                ),
+          ),
+          Constants.smallVerticalGutter.verticalSpace,
+          Padding(
+            padding: const EdgeInsets.only(right: 50.0),
+            child: Text(
+              'Your email was not in our data base and sadly registration is closed. But, hey! Have an amazing DevFest 2023! 🥳',
+              style: DevFestTheme.of(context)
+                  .textTheme
+                  ?.body02
+                  ?.copyWith(color: ref.watch(authSubtitleTextColorProvider)),
+            ),
+          ),
+          const Spacer(),
+          DevfestFilledButton(
+            title: const Text('Proceed to App'),
+            onPressed: () {
+              context.pushNamedAndClear('/app/${TabItem.home.name}');
+            },
+          ),
+        ],
+      ),
     );
   }
 }
