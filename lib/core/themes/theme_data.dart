@@ -1,3 +1,5 @@
+import 'package:devfest23/core/themes/text_field_theme.dart';
+
 import 'bottom_nav_theme.dart';
 import 'button_theme.dart';
 import 'outlined_button_theme.dart';
@@ -12,6 +14,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
   final DevfestButtonTheme? buttonTheme;
   final DevfestOutlinedButtonTheme? outlinedButtonTheme;
   final DevfestBottomNavTheme? bottomNavTheme;
+  final DevfestTextFieldTheme? textFieldTheme;
   final Color? backgroundColor;
   final Color? onBackgroundColor;
   final Color? inverseBackgroundColor;
@@ -27,6 +30,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
     this.outlinedButtonTheme,
     this.bottomNavTheme,
     this.buttonTheme,
+    this.textFieldTheme
   });
 
   DevFestTheme.light()
@@ -38,6 +42,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.light(),
           bottomNavTheme: DevfestBottomNavTheme.light(),
           textTheme: DevfestTextTheme.responsive(),
+          textFieldTheme: DevfestTextFieldTheme.light()
         );
 
   DevFestTheme.dark()
@@ -49,6 +54,7 @@ class DevFestTheme extends ThemeExtension<DevFestTheme> {
           outlinedButtonTheme: const DevfestOutlinedButtonTheme.dark(),
           bottomNavTheme: DevfestBottomNavTheme.dark(),
           textTheme: DevfestTextTheme.responsive(),
+          textFieldTheme: DevfestTextFieldTheme.dark()
         );
 
   @override
