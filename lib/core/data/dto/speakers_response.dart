@@ -29,6 +29,9 @@ final class Speaker extends Equatable {
   final String avatar;
   final String email;
   final int order;
+  final String category;
+  final String currentSession;
+  final String currentSessionId;
 
   const Speaker({
     required this.twitter,
@@ -41,7 +44,27 @@ final class Speaker extends Equatable {
     required this.avatar,
     required this.email,
     required this.order,
+    required this.category,
+    required this.currentSession,
+    required this.currentSessionId,
   });
+
+  const Speaker.empty()
+      : this(
+          twitter: '',
+          github: '',
+          role: '',
+          organization: '',
+          name: '',
+          bio: '',
+          linkedIn: '',
+          avatar: '',
+          email: '',
+          order: 0,
+          category: '',
+          currentSession: '',
+          currentSessionId: '',
+        );
 
   factory Speaker.fromJson(Map<String, dynamic> json) => Speaker(
         twitter: json['twitter'] ?? '',
@@ -54,6 +77,9 @@ final class Speaker extends Equatable {
         avatar: json['avatar'] ?? '',
         email: json['email'] ?? '',
         order: json['order'] ?? 0,
+        category: json['category'] ?? '',
+        currentSession: json['currentSession'] ?? '',
+        currentSessionId: json['currentSessionId'] ?? '',
       );
 
   @override
@@ -68,5 +94,8 @@ final class Speaker extends Equatable {
         avatar,
         email,
         order,
+        category,
+        currentSession,
+        currentSessionId,
       ];
 }

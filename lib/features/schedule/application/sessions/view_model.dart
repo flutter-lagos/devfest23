@@ -1,13 +1,13 @@
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
-import 'package:devfest23/features/schedule/application/ui_state.dart';
+import 'package:devfest23/features/schedule/application/sessions/ui_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/data/data.dart';
+import '../../../../core/data/data.dart';
 
-class ScheduleViewModel extends StateNotifier<ScheduleUiState> {
+class SessionsViewModel extends StateNotifier<SessionsUiState> {
   final DevfestRepository _repo;
 
-  ScheduleViewModel(this._repo) : super(const ScheduleUiState.initial());
+  SessionsViewModel(this._repo) : super(const SessionsUiState.initial());
 
   Future<void> fetchSessions() async {
     await launch(state.ref, (model) async {
@@ -28,6 +28,6 @@ class ScheduleViewModel extends StateNotifier<ScheduleUiState> {
 }
 
 final scheduleViewModelProvider =
-    StateNotifierProvider.autoDispose<ScheduleViewModel, ScheduleUiState>(
-  (ref) => ScheduleViewModel(ref.read(devfestRepositoryProvider)),
+    StateNotifierProvider.autoDispose<SessionsViewModel, SessionsUiState>(
+  (ref) => SessionsViewModel(ref.read(devfestRepositoryProvider)),
 );

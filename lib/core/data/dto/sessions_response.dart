@@ -53,6 +53,25 @@ final class Session extends Equatable {
     required this.slot,
   });
 
+  const Session.empty()
+      : this(
+          owner: '',
+          level: '',
+          scheduledDuration: '',
+          description: '',
+          hall: '',
+          sessionId: '',
+          title: '',
+          category: '',
+          scheduledAt: '',
+          sessionFormat: '',
+          ownerEmail: '',
+          speakerImage: '',
+          tagLine: '',
+          availableSeats: 0,
+          slot: 0,
+        );
+
   factory Session.fromJson(Map<String, dynamic> json) => Session(
         owner: json['owner'] ?? '',
         level: json['level'] ?? '',

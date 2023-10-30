@@ -1,6 +1,6 @@
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 import 'package:devfest23/features/schedule/application/controllers.dart';
-import 'package:devfest23/features/schedule/application/view_model.dart';
+import 'package:devfest23/features/schedule/application/sessions/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/enums/devfest_day.dart';
@@ -41,10 +41,6 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
       });
 
     day = widget.initialDay;
-
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
-      ref.read(scheduleViewModelProvider.notifier).fetchSessions();
-    });
   }
 
   @override
@@ -57,6 +53,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   Widget build(BuildContext context) {
     return NestedScrollView(
       controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
       key: const PageStorageKey<String>('FavouritesPageScrollView'),
       headerSliverBuilder: (context, isScrolledUnder) {
         return [
@@ -128,7 +125,12 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         if (ref.watch(
                 scheduleViewModelProvider.select((value) => value.viewState)) ==
             ViewState.loading) {
-          return const FetchingSessions();
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+                    horizontal: Constants.horizontalMargin)
+                .w,
+            child: const FetchingSessions(),
+          );
         }
 
         return AnimatedIndexedStack(
@@ -143,7 +145,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               itemBuilder: (context, index) {
                 final session = ref.watch(sessionsProvider)[index];
                 return ScheduleTile(
-                 // isGeneral: ,
+                  isGeneral: session.category.isEmpty,
                   title: session.title,
                   speaker: session.owner,
                   time: session.scheduledDuration,
@@ -165,7 +167,15 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   .w,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                final session = ref.watch(sessionsProvider)[index];
                 return ScheduleTile(
+                  isGeneral: session.category.isEmpty,
+                  title: session.title,
+                  speaker: session.owner,
+                  time: session.scheduledDuration,
+                  venue: session.hall,
+                  category: session.category,
+                  speakerImage: session.speakerImage,
                   onTap: () {
                     context.go("${RoutePaths.session}/$index");
                   },
@@ -177,21 +187,6 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           ],
         );
       }(),
-    );
-  }
-}
-
-class FetchingSessions extends StatelessWidget {
-  const FetchingSessions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding:
-          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
-      itemBuilder: (context, index) => const ScheduleTileShimmer(),
-      separatorBuilder: (_, __) => const SizedBox(height: 14),
-      itemCount: 5,
     );
   }
 }

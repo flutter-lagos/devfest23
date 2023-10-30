@@ -15,7 +15,11 @@ abstract interface class DevfestRepository {
 
   Future<EitherExceptionOr> addToRSVP(AddToRSVPRequestDto dto);
 
-  Future<EitherExceptionOr> fetchRSVP();
+  Future<EitherExceptionOr> addMultipleRSVPs(AddMultipleRSVPRequestDto dto);
+
+  Future<EitherExceptionOr<SessionsResponseDto>> fetchRSVPSessions();
+
+  Future<EitherExceptionOr<CategoriesResponseDto>> fetchSessionCategories();
 }
 
 final devfestRepositoryProvider = Provider.autoDispose((ref) {

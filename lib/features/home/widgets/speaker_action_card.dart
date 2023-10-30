@@ -1,3 +1,4 @@
+import 'package:devfest23/core/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +30,14 @@ Widget devfestSpeakerActionCard(BuildContext context) {
 }
 
 class SpeakerActionCard extends ConsumerWidget {
-  const SpeakerActionCard({super.key});
+  const SpeakerActionCard({
+    super.key,
+    this.session = const Session.empty(),
+    this.reserveSessionOnTap,
+  });
+
+  final Session session;
+  final VoidCallback? reserveSessionOnTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,14 +56,14 @@ class SpeakerActionCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'MOBILE DEVELOPMENT',
+            session.category,
             style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
                   color: isDark ? DevfestColors.grey80 : DevfestColors.grey30,
                 ),
           ),
           Constants.smallVerticalGutter.verticalSpace,
           Text(
-            'Animations in Flutter and how to make them',
+            session.title,
             style: DevFestTheme.of(context).textTheme?.title02?.copyWith(
                   color: isDark ? DevfestColors.grey100 : DevfestColors.grey0,
                 ),
@@ -64,7 +72,7 @@ class SpeakerActionCard extends ConsumerWidget {
           Row(
             children: [
               Text(
-                '11:00 AM',
+                session.scheduledAt,
                 style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
                       color:
                           isDark ? DevfestColors.grey100 : DevfestColors.grey10,
@@ -81,7 +89,7 @@ class SpeakerActionCard extends ConsumerWidget {
                 ),
               ),
               Text(
-                'Hall A',
+                session.hall,
                 style: DevFestTheme.of(context).textTheme?.body03?.copyWith(
                       color:
                           isDark ? DevfestColors.grey80 : DevfestColors.grey10,
@@ -90,7 +98,10 @@ class SpeakerActionCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: Constants.verticalGutter),
-          DevfestFavouriteButton(onPressed: () {}),
+          DevfestFavouriteButton(
+            onPressed: reserveSessionOnTap ?? () {},
+            // TODO: Handle rsvped sessions.
+          ),
         ],
       ),
     );

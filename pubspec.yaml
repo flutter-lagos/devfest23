@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^3.3.0
   firebase_auth: ^4.12.0
   google_sign_in: ^6.1.5
+  url_launcher: ^6.2.1
+
 
 dev_dependencies:
   flutter_test:

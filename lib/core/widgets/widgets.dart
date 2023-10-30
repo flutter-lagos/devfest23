@@ -2,6 +2,7 @@ export 'animated_indexed_stack.dart';
 export 'bottom_nav.dart';
 export 'buttons.dart';
 export 'switcher.dart';
+export 'loading_widgets.dart';
 
 abstract final class DevfestButtons {}
 
