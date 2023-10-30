@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:iconoir_flutter/iconoir_flutter.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/icons.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/buttons.dart';
@@ -12,8 +11,7 @@ import '../widgets/title_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 import '../../../core/enums/tab_item.dart';
 import '../../../core/providers/providers.dart';
@@ -76,7 +74,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 }
 
 class _AuthenticationHome extends ConsumerWidget {
-  _AuthenticationHome(
+  const _AuthenticationHome(
       {required this.emailController, required this.ticketNoController});
   final TextEditingController emailController;
   final TextEditingController ticketNoController;
@@ -93,7 +91,7 @@ class _AuthenticationHome extends ConsumerWidget {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return const AlertDialog(
                 title: Text('Incorrect Ticket ID'),
               );
             });
@@ -105,7 +103,7 @@ class _AuthenticationHome extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final color =
         ref.watch(isDarkProvider) ? DevfestColors.grey80 : DevfestColors.grey0;
-    var auth = AuthService();
+   
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

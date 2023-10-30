@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextFieldWrapper extends StatelessWidget {
   const TextFieldWrapper(
-      {required this.title,
+      {
+        super.key,
+        required this.title,
       required this.controller,
       required this.hint,
       required this.info,

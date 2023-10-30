@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -13,16 +12,9 @@ class AuthService {
   }
 
   void signInWithEmailAndTicketNo(String email, String ticketNo) async {
-    try{
      await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: ticketNo);
-    }on FirebaseAuthException catch(e){
-      if(e.code=='user-not-found'){
-
-      }else if(e.code=='wrong-password'){
-       // showDialog(context: context, builder: builder)
-      }
-    }
+    
     
   }
 }
