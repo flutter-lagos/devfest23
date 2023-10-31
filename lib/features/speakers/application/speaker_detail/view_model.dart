@@ -7,8 +7,7 @@ import 'ui_state.dart';
 class SpeakerDetailsViewModel extends StateNotifier<SpeakerDetailsUiState> {
   final DevfestRepository _repo;
 
-  SpeakerDetailsViewModel(this._repo)
-      : super(const SpeakerDetailsUiState.initial());
+  SpeakerDetailsViewModel(this._repo) : super(SpeakerDetailsUiState.initial());
 
   void initialiseSpeaker(Speaker speaker) {
     state = state.copyWith(speaker: speaker);

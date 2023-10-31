@@ -1,3 +1,5 @@
+import 'package:devfest23/core/data/data.dart';
+
 import '../../../core/enums/devfest_day.dart';
 import '../../../core/router/module_provider.dart';
 import '../../../core/router/navigator.dart';
@@ -11,13 +13,11 @@ import '../../schedule/pages/session.dart';
 
 agendaRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => AgendaPage(initialDay: initialDay),
-      "${RoutePaths.session}/:id": (context, args) {
-        final id = int.parse(args.pathArgs['id']!);
-        return SessionPage(sessionIndex: id);
+      RoutePaths.session: (context, args) {
+        return SessionPage(session: args.body as Session);
       },
-      "${RoutePaths.speakers}/:id": (context, args) {
-        final id = int.parse(args.pathArgs['id']!);
-        return SpeakerDetailsPage(speakerIndex: id);
+      RoutePaths.speakers: (context, args) {
+        return SpeakerDetailsPage(speaker: args.body as Speaker);
       }
     });
 

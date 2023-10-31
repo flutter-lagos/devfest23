@@ -13,12 +13,12 @@ final class SpeakerDetailsUiState extends DevfestUiState {
     required this.session,
   });
 
-  const SpeakerDetailsUiState.initial()
+  SpeakerDetailsUiState.initial()
       : this(
           viewState: ViewState.idle,
           exception: const EmptyException(),
-          speaker: const Speaker.empty(),
-          session: const Session.empty(),
+          speaker: Speaker.empty(),
+          session: Session.empty(),
         );
 
   SpeakerDetailsUiState copyWith({

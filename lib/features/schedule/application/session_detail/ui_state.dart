@@ -11,9 +11,9 @@ final class SessionDetailUiState extends DevfestUiState {
     super.exception,
   });
 
-  const SessionDetailUiState.initial()
+  SessionDetailUiState.initial()
       : this(
-          session: const Session.empty(),
+          session: Session.empty(),
           viewState: ViewState.idle,
           exception: const EmptyException(),
         );

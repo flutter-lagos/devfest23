@@ -15,14 +15,15 @@ extension NavigatorContextExtension on BuildContext {
     return AppNavigator.pop(result: result, module: module);
   }
 
-  Future go(String route) {
+  Future go(String route, {Object? extra}) {
     final Module module = ModuleExtension.moduleOf(this);
-    return AppNavigator.pushNamed(route, module: module);
+    return AppNavigator.pushNamed(route, module: module, arguments: extra);
   }
 
-  Future goReplace(String route) {
+  Future goReplace(String route, {Object? extra}) {
     final Module module = ModuleExtension.moduleOf(this);
-    return AppNavigator.pushNamedReplacement(route, module: module);
+    return AppNavigator.pushNamedReplacement(route,
+        module: module, arguments: extra);
   }
 
   Future pushNamedAndClear(String route) {

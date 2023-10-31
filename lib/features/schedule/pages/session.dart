@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devfest23/core/data/data.dart';
+import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 import 'package:devfest23/features/schedule/application/application.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/router/navigator.dart';
+import '../../../core/router/routes.dart';
 import '../../../core/widgets/chips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +19,9 @@ import '../../../core/widgets/widgets.dart';
 enum SessionStatus { notStarted, ongoing, completed }
 
 class SessionPage extends ConsumerStatefulWidget {
-  const SessionPage({super.key, required this.sessionIndex});
+  const SessionPage({super.key, required this.session});
 
-  final int sessionIndex;
+  final Session session;
 
   @override
   ConsumerState<SessionPage> createState() => _SessionPageState();
@@ -31,28 +35,33 @@ class _SessionPageState extends ConsumerState<SessionPage> {
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       ref
           .read(sessionDetailsViewModelProvider.notifier)
-          .initialiseSession(ref.read(sessionsProvider)[widget.sessionIndex]);
+          .initialiseSession(widget.session);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: DevFestTheme.of(context).backgroundColor,
-      appBar: AppBar(
+    return OnScreenLoader(
+      isLoading: ref.watch(sessionDetailsViewModelProvider
+              .select((value) => value.viewState)) ==
+          ViewState.loading,
+      child: Scaffold(
         backgroundColor: DevFestTheme.of(context).backgroundColor,
-        elevation: 0,
-        leadingWidth: 120,
-        scrolledUnderElevation: 0,
-        leading: const GoBackButton(),
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
-                .w,
-        child: ref.watch(sessionProvider).category.isEmpty
-            ? GeneralSessionPage(info: ref.watch(sessionProvider))
-            : SpeakerSessionPage(info: ref.watch(sessionProvider)),
+        appBar: AppBar(
+          backgroundColor: DevFestTheme.of(context).backgroundColor,
+          elevation: 0,
+          leadingWidth: 120,
+          scrolledUnderElevation: 0,
+          leading: const GoBackButton(),
+        ),
+        body: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
+                  .w,
+          child: ref.watch(sessionProvider).category.isEmpty
+              ? GeneralSessionPage(info: ref.watch(sessionProvider))
+              : SpeakerSessionPage(info: ref.watch(sessionProvider)),
+        ),
       ),
     );
   }
@@ -124,7 +133,7 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
                     //       .difference(widget.info.sessionTime)
                     //       .inMinutes,
                     // ),
-                    SessionSlotsChip(slotsLeft: widget.info.slot),
+                    SessionSlotsChip(slotsLeft: widget.info.availableSeats),
                   ],
                 ),
                 Constants.largeVerticalGutter.verticalSpace,
@@ -156,12 +165,22 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
               const EdgeInsets.symmetric(vertical: Constants.verticalGutter).w,
           child: _FavouriteInfoText(isFavourite: isFavourite),
         ),
-        DevfestFavouriteButton(
-          isFavourite: isFavourite,
-          onPressed: () {
-            ref
-                .read(sessionDetailsViewModelProvider.notifier)
-                .reserveSessionOnTap();
+        StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.data != null) {
+              return DevfestFavouriteButton(
+                isFavourite: isFavourite,
+                onPressed: ref
+                    .read(sessionDetailsViewModelProvider.notifier)
+                    .reserveSessionOnTap,
+              );
+            }
+            return DevfestLoginReserveSessionButton(
+              onPressed: () {
+                AppNavigator.pushNamedAndClear(RoutePaths.onboarding);
+              },
+            );
           },
         ),
         Constants.largeVerticalGutter.verticalSpace,

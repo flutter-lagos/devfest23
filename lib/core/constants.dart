@@ -1,4 +1,7 @@
 abstract class Constants {
+  static final day1 = DateTime(2023, 11, 24);
+  static final day2 = DateTime(2023, 11, 25);
+
   static const kAnimationDur = Duration(milliseconds: 300);
   static const kShimmerDur = Duration(milliseconds: 800);
 
