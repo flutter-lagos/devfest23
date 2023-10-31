@@ -1,7 +1,6 @@
 import 'package:devfest23/core/themes/themes.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/themes/theme_data.dart';
 import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
