@@ -58,7 +58,6 @@ class DevfestTextFieldTheme extends ThemeExtension<DevfestTextFieldTheme> {
   @override
   ThemeExtension<DevfestTextFieldTheme> lerp(
       covariant ThemeExtension<DevfestTextFieldTheme>? other, double t) {
-    // TODO: implement lerp
-    throw UnimplementedError();
+    return this;
   }
 }

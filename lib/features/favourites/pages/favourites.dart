@@ -92,7 +92,7 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
                       ?.copyWith(fontWeight: FontWeight.w500),
                   children: [
                     WidgetSpan(child: 4.horizontalSpace),
-                    const TextSpan(text: 'Favourites')
+                    const TextSpan(text: 'Rsvp')
                   ],
                 ),
               ),
@@ -281,7 +281,7 @@ class NoRSVPSessions extends ConsumerWidget {
             ),
             Constants.largeVerticalGutter.verticalSpace,
             Text(
-              'No Favourites Yet',
+              'No RSVP\'d sessions Yet',
               textAlign: TextAlign.center,
               style: DevFestTheme.of(context).textTheme?.headline04,
             ),

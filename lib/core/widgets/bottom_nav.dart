@@ -21,7 +21,7 @@ Widget devfestBottomNav(BuildContext context) {
           ),
           DevfestBottomNavItem(label: 'Speakers', icon: Icon(Icons.speaker)),
           DevfestBottomNavItem(
-            label: 'Favourites',
+            label: 'Rsvp',
             icon: Icon(Icons.star_border_purple500_outlined),
           ),
           DevfestBottomNavItem(
