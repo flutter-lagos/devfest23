@@ -68,6 +68,7 @@ class DevfestTextFormField extends StatelessWidget {
           validator: validator,
           textInputAction: textInputAction,
           cursorColor: DevFestTheme.of(context).onBackgroundColor,
+          style: DevFestTheme.of(context).textFieldTheme?.style,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: textFieldTheme.hintStyle,
