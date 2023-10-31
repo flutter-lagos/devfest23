@@ -1,6 +1,10 @@
 import 'package:devfest23/core/data/devfest_repository.dart';
 import 'package:devfest23/core/data/dto/dto.dart';
+import 'package:devfest23/core/exceptions/exceptions.dart';
 import 'package:devfest23/core/network/network.dart';
+import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final class DevfestRepositoryImplementation implements DevfestRepository {
   final DevfestNetworkClient client;
@@ -22,8 +26,10 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
 
   @override
   Future<EitherExceptionOr> addToRSVP(AddToRSVPRequestDto dto) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://addtousersessions-azqpniimiq-uc.a.run.app',
+      options: Options(headers: {'Authorization': token}),
       method: RequestMethod.post,
       body: dto.toJson(),
     );
@@ -43,8 +49,10 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
 
   @override
   Future<EitherExceptionOr<SessionsResponseDto>> fetchRSVPSessions() async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://getusersessions-azqpniimiq-uc.a.run.app',
+      options: Options(headers: {'Authorization': token}),
       method: RequestMethod.get,
     );
 
@@ -80,5 +88,48 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
     );
 
     return await processData(CategoriesResponseDto.fromJson, response);
+  }
+
+  @override
+  Future<EitherExceptionOr<String>> rsvpLogin(LoginRequestDto dto) async {
+    try {
+      final result = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: dto.email,
+        password: dto.password,
+      );
+
+      if (result.user != null) {
+        final idToken = await result.user!.getIdToken();
+        return Right(idToken!);
+      }
+
+      return const Left(ClientException(
+          exceptionMessage: 'Something went wrong, please try again'));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        return const Left(
+          ClientException(
+              exceptionMessage:
+                  'Invalid email. Please ensure to enter a valid email address😉'),
+        );
+      }
+
+      if (e.code == 'user-not-found') {
+        return const Left(UserNotRegisteredException());
+      }
+
+      if (e.code == 'wrong-password') {
+        return const Left(InvalidTicketIdException());
+      }
+    }
+
+    return const Left(ClientException(
+        exceptionMessage: 'Something went wrong, please try again'));
+  }
+
+  @override
+  Future<EitherExceptionOr<void>> logout() async {
+    final result = await FirebaseAuth.instance.signOut();
+    return Right(result);
   }
 }

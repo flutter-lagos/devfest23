@@ -1,8 +1,12 @@
+import 'package:devfest23/core/themes/colors.dart';
+import 'package:devfest23/core/widgets/buttons.dart';
 import 'package:devfest23/features/favourites/application/controllers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/icons.dart';
+import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/themes/theme_data.dart';
 import '../../../core/widgets/animated_indexed_stack.dart';
@@ -13,6 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/enums/devfest_day.dart';
 import '../../../core/router/routes.dart';
+import '../../home/pages/home.dart';
 import '../../home/widgets/header_delegate.dart';
 import '../../home/widgets/schedule_tile.dart';
 
@@ -87,76 +92,220 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
                       ?.copyWith(fontWeight: FontWeight.w500),
                   children: [
                     WidgetSpan(child: 4.horizontalSpace),
-                    const TextSpan(text: 'Favourites')
+                    const TextSpan(text: 'Rsvp')
                   ],
                 ),
               ),
             ),
           ),
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: HeaderDelegate(
-              height: 100.w,
-              child: Container(
-                height: 100.w,
-                color: DevFestTheme.of(context).backgroundColor,
-                padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.horizontalMargin)
-                    .w,
-                child: ScheduleTabBar(
-                  index: day.index,
-                  onTap: (tab) {
-                    setState(() {
-                      day = DevfestDay.values[tab];
-                      if (scrollOffsets.containsKey(day.index)) {
-                        _scrollController.jumpTo(scrollOffsets[day.index]!);
-                      } else {
-                        _scrollController.jumpTo(0);
-                      }
-                    });
-                  },
-                ),
-              ),
-            ),
+          StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SliverPersistentHeader(
+                  pinned: true,
+                  delegate: HeaderDelegate(
+                    height: 100.w,
+                    child: Container(
+                      height: 100.w,
+                      color: DevFestTheme.of(context).backgroundColor,
+                      padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.horizontalMargin)
+                          .w,
+                      child: ScheduleTabBar(
+                        index: day.index,
+                        onTap: (tab) {
+                          setState(() {
+                            day = DevfestDay.values[tab];
+                            if (scrollOffsets.containsKey(day.index)) {
+                              _scrollController
+                                  .jumpTo(scrollOffsets[day.index]!);
+                            } else {
+                              _scrollController.jumpTo(0);
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
+            },
           ),
         ];
       },
-      body: AnimatedIndexedStack(
-        index: day.index,
-        children: [
-          ListView.separated(
-            key: const PageStorageKey<String>('Day1'),
-            padding: const EdgeInsets.symmetric(
-                    horizontal: Constants.horizontalMargin)
-                .w,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ScheduleTile(
-                onTap: () {
-                  context.go("${RoutePaths.session}/$index");
-                },
-              );
-            },
-            separatorBuilder: (_, __) => 14.verticalSpace,
-            itemCount: ref.watch(rsvpSessionsProvider).length,
-          ),
-          ListView.separated(
-            key: const PageStorageKey<String>('Day2'),
-            padding: const EdgeInsets.symmetric(
-                    horizontal: Constants.horizontalMargin)
-                .w,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return ScheduleTile(
-                onTap: () {
-                  context.go("${RoutePaths.session}/$index");
-                },
-              );
-            },
-            separatorBuilder: (_, __) => 14.verticalSpace,
-            itemCount: ref.watch(rsvpSessionsProvider).length,
-          ),
-        ],
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            return AnimatedIndexedStack(
+              index: day.index,
+              children: [
+                () {
+                  if (ref.watch(rsvpSessionsProvider).isEmpty) {
+                    return const NoRSVPSessions();
+                  }
+
+                  return ListView.separated(
+                    key: const PageStorageKey<String>('Day1'),
+                    padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.horizontalMargin)
+                        .w,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ScheduleTile(
+                        onTap: () {
+                          context.go("${RoutePaths.session}/$index");
+                        },
+                      );
+                    },
+                    separatorBuilder: (_, __) => 14.verticalSpace,
+                    itemCount: ref.watch(rsvpSessionsProvider).length,
+                  );
+                }(),
+                () {
+                  if (ref.watch(rsvpSessionsProvider).isEmpty) {
+                    return const NoRSVPSessions();
+                  }
+
+                  return ListView.separated(
+                    key: const PageStorageKey<String>('Day2'),
+                    padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.horizontalMargin)
+                        .w,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ScheduleTile(
+                        onTap: () {
+                          context.go("${RoutePaths.session}/$index");
+                        },
+                      );
+                    },
+                    separatorBuilder: (_, __) => 14.verticalSpace,
+                    itemCount: ref.watch(rsvpSessionsProvider).length,
+                  );
+                }(),
+              ],
+            );
+          }
+
+          return const _UserNotLoggedIn();
+        },
+      ),
+    );
+  }
+}
+
+class _UserNotLoggedIn extends StatelessWidget {
+  const _UserNotLoggedIn();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: const Alignment(0, -0.6),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40).w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(Constants.largeVerticalGutter).w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: DevfestColors.grey90,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                '🔒',
+                style: TextStyle(fontSize: 32),
+              ),
+            ),
+            Constants.largeVerticalGutter.verticalSpace,
+            Text(
+              'Log In To see RSVP\'d Sessions',
+              textAlign: TextAlign.center,
+              style: DevFestTheme.of(context).textTheme?.headline04,
+            ),
+            Constants.smallVerticalGutter.verticalSpace,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                      horizontal: Constants.largeVerticalGutter)
+                  .w,
+              child: Text(
+                'Hey Bestie! You need to be logged in to see sessions you RSVP\'d',
+                textAlign: TextAlign.center,
+                style: DevFestTheme.of(context).textTheme?.body03,
+              ),
+            ),
+            Constants.largeVerticalGutter.verticalSpace,
+            DevfestFilledButton(
+              title: const Text('Log In Now'),
+              onPressed: () {
+                AppNavigator.pushNamedAndClear(RoutePaths.onboarding);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NoRSVPSessions extends ConsumerWidget {
+  const NoRSVPSessions({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Align(
+      alignment: const Alignment(0, -0.6),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40).w,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(Constants.largeVerticalGutter).w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: DevfestColors.grey90,
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                '⭐',
+                style: TextStyle(fontSize: 32),
+              ),
+            ),
+            Constants.largeVerticalGutter.verticalSpace,
+            Text(
+              'No RSVP\'d sessions Yet',
+              textAlign: TextAlign.center,
+              style: DevFestTheme.of(context).textTheme?.headline04,
+            ),
+            Constants.smallVerticalGutter.verticalSpace,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                      horizontal: Constants.horizontalGutter)
+                  .w,
+              child: Text(
+                'You have not added any talk from the schedule to RSVP yet',
+                textAlign: TextAlign.center,
+                style: DevFestTheme.of(context).textTheme?.body03,
+              ),
+            ),
+            Constants.largeVerticalGutter.verticalSpace,
+            DevfestFilledButton(
+              title: const Text('View Schedule'),
+              onPressed: () {
+                ref.watch(appCurrentTab.notifier).update((state) => state = 1);
+                pageController.animateTo(1);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

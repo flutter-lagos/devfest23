@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../../core/router/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,15 +78,21 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text.rich(
-                      TextSpan(
-                        text: 'Hey Bruce',
-                        style: DevFestTheme.of(context).textTheme?.title01,
-                        children: [
-                          WidgetSpan(child: 4.horizontalSpace),
-                          const TextSpan(text: '🤭')
-                        ],
-                      ),
+                    StreamBuilder(
+                      stream: FirebaseAuth.instance.authStateChanges(),
+                      builder: (context, snapshot) {
+                        return Text.rich(
+                          TextSpan(
+                            text:
+                                'Hey ${snapshot.data?.displayName?.split(' ').first ?? 'friend'}',
+                            style: DevFestTheme.of(context).textTheme?.title01,
+                            children: [
+                              WidgetSpan(child: 4.horizontalSpace),
+                              const TextSpan(text: '🤭')
+                            ],
+                          ),
+                        );
+                      },
                     ),
                     Constants.smallVerticalGutter.verticalSpace,
                     Text(

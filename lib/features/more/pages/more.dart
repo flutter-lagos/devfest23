@@ -1,3 +1,5 @@
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/widgets/switcher.dart';
@@ -64,15 +66,16 @@ class _MorePageState extends ConsumerState<MorePage> {
             MoreTile(
               leading: const Icon(Symbols.account_circle),
               title: const Text('Profile'),
+              subtitle: const Text('See your email address and logout options'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onPressed: () {
                 context.go(RoutePaths.profile);
               },
             ),
-            const _MoreDivider(),
             MoreTile(
               leading: const Icon(Symbols.partly_cloudy_night),
               title: const Text('Dark Mode'),
+              subtitle: const Text('Toggle between light and dark mode'),
               trailing: DevfestSwitcher(
                 value: ref.watch(isDarkProvider),
                 onChanged: (enabled) {
@@ -81,14 +84,13 @@ class _MorePageState extends ConsumerState<MorePage> {
                 },
               ),
             ),
-            const _MoreDivider(),
             MoreTile(
               leading: const Icon(Symbols.headset_mic),
               title: const Text('Contact Us'),
+              subtitle: const Text('Ask questions and make enquiries'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onPressed: () {},
             ),
-            const _MoreDivider(),
             MoreTile(
               leading: Align(
                 child: SvgPicture.asset(
@@ -99,9 +101,32 @@ class _MorePageState extends ConsumerState<MorePage> {
                 ),
               ),
               title: const Text('Join The Community'),
+              subtitle: const Text('Make magic with us by joining a GDG'),
               trailing: const Icon(Icons.chevron_right_rounded),
               onPressed: () {},
             ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal:
+                    Constants.horizontalMargin + Constants.verticalGutter,
+              ).w,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Made with love, vibes and GeekTutor\'s soul obliterating deadlines🥰',
+                    textAlign: TextAlign.center,
+                    style: DevFestTheme.of(context)
+                        .textTheme
+                        ?.body03
+                        ?.copyWith(color: DevfestColors.grey40),
+                  ),
+                  const AppVersionPill(),
+                ],
+              ),
+            ),
+            Constants.largeVerticalGutter.verticalSpace,
           ],
         ),
       ),
@@ -109,18 +134,41 @@ class _MorePageState extends ConsumerState<MorePage> {
   }
 }
 
-class _MoreDivider extends StatelessWidget {
-  const _MoreDivider();
+class AppVersionPill extends StatelessWidget {
+  const AppVersionPill({super.key});
+
+  static final _appVersionFuture = PackageInfo.fromPlatform();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 2.h,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(32)),
-        color: DevfestColors.grey90,
-      ),
+    return FutureBuilder(
+      future: _appVersionFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final versionInfo = snapshot.requireData;
+
+          return Container(
+            margin: const EdgeInsets.only(top: Constants.verticalGutter).w,
+            padding: const EdgeInsets.symmetric(
+              horizontal: Constants.smallVerticalGutter,
+              vertical: Constants.smallVerticalGutter / 2,
+            ).w,
+            decoration: const BoxDecoration(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.verticalGutter)),
+              color: Color(0xffd8f3df),
+            ),
+            child: Text(
+              'Version ${versionInfo.version}',
+              style: DevFestTheme.of(context).textTheme?.body05?.copyWith(
+                    color: DevfestColors.grey0,
+                  ),
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }

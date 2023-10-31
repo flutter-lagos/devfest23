@@ -21,7 +21,7 @@ Widget devfestBottomNav(BuildContext context) {
           ),
           DevfestBottomNavItem(label: 'Speakers', icon: Icon(Icons.speaker)),
           DevfestBottomNavItem(
-            label: 'Favourites',
+            label: 'Rsvp',
             icon: Icon(Icons.star_border_purple500_outlined),
           ),
           DevfestBottomNavItem(
@@ -70,8 +70,13 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
               unselectedColor: widget.unselectedColor,
             ),
       ),
-      child: SizedBox(
+      child: Container(
         height: 88,
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(color: DevfestColors.grey90, width: 2),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(

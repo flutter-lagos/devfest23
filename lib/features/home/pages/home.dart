@@ -14,7 +14,7 @@ import '../../schedule/pages/schedule_base.dart';
 import '../../speakers/application/application.dart';
 import '../../speakers/page/speakers_base.dart';
 
-late final TabController pageController;
+late TabController pageController;
 
 class AppHome extends ConsumerStatefulWidget {
   const AppHome({
@@ -73,15 +73,18 @@ class _AppHomeState extends ConsumerState<AppHome>
             MoreView(),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'refresh button',
-          onPressed: _userInfoCalls,
-          backgroundColor: DevFestTheme.of(context).inverseBackgroundColor,
-          child: Icon(
-            Icons.refresh_rounded,
-            color: DevFestTheme.of(context).backgroundColor,
-          ),
-        ),
+        floatingActionButton: ref.watch(appCurrentTab) == 4
+            ? null
+            : FloatingActionButton(
+                tooltip: 'refresh button',
+                onPressed: _userInfoCalls,
+                backgroundColor:
+                    DevFestTheme.of(context).buttonTheme?.backgroundColor,
+                child: Icon(
+                  Icons.refresh_rounded,
+                  color: DevFestTheme.of(context).buttonTheme?.iconColor,
+                ),
+              ),
         bottomNavigationBar: DevfestBottomNav(
           index: ref.watch(appCurrentTab),
           items: const [
@@ -94,7 +97,7 @@ class _AppHomeState extends ConsumerState<AppHome>
             DevfestBottomNavItem(
                 label: 'Speakers', icon: Icon(Icons.person_2_outlined)),
             DevfestBottomNavItem(
-              label: 'Favourites',
+              label: 'Rsvp',
               icon: Icon(Icons.star_border_outlined),
             ),
             DevfestBottomNavItem(

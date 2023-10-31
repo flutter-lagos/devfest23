@@ -47,7 +47,7 @@ abstract class AppNavigator {
   static final _speakersNavKey =
       GlobalKey<NavigatorState>(debugLabel: 'Speakers Navigator Key');
   static final _favouritesNavKey =
-      GlobalKey<NavigatorState>(debugLabel: 'Favourites Navigator Key');
+      GlobalKey<NavigatorState>(debugLabel: 'Rsvp Navigator Key');
   static final _moreNavKey =
       GlobalKey<NavigatorState>(debugLabel: 'More Navigator Key');
 
