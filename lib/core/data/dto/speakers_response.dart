@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../constants.dart';
+
 final class SpeakersResponseDto extends Equatable {
   final List<Speaker> speakers;
 
@@ -32,6 +34,7 @@ final class Speaker extends Equatable {
   final String category;
   final String currentSession;
   final String currentSessionId;
+  final DateTime sessionDate;
 
   const Speaker({
     required this.twitter,
@@ -47,9 +50,10 @@ final class Speaker extends Equatable {
     required this.category,
     required this.currentSession,
     required this.currentSessionId,
+    required this.sessionDate,
   });
 
-  const Speaker.empty()
+  Speaker.empty()
       : this(
           twitter: '',
           github: '',
@@ -64,6 +68,7 @@ final class Speaker extends Equatable {
           category: '',
           currentSession: '',
           currentSessionId: '',
+          sessionDate: DateTime.now(),
         );
 
   factory Speaker.fromJson(Map<String, dynamic> json) => Speaker(
@@ -80,6 +85,8 @@ final class Speaker extends Equatable {
         category: json['category'] ?? '',
         currentSession: json['currentSession'] ?? '',
         currentSessionId: json['currentSessionId'] ?? '',
+        sessionDate: DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
+            Constants.day1,
       );
 
   @override
@@ -97,5 +104,6 @@ final class Speaker extends Equatable {
         category,
         currentSession,
         currentSessionId,
+        sessionDate,
       ];
 }

@@ -7,8 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SessionDetailsViewModel extends StateNotifier<SessionDetailUiState> {
   final DevfestRepository _repo;
 
-  SessionDetailsViewModel(this._repo)
-      : super(const SessionDetailUiState.initial());
+  SessionDetailsViewModel(this._repo) : super(SessionDetailUiState.initial());
 
   void initialiseSession(Session session) {
     state = state.copyWith(session: session);

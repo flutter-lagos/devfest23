@@ -157,19 +157,19 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                   const Color(0xffffafff)
                 ].elementAt(index > 3 ? index % 2 : index);
 
-                final speaker = ref.watch(speakersProvider)[index];
+                final speaker = ref.watch(day1SpeakersProvider)[index];
                 return SpeakersChip(
                   moodColor: color,
                   name: speaker.name,
                   shortInfo: speaker.role,
                   avatarImageUrl: speaker.avatar,
                   onTap: () {
-                    context.go('${RoutePaths.speakers}/$index');
+                    context.go(RoutePaths.speakers, extra: speaker);
                   },
                 );
               },
               separatorBuilder: (_, __) => const SizedBox(height: 14),
-              itemCount: ref.watch(speakersProvider).length,
+              itemCount: ref.watch(day1SpeakersProvider).length,
             ),
             ListView.separated(
               key: const PageStorageKey<String>('Day2'),
@@ -184,19 +184,19 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
                   const Color(0xffffafff)
                 ].elementAt(index > 3 ? index % 2 : index);
 
-                final speaker = ref.watch(speakersProvider)[index];
+                final speaker = ref.watch(day2SpeakersProvider)[index];
                 return SpeakersChip(
                   moodColor: color,
                   name: speaker.name,
                   shortInfo: speaker.role,
                   avatarImageUrl: speaker.avatar,
                   onTap: () {
-                    context.go('${RoutePaths.speakers}/$index');
+                    context.go(RoutePaths.speakers, extra: speaker);
                   },
                 );
               },
               separatorBuilder: (_, __) => const SizedBox(height: 14),
-              itemCount: ref.watch(speakersProvider).length,
+              itemCount: ref.watch(day2SpeakersProvider).length,
             ),
           ],
         );

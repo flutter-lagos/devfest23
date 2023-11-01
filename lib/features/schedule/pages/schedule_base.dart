@@ -1,3 +1,5 @@
+import 'package:devfest23/core/data/data.dart';
+
 import '../../../core/router/routes.dart';
 import 'schedule.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,8 @@ import 'session.dart';
 
 scheduleRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => SchedulePage(initialDay: initialDay),
-      "${RoutePaths.session}/:id": (context, args) {
-        final id = int.parse(args.pathArgs['id']!);
-        return SessionPage(sessionIndex: id);
+      RoutePaths.session: (context, args) {
+        return SessionPage(session: args.body as Session);
       }
     });
 

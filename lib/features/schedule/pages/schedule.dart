@@ -143,7 +143,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
               ).w,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final session = ref.watch(sessionsProvider)[index];
+                final session = ref.watch(day1SessionsProvider)[index];
                 return ScheduleTile(
                   isGeneral: session.category.isEmpty,
                   title: session.title,
@@ -153,12 +153,12 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   category: session.category,
                   speakerImage: session.speakerImage,
                   onTap: () {
-                    context.go("${RoutePaths.session}/$index");
+                    context.go(RoutePaths.session, extra: session);
                   },
                 );
               },
               separatorBuilder: (_, __) => 14.verticalSpace,
-              itemCount: ref.watch(sessionsProvider).length,
+              itemCount: ref.watch(day1SessionsProvider).length,
             ),
             ListView.separated(
               key: const PageStorageKey<String>('Day2'),
@@ -167,7 +167,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   .w,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final session = ref.watch(sessionsProvider)[index];
+                final session = ref.watch(day2SessionsProvider)[index];
                 return ScheduleTile(
                   isGeneral: session.category.isEmpty,
                   title: session.title,
@@ -177,12 +177,12 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   category: session.category,
                   speakerImage: session.speakerImage,
                   onTap: () {
-                    context.go("${RoutePaths.session}/$index");
+                    context.go(RoutePaths.session, extra: session);
                   },
                 );
               },
               separatorBuilder: (_, __) => 14.verticalSpace,
-              itemCount: 5,
+              itemCount: ref.watch(day2SessionsProvider).length,
             ),
           ],
         );

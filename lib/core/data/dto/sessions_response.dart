@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../constants.dart';
+
 final class SessionsResponseDto extends Equatable {
   final List<Session> sessions;
 
@@ -34,6 +36,7 @@ final class Session extends Equatable {
   final String tagLine;
   final int availableSeats;
   final int slot;
+  final DateTime sessionDate;
 
   const Session({
     required this.owner,
@@ -51,9 +54,10 @@ final class Session extends Equatable {
     required this.tagLine,
     required this.availableSeats,
     required this.slot,
+    required this.sessionDate,
   });
 
-  const Session.empty()
+  Session.empty()
       : this(
           owner: '',
           level: '',
@@ -70,6 +74,7 @@ final class Session extends Equatable {
           tagLine: '',
           availableSeats: 0,
           slot: 0,
+          sessionDate: DateTime.now(),
         );
 
   factory Session.fromJson(Map<String, dynamic> json) => Session(
@@ -88,7 +93,47 @@ final class Session extends Equatable {
         tagLine: json['tagLine'] ?? '',
         availableSeats: json['availableSeats'] ?? 0,
         slot: json['slot'] ?? 0,
+        sessionDate: DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
+            Constants.day1,
       );
+
+  Session copyWith({
+    String? owner,
+    String? level,
+    String? scheduledDuration,
+    String? description,
+    String? hall,
+    String? sessionId,
+    String? title,
+    String? category,
+    String? scheduledAt,
+    String? sessionFormat,
+    String? ownerEmail,
+    String? speakerImage,
+    String? tagLine,
+    int? availableSeats,
+    int? slot,
+    DateTime? sessionDate,
+  }) {
+    return Session(
+      owner: owner ?? this.owner,
+      level: level ?? this.level,
+      scheduledDuration: scheduledDuration ?? this.scheduledDuration,
+      description: description ?? this.description,
+      hall: hall ?? this.hall,
+      sessionId: sessionId ?? this.sessionId,
+      title: title ?? this.title,
+      category: category ?? this.category,
+      scheduledAt: scheduledAt ?? this.scheduledAt,
+      sessionFormat: sessionFormat ?? this.sessionFormat,
+      ownerEmail: ownerEmail ?? this.ownerEmail,
+      speakerImage: speakerImage ?? this.speakerImage,
+      tagLine: tagLine ?? this.tagLine,
+      availableSeats: availableSeats ?? this.availableSeats,
+      slot: slot ?? this.slot,
+      sessionDate: sessionDate ?? this.sessionDate,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -107,5 +152,6 @@ final class Session extends Equatable {
         tagLine,
         availableSeats,
         slot,
+        sessionDate,
       ];
 }

@@ -354,6 +354,24 @@ class DevfestFavouriteButton extends StatelessWidget {
   }
 }
 
+class DevfestLoginReserveSessionButton extends StatelessWidget {
+  const DevfestLoginReserveSessionButton({
+    super.key,
+    this.onPressed,
+  });
+
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return DevfestOutlinedButton(
+      title: const Text('Login to reserve a Session'),
+      prefixIcon: const Icon(Symbols.grade, weight: Constants.iconWeight),
+      onPressed: onPressed,
+    );
+  }
+}
+
 class GoBackButton extends StatelessWidget {
   const GoBackButton({super.key, this.onTap});
 

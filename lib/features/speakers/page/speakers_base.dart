@@ -1,3 +1,5 @@
+import 'package:devfest23/core/data/data.dart';
+
 import '../../../core/router/routes.dart';
 import 'speakers.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,8 @@ import 'speaker_details.dart';
 
 speakerRouter(DevfestDay initialDay) => RegexRouter.create({
       "/": (context, args) => SpeakersPage(initialDay: initialDay),
-      "${RoutePaths.speakers}/:id": (context, args) {
-        final id = int.parse(args.pathArgs['id']!);
-        return SpeakerDetailsPage(speakerIndex: id);
+      RoutePaths.speakers: (context, args) {
+        return SpeakerDetailsPage(speaker: args.body as Speaker);
       }
     });
 

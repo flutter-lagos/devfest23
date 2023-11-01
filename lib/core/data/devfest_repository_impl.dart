@@ -29,7 +29,7 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
     final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://addtousersessions-azqpniimiq-uc.a.run.app',
-      options: Options(headers: {'Authorization': token}),
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
       method: RequestMethod.post,
       body: dto.toJson(),
     );
@@ -52,7 +52,7 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
     final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://getusersessions-azqpniimiq-uc.a.run.app',
-      options: Options(headers: {'Authorization': token}),
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
       method: RequestMethod.get,
     );
 
