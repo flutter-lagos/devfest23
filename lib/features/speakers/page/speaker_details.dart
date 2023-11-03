@@ -36,6 +36,15 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
   void initState() {
     super.initState();
 
+    ref.listenManual(
+      speakerDetailsViewModelProvider.select((value) => value.viewState),
+      (previous, next) {
+        if (next == ViewState.success) {
+          ref.read(scheduleViewModelProvider.notifier).fetchSessions();
+        }
+      },
+    );
+
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       ref
           .read(speakerDetailsViewModelProvider.notifier)

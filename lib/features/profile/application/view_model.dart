@@ -16,9 +16,11 @@ class ProfileViewModel extends StateNotifier<ProfileUiState> {
 
       state = model.setState(result.fold(
         (left) => state.copyWith(viewState: ViewState.error, exception: left),
-        (right) => state.copyWith(viewState: ViewState.idle),
+        (right) => state.copyWith(viewState: ViewState.success),
       ));
     });
+
+    state = state.copyWith(viewState: ViewState.idle);
   }
 }
 

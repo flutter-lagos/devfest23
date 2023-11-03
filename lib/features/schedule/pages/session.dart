@@ -32,6 +32,15 @@ class _SessionPageState extends ConsumerState<SessionPage> {
   void initState() {
     super.initState();
 
+    ref.listenManual(
+      sessionDetailsViewModelProvider.select((value) => value.viewState),
+      (previous, next) {
+        if (next == ViewState.success) {
+          ref.read(scheduleViewModelProvider.notifier).fetchSessions();
+        }
+      },
+    );
+
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       ref
           .read(sessionDetailsViewModelProvider.notifier)
@@ -103,20 +112,13 @@ class GeneralSessionPage extends StatelessWidget {
   }
 }
 
-class SpeakerSessionPage extends ConsumerStatefulWidget {
+class SpeakerSessionPage extends ConsumerWidget {
   const SpeakerSessionPage({super.key, required this.info});
 
   final Session info;
 
   @override
-  ConsumerState<SpeakerSessionPage> createState() => _SpeakerSessionPageState();
-}
-
-class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
-  bool isFavourite = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -133,11 +135,11 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
                     //       .difference(widget.info.sessionTime)
                     //       .inMinutes,
                     // ),
-                    SessionSlotsChip(slotsLeft: widget.info.availableSeats),
+                    SessionSlotsChip(slotsLeft: info.availableSeats),
                   ],
                 ),
                 Constants.largeVerticalGutter.verticalSpace,
-                _TitleSection(info: widget.info),
+                _TitleSection(info: info),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                           vertical: Constants.largeVerticalGutter)
@@ -145,9 +147,9 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SessionTimeChip(sessionTime: widget.info.scheduledAt),
+                      SessionTimeChip(sessionTime: info.scheduledAt),
                       Constants.horizontalGutter.horizontalSpace,
-                      SessionVenueChip(venue: widget.info.hall),
+                      SessionVenueChip(venue: info.hall),
                       // if (widget.info.status != SessionStatus.notStarted) ...[
                       //   Constants.horizontalGutter.horizontalSpace,
                       //   _SessionStatus(status: widget.info.status),
@@ -155,7 +157,7 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
                     ],
                   ),
                 ),
-                _DescriptionSection(info: widget.info),
+                _DescriptionSection(info: info),
               ],
             ),
           ),
@@ -163,14 +165,14 @@ class _SpeakerSessionPageState extends ConsumerState<SpeakerSessionPage> {
         Padding(
           padding:
               const EdgeInsets.symmetric(vertical: Constants.verticalGutter).w,
-          child: _FavouriteInfoText(isFavourite: isFavourite),
+          child: _FavouriteInfoText(isFavourite: info.hasRsvped),
         ),
         StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.data != null) {
               return DevfestFavouriteButton(
-                isFavourite: isFavourite,
+                isFavourite: info.hasRsvped,
                 onPressed: ref
                     .read(sessionDetailsViewModelProvider.notifier)
                     .reserveSessionOnTap,

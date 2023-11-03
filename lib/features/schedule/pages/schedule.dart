@@ -152,6 +152,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   venue: session.hall,
                   category: session.category,
                   speakerImage: session.speakerImage,
+                  hasRsvped: session.hasRsvped,
                   onTap: () {
                     context.go(RoutePaths.session, extra: session);
                   },
@@ -176,6 +177,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                   venue: session.hall,
                   category: session.category,
                   speakerImage: session.speakerImage,
+                  hasRsvped: session.hasRsvped,
                   onTap: () {
                     context.go(RoutePaths.session, extra: session);
                   },

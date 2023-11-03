@@ -1,4 +1,3 @@
-import 'package:devfest23/features/favourites/application/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,7 +49,6 @@ class _AppHomeState extends ConsumerState<AppHome>
       ref.read(scheduleViewModelProvider.notifier).fetchSessions(),
       ref.read(speakersViewModelProvider.notifier).fetchSpeakers(),
       ref.read(speakersViewModelProvider.notifier).fetchSessionCategories(),
-      ref.read(rsvpSessionsViewModelProvider.notifier).fetchRSVPSessions(),
     ]);
   }
 

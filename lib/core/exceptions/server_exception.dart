@@ -13,5 +13,5 @@ final class ServerException extends DevfestException {
       );
 
   @override
-  String toString() => error;
+  String toString() => message;
 }

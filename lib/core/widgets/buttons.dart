@@ -106,14 +106,14 @@ Widget devfestFavouriteButton(BuildContext context) {
           children: [
             DevfestFavouriteButton(
               isFavourite: isFavourite0,
-              onPressed: () {
+              onPressed: (hasRsvped) {
                 setState(() => isFavourite0 = !isFavourite0);
               },
             ),
             const SizedBox(height: 10),
             DevfestFavouriteButton(
               isFavourite: isFavourite1,
-              onPressed: () {
+              onPressed: (hasRsvped) {
                 setState(() => isFavourite1 = !isFavourite1);
               },
             ),
@@ -319,7 +319,7 @@ class DevfestFavouriteButton extends StatelessWidget {
   final Widget? title;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final VoidCallback? onPressed;
+  final void Function(bool hasRsvped)? onPressed;
   final bool isFavourite;
 
   @override
@@ -338,7 +338,7 @@ class DevfestFavouriteButton extends StatelessWidget {
                   fill: 1,
                 ),
             suffixIcon: suffixIcon,
-            onPressed: onPressed,
+            onPressed: () => onPressed?.call(true),
           );
         }
 
@@ -347,7 +347,7 @@ class DevfestFavouriteButton extends StatelessWidget {
           prefixIcon: prefixIcon ??
               const Icon(Symbols.grade, weight: Constants.iconWeight),
           suffixIcon: suffixIcon,
-          onPressed: onPressed,
+          onPressed: () => onPressed?.call(false),
         );
       }(),
     );

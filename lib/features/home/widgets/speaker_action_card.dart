@@ -37,7 +37,8 @@ class SpeakerActionCard extends ConsumerWidget {
     this.reserveSessionOnTap,
   });
 
-  SpeakerActionCard.empty({Key? key, VoidCallback? reserveSessionOnTap})
+  SpeakerActionCard.empty(
+      {Key? key, void Function(bool hasRsvped)? reserveSessionOnTap})
       : this(
           key: key,
           session: Session.empty(),
@@ -45,7 +46,7 @@ class SpeakerActionCard extends ConsumerWidget {
         );
 
   final Session session;
-  final VoidCallback? reserveSessionOnTap;
+  final void Function(bool hasRsvped)? reserveSessionOnTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,8 +108,8 @@ class SpeakerActionCard extends ConsumerWidget {
           ),
           const SizedBox(height: Constants.verticalGutter),
           DevfestFavouriteButton(
-            onPressed: reserveSessionOnTap ?? () {},
-            // TODO: Handle rsvped sessions.
+            onPressed: reserveSessionOnTap ?? (_) {},
+            isFavourite: session.hasRsvped,
           ),
         ],
       ),
@@ -194,7 +195,6 @@ class SpeakerLoginActionCard extends ConsumerWidget {
           const SizedBox(height: Constants.verticalGutter),
           DevfestLoginReserveSessionButton(
             onPressed: loginOnTap ?? () {},
-            // TODO: Handle rsvped sessions.
           ),
         ],
       ),
