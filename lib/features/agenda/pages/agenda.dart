@@ -121,6 +121,13 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Constants.verticalGutter.verticalSpace,
+                Text(
+                  'SCHEDULE',
+                  style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
+                        color: DevfestColors.grey30,
+                      ),
+                ),
+                Constants.verticalGutter.verticalSpace,
                 ScheduleTabBar(
                   index: day.index,
                   onTap: (tab) {
