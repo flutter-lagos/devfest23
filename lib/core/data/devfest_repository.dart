@@ -21,6 +21,8 @@ abstract interface class DevfestRepository {
 
   Future<EitherExceptionOr> removeFromRSVP(RSVPSessionRequestDto dto);
 
+  Future<EitherExceptionOr> updateUserDeviceToken(UpdateTokenRequestDto dto);
+
   Future<EitherExceptionOr> addMultipleRSVPs(AddMultipleRSVPRequestDto dto);
 
   Future<EitherExceptionOr<List<String>>> fetchRSVPSessions();
