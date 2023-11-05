@@ -62,6 +62,7 @@ class DevfestBottomNav extends StatefulWidget {
 class _DevfestBottomNavState extends State<DevfestBottomNav> {
   @override
   Widget build(BuildContext context) {
+    final additionalBottomPadding = MediaQuery.viewPaddingOf(context).bottom;
     return DevfestTheme(
       data: DevFestTheme.of(context).copyWith(
         bottomNavTheme: DevFestTheme.of(context).bottomNavTheme?.copyWith(
@@ -71,7 +72,8 @@ class _DevfestBottomNavState extends State<DevfestBottomNav> {
             ),
       ),
       child: Container(
-        height: 88,
+        height: 88 + additionalBottomPadding,
+        padding: EdgeInsets.only(bottom: additionalBottomPadding),
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(color: DevfestColors.grey90, width: 2),
