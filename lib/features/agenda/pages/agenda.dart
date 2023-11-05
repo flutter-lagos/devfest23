@@ -124,7 +124,9 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                 Text(
                   'SCHEDULE',
                   style: DevFestTheme.of(context).textTheme?.body04?.copyWith(
-                        color: DevfestColors.grey30,
+                        color: isDark
+                            ? DevfestColors.grey100
+                            : DevfestColors.grey30,
                       ),
                 ),
                 Constants.verticalGutter.verticalSpace,
