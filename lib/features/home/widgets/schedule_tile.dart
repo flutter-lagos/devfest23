@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/constants.dart';
@@ -87,6 +88,7 @@ class ScheduleTile extends StatelessWidget {
     this.venue = '',
     this.category = '',
     this.speakerImage = '',
+    this.hasRsvped = false,
   });
 
   final VoidCallback? onTap;
@@ -98,6 +100,7 @@ class ScheduleTile extends StatelessWidget {
   final String venue;
   final String category;
   final String speakerImage;
+  final bool hasRsvped;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +116,7 @@ class ScheduleTile extends StatelessWidget {
         venue: venue,
         category: category,
         speakerImage: speakerImage,
+        hasRsvped: hasRsvped,
       ),
     );
   }
@@ -128,6 +132,7 @@ class _InActiveFavouriteSessionTile extends ConsumerStatefulWidget {
     required this.venue,
     required this.category,
     required this.speakerImage,
+    required this.hasRsvped,
   });
 
   final bool isGeneral;
@@ -138,6 +143,7 @@ class _InActiveFavouriteSessionTile extends ConsumerStatefulWidget {
   final String venue;
   final String category;
   final String speakerImage;
+  final bool hasRsvped;
 
   @override
   ConsumerState<_InActiveFavouriteSessionTile> createState() =>
@@ -187,7 +193,10 @@ class _InActiveFavouriteSessionTileState
                     ]
                   ],
                 ),
-                if (!widget.isGeneral) const _FavouriteIcon(),
+                if (!widget.isGeneral)
+                  _FavouriteIcon(
+                    isFavourite: widget.hasRsvped,
+                  ),
               ],
             ),
             widget.isGeneral
@@ -330,20 +339,32 @@ class _OngoingIndicator extends StatelessWidget {
 }
 
 class _FavouriteIcon extends ConsumerWidget {
-  const _FavouriteIcon();
+  const _FavouriteIcon({this.isFavourite = false});
+
+  final bool isFavourite;
 
   @override
   Widget build(BuildContext context, ref) {
-    return Container(
+    return AnimatedContainer(
+      duration: Constants.kAnimationDur,
       height: 30,
       width: 30,
       alignment: Alignment.center,
-      child: Icon(
-        Icons.star_border_rounded,
-        color: ref.watch(isDarkProvider)
-            ? DevfestColors.grey90
-            : DevfestColors.grey70,
-      ),
+      child: isFavourite
+          ? const Icon(
+              Symbols.grade_rounded,
+              key: Key('rsvp-icon'),
+              weight: Constants.iconWeight,
+              color: DevfestColors.yellow,
+              fill: 1,
+            )
+          : Icon(
+              Icons.star_border_rounded,
+              key: const Key('un-rsvp-icon'),
+              color: ref.watch(isDarkProvider)
+                  ? DevfestColors.grey90
+                  : DevfestColors.grey70,
+            ),
     );
   }
 }

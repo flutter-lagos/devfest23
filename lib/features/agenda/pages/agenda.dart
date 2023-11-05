@@ -168,6 +168,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                                 venue: session.hall,
                                 category: session.category,
                                 speakerImage: session.speakerImage,
+                                hasRsvped: session.hasRsvped,
                                 onTap: () {
                                   context.go(
                                     RoutePaths.session,
@@ -214,6 +215,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                                 venue: session.hall,
                                 category: session.category,
                                 speakerImage: session.speakerImage,
+                                hasRsvped: session.hasRsvped,
                                 onTap: () {
                                   context.go(
                                     RoutePaths.session,

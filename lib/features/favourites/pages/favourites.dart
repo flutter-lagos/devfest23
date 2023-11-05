@@ -1,6 +1,7 @@
 import 'package:devfest23/core/themes/colors.dart';
 import 'package:devfest23/core/widgets/buttons.dart';
-import 'package:devfest23/features/favourites/application/controllers.dart';
+import 'package:devfest23/core/widgets/loading_widgets.dart';
+import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,7 @@ import '../../../core/icons.dart';
 import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/themes/theme_data.dart';
+import '../../../core/ui_state_model/ui_state_model.dart';
 import '../../../core/widgets/animated_indexed_stack.dart';
 import '../../../core/widgets/schedule_tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -140,55 +142,80 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.data != null) {
-            return AnimatedIndexedStack(
-              index: day.index,
-              children: [
-                () {
-                  if (ref.watch(rsvpSessionsProvider).isEmpty) {
-                    return const NoRSVPSessions();
-                  }
+            return switch (ref.watch(
+                scheduleViewModelProvider.select((value) => value.viewState))) {
+              ViewState.loading => const FetchingSessions(),
+              ViewState.success => AnimatedIndexedStack(
+                  index: day.index,
+                  children: [
+                    () {
+                      if (ref.watch(day1RSVPSessionProvider).isEmpty) {
+                        return const NoRSVPSessions();
+                      }
 
-                  return ListView.separated(
-                    key: const PageStorageKey<String>('Day1'),
-                    padding: const EdgeInsets.symmetric(
-                            horizontal: Constants.horizontalMargin)
-                        .w,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ScheduleTile(
-                        onTap: () {
-                          context.go("${RoutePaths.session}/$index");
+                      return ListView.separated(
+                        key: const PageStorageKey<String>('Day1'),
+                        padding: const EdgeInsets.symmetric(
+                                horizontal: Constants.horizontalMargin)
+                            .w,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final session =
+                              ref.watch(day1RSVPSessionProvider)[index];
+                          return ScheduleTile(
+                            isGeneral: session.category.isEmpty,
+                            title: session.title,
+                            speaker: session.owner,
+                            time: session.scheduledDuration,
+                            venue: session.hall,
+                            category: session.category,
+                            speakerImage: session.speakerImage,
+                            hasRsvped: session.hasRsvped,
+                            onTap: () {
+                              context.go(RoutePaths.session, extra: session);
+                            },
+                          );
                         },
+                        separatorBuilder: (_, __) => 14.verticalSpace,
+                        itemCount: ref.watch(day1RSVPSessionProvider).length,
                       );
-                    },
-                    separatorBuilder: (_, __) => 14.verticalSpace,
-                    itemCount: ref.watch(rsvpSessionsProvider).length,
-                  );
-                }(),
-                () {
-                  if (ref.watch(rsvpSessionsProvider).isEmpty) {
-                    return const NoRSVPSessions();
-                  }
+                    }(),
+                    () {
+                      if (ref.watch(day2RSVPSessionProvider).isEmpty) {
+                        return const NoRSVPSessions();
+                      }
 
-                  return ListView.separated(
-                    key: const PageStorageKey<String>('Day2'),
-                    padding: const EdgeInsets.symmetric(
-                            horizontal: Constants.horizontalMargin)
-                        .w,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ScheduleTile(
-                        onTap: () {
-                          context.go("${RoutePaths.session}/$index");
+                      return ListView.separated(
+                        key: const PageStorageKey<String>('Day2'),
+                        padding: const EdgeInsets.symmetric(
+                                horizontal: Constants.horizontalMargin)
+                            .w,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final session =
+                              ref.watch(day2RSVPSessionProvider)[index];
+                          return ScheduleTile(
+                            isGeneral: session.category.isEmpty,
+                            title: session.title,
+                            speaker: session.owner,
+                            time: session.scheduledDuration,
+                            venue: session.hall,
+                            category: session.category,
+                            speakerImage: session.speakerImage,
+                            hasRsvped: session.hasRsvped,
+                            onTap: () {
+                              context.go(RoutePaths.session, extra: session);
+                            },
+                          );
                         },
+                        separatorBuilder: (_, __) => 14.verticalSpace,
+                        itemCount: ref.watch(day2RSVPSessionProvider).length,
                       );
-                    },
-                    separatorBuilder: (_, __) => 14.verticalSpace,
-                    itemCount: ref.watch(rsvpSessionsProvider).length,
-                  );
-                }(),
-              ],
-            );
+                    }(),
+                  ],
+                ),
+              _ => const SizedBox.shrink(),
+            };
           }
 
           return const _UserNotLoggedIn();

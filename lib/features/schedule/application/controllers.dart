@@ -24,6 +24,20 @@ final day2SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
       .toList();
 });
 
+final day1RSVPSessionProvider = Provider.autoDispose<List<Session>>((ref) {
+  return ref
+      .watch(day1SessionsProvider)
+      .where((element) => element.hasRsvped)
+      .toList();
+});
+
+final day2RSVPSessionProvider = Provider.autoDispose<List<Session>>((ref) {
+  return ref
+      .watch(day2SessionsProvider)
+      .where((element) => element.hasRsvped)
+      .toList();
+});
+
 final sessionProvider = Provider.autoDispose<Session>((ref) {
   return ref
       .watch(sessionDetailsViewModelProvider.select((value) => value.session));

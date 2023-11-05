@@ -37,6 +37,7 @@ final class Session extends Equatable {
   final int availableSeats;
   final int slot;
   final DateTime sessionDate;
+  final bool hasRsvped;
 
   const Session({
     required this.owner,
@@ -55,6 +56,7 @@ final class Session extends Equatable {
     required this.availableSeats,
     required this.slot,
     required this.sessionDate,
+    required this.hasRsvped,
   });
 
   Session.empty()
@@ -75,6 +77,7 @@ final class Session extends Equatable {
           availableSeats: 0,
           slot: 0,
           sessionDate: DateTime.now(),
+          hasRsvped: false,
         );
 
   factory Session.fromJson(Map<String, dynamic> json) => Session(
@@ -93,8 +96,14 @@ final class Session extends Equatable {
         tagLine: json['tagLine'] ?? '',
         availableSeats: json['availableSeats'] ?? 0,
         slot: json['slot'] ?? 0,
-        sessionDate: DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
-            Constants.day1,
+        sessionDate: () {
+          final date =
+              DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
+                  Constants.day1;
+
+          return DateTime(date.year, date.month, date.day);
+        }(),
+        hasRsvped: false,
       );
 
   Session copyWith({
@@ -114,6 +123,7 @@ final class Session extends Equatable {
     int? availableSeats,
     int? slot,
     DateTime? sessionDate,
+    bool? hasRsvped,
   }) {
     return Session(
       owner: owner ?? this.owner,
@@ -132,6 +142,7 @@ final class Session extends Equatable {
       availableSeats: availableSeats ?? this.availableSeats,
       slot: slot ?? this.slot,
       sessionDate: sessionDate ?? this.sessionDate,
+      hasRsvped: hasRsvped ?? this.hasRsvped,
     );
   }
 
@@ -153,5 +164,6 @@ final class Session extends Equatable {
         availableSeats,
         slot,
         sessionDate,
+        hasRsvped,
       ];
 }

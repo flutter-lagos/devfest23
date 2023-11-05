@@ -13,17 +13,49 @@ class SessionDetailsViewModel extends StateNotifier<SessionDetailUiState> {
     state = state.copyWith(session: session);
   }
 
-  Future<void> reserveSessionOnTap() async {
+  Future<void> reserveSessionOnTap(bool hasRsvped) async {
+    if (!hasRsvped) {
+      await launch(state.ref, (model) async {
+        state = model.setState(state.copyWith(viewState: ViewState.loading));
+        final dto = RSVPSessionRequestDto(sessionId: state.session.sessionId);
+        final result = await _repo.addToRSVP(dto);
+
+        state = model.setState(result.fold(
+          (left) => state.copyWith(viewState: ViewState.error, exception: left),
+          (right) => state.copyWith(
+            viewState: ViewState.success,
+            session: state.session.copyWith(
+              availableSeats: state.session.availableSeats - 1,
+              hasRsvped: true,
+            ),
+          ),
+        ));
+      });
+
+      state = state.copyWith(viewState: ViewState.idle);
+      return;
+    }
+
     await launch(state.ref, (model) async {
       state = model.setState(state.copyWith(viewState: ViewState.loading));
-      final dto = AddToRSVPRequestDto(sessionId: state.session.sessionId);
-      final result = await _repo.addToRSVP(dto);
+      final dto = RSVPSessionRequestDto(sessionId: state.session.sessionId);
+      final result = await _repo.removeFromRSVP(dto);
 
-      state = model.setState(result.fold(
-        (left) => state.copyWith(viewState: ViewState.error, exception: left),
-        (right) => state.copyWith(viewState: ViewState.success),
-      ));
+      state = model.setState(
+        result.fold(
+          (left) => state.copyWith(viewState: ViewState.error, exception: left),
+          (right) => state.copyWith(
+            viewState: ViewState.success,
+            session: state.session.copyWith(
+              availableSeats: state.session.availableSeats + 1,
+              hasRsvped: false,
+            ),
+          ),
+        ),
+      );
     });
+
+    state = state.copyWith(viewState: ViewState.idle);
   }
 }
 

@@ -25,7 +25,7 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
   }
 
   @override
-  Future<EitherExceptionOr> addToRSVP(AddToRSVPRequestDto dto) async {
+  Future<EitherExceptionOr> addToRSVP(RSVPSessionRequestDto dto) async {
     final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://addtousersessions-azqpniimiq-uc.a.run.app',
@@ -48,7 +48,7 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
   }
 
   @override
-  Future<EitherExceptionOr<SessionsResponseDto>> fetchRSVPSessions() async {
+  Future<EitherExceptionOr<List<String>>> fetchRSVPSessions() async {
     final token = await FirebaseAuth.instance.currentUser?.getIdToken();
     final response = await client.call(
       path: 'https://getusersessions-azqpniimiq-uc.a.run.app',
@@ -56,7 +56,13 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
       method: RequestMethod.get,
     );
 
-    return await processData(SessionsResponseDto.fromJson, response);
+    return await processData(
+      (data) => switch (data) {
+        final List list? => list.map((e) => e.toString()).toList(),
+        _ => [],
+      },
+      response,
+    );
   }
 
   @override
@@ -131,5 +137,18 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
   Future<EitherExceptionOr<void>> logout() async {
     final result = await FirebaseAuth.instance.signOut();
     return Right(result);
+  }
+
+  @override
+  Future<EitherExceptionOr> removeFromRSVP(RSVPSessionRequestDto dto) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    final response = await client.call(
+      path: 'https://removefromusersessions-azqpniimiq-uc.a.run.app',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      method: RequestMethod.post,
+      body: dto.toJson(),
+    );
+
+    return await processData((data) => null, response);
   }
 }

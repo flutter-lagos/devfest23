@@ -17,11 +17,13 @@ abstract interface class DevfestRepository {
 
   Future<EitherExceptionOr<SessionsResponseDto>> fetchSessions();
 
-  Future<EitherExceptionOr> addToRSVP(AddToRSVPRequestDto dto);
+  Future<EitherExceptionOr> addToRSVP(RSVPSessionRequestDto dto);
+
+  Future<EitherExceptionOr> removeFromRSVP(RSVPSessionRequestDto dto);
 
   Future<EitherExceptionOr> addMultipleRSVPs(AddMultipleRSVPRequestDto dto);
 
-  Future<EitherExceptionOr<SessionsResponseDto>> fetchRSVPSessions();
+  Future<EitherExceptionOr<List<String>>> fetchRSVPSessions();
 
   Future<EitherExceptionOr<CategoriesResponseDto>> fetchSessionCategories();
 }

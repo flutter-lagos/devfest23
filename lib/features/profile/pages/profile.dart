@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 import 'package:devfest23/features/profile/application/view_model.dart';
+import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,11 +15,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/themes/themes.dart';
 import '../../../core/widgets/widgets.dart';
 
-class ProfilePage extends ConsumerWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends ConsumerState<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(
+        profileViewModelProvider.select((value) => value.viewState),
+        (previous, next) {
+      if (next == ViewState.success) {
+        ref.read(scheduleViewModelProvider.notifier).fetchSessions();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return OnScreenLoader(
       isLoading: ref.watch(
               profileViewModelProvider.select((value) => value.viewState)) ==

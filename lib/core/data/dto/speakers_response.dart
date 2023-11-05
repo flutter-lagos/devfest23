@@ -85,8 +85,13 @@ final class Speaker extends Equatable {
         category: json['category'] ?? '',
         currentSession: json['currentSession'] ?? '',
         currentSessionId: json['currentSessionId'] ?? '',
-        sessionDate: DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
-            Constants.day1,
+        sessionDate: () {
+          final date =
+              DateTime.tryParse(json['sessionDate'] as String? ?? '') ??
+                  Constants.day1;
+
+          return DateTime(date.year, date.month, date.day);
+        }(),
       );
 
   @override
