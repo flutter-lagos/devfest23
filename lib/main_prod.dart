@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/services/firebase_notification_manager.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -28,6 +29,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseNotificationManager firebaseNotificationManager =
+      FirebaseNotificationManager();
+  firebaseNotificationManager.registerNotification();
 
   runApp(const ProviderScope(child: DevfestApp()));
 }

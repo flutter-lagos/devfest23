@@ -6,3 +6,4 @@ export 'rsvp_session_request.dart';
 export 'categories_response.dart';
 export 'add_multiple_rsvp_request.dart';
 export 'login_request.dart';
+export 'update_token_request.dart';

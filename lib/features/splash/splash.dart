@@ -24,7 +24,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   void initState() {
     super.initState();
 
-    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) async {
       Future.delayed(const Duration(seconds: 2), () {
         if (FirebaseAuth.instance.currentUser != null) {
           context.pushNamedAndClear('/app/${TabItem.home.name}');

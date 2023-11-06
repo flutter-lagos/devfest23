@@ -151,4 +151,18 @@ final class DevfestRepositoryImplementation implements DevfestRepository {
 
     return await processData((data) => null, response);
   }
+
+  @override
+  Future<EitherExceptionOr> updateUserDeviceToken(
+      UpdateTokenRequestDto dto) async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    final response = await client.call(
+      path: 'https://updateuser-azqpniimiq-uc.a.run.app',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      method: RequestMethod.post,
+      body: dto.toJson(),
+    );
+
+    return await processData((data) => null, response);
+  }
 }
