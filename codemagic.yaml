@@ -8,6 +8,11 @@ workflows:
       xcode: latest
       android_signing:
         - devfest23-key
+      vars:
+        TYPE: 'release' # Can be 'patch' or 'release'
+      groups:
+        # Exports the SHOREBIRD_TOKEN environment variable
+        - shorebird
     cache:
       cache_paths:
         - $FLUTTER_ROOT/.pub-cache
@@ -37,10 +42,32 @@ workflows:
       - name: Flutter unit tests
         script: |
           flutter test
-        ignore_failure: true          
-      - name: Build Apk with Flutter  
+        ignore_failure: true   
+      - name: 🐦 Setup Shorebird
         script: |
-          flutter build apk -t lib/main_staging.dart --release --obfuscate --split-debug-info=.
+          # Install Shorebird
+          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+
+          # Add Shorebird to PATH
+          echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV  
+      - name: 🙌 Shorebird Build/Patch/Release
+        script: |
+          echo "➡️ Using type: $TYPE"
+
+          # If type is neither "patch" nor "release", exit with error
+          if [ "$TYPE" != "patch" ] && [ "$TYPE" != "release" ]; then
+            echo "TYPE must be either 'patch' or 'release'"
+            exit 1
+          fi
+
+          # Check type and run corresponding command
+          if [ "$TYPE" == "patch" ]; then
+            echo "🩹 Running patch command"
+            shorebird patch android -- -t lib/main_prod.dart --release --obfuscate --split-debug-info=.
+          elif [ "$TYPE" == "release" ]; then
+            echo "🚀 Running release command"
+            shorebird release android --artifact apk -- -t lib/main_prod.dart --release --obfuscate --split-debug-info=.
+          fi     
     artifacts:
       - build/**/outputs/apk/**/*.apk
     publishing:
