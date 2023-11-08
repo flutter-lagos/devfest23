@@ -24,6 +24,7 @@ class FirebaseNotificationManager {
         debugPrint('Empty Messages: $message');
       }
     });
+    await LocalNotificationManager.initialiseHeadsUpNotificationAndroid();
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     // request permission from user to display notification
     NotificationSettings settings = await messaging.requestPermission(
