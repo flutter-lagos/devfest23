@@ -2,12 +2,19 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final class LocalNotificationManager {
+  static Future<void> initialiseHeadsUpNotificationAndroid() async {
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(_androidChannel);
+  }
+
   static const AndroidNotificationChannel _androidChannel =
       AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
     description: 'This channel is used for important notifications.',
-    importance: Importance.high,
+    importance: Importance.max,
   );
 
   static const _initializationSettingsAndroid =
@@ -22,9 +29,12 @@ final class LocalNotificationManager {
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static void showNotification(NotificationDto message) {
-    _flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
+    _flutterLocalNotificationsPlugin.initialize(
+      const InitializationSettings(
         android: _initializationSettingsAndroid,
-        iOS: _initializationSettingsDarwin));
+        iOS: _initializationSettingsDarwin,
+      ),
+    );
 
     _flutterLocalNotificationsPlugin.show(
       message.id,
@@ -35,7 +45,8 @@ final class LocalNotificationManager {
           _androidChannel.id,
           _androidChannel.name,
           channelDescription: _androidChannel.description,
-          // icon: 'notification',
+          priority: Priority.high,
+          importance: _androidChannel.importance,
         ),
         iOS: const DarwinNotificationDetails(
           presentAlert: true,
