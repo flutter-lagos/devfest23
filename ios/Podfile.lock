@@ -48,7 +48,7 @@ PODS:
   - FirebaseFirestore/Base (10.16.0)
   - FirebaseFirestore/WithLeveldb (10.16.0):
     - FirebaseFirestore/Base
-  - FirebaseInstallations (10.17.0):
+  - FirebaseInstallations (10.16.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -189,8 +189,8 @@ SPEC CHECKSUMS:
   FirebaseAuth: 3862d87d4d58deff08f705d471896a2f66e8bbf0
   FirebaseCore: 65a801af84cca84361ef9eac3fd868656968a53b
   FirebaseCoreInternal: 26233f705cc4531236818a07ac84d20c333e505a
-  FirebaseFirestore: af9a84203f05086d393e7fe24020a3880390245b
-  FirebaseInstallations: 9387bf15abfc69a714f54e54f74a251264fdb79b
+  FirebaseFirestore: a78fa6e8bd3644023c22d5212e7afee9d7522194
+  FirebaseInstallations: b822f91a61f7d1ba763e5ccc9d4f2e6f2ed3b3ee
   FirebaseMessaging: 80b4a086d20ed4fd385a702f4bfa920e14f5064d
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
@@ -210,4 +210,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 24915fc3dae3448c24a88e45b3a9e88e0ce37aae
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.2
