@@ -6,7 +6,7 @@
   <img src="./shots/gdg-logo.png" alt="DevFest Lagos 2023" width="50%" />
 </p>
 <p align="center">
-<a target="_blank" href='#'><img alt='Get it on Google Play' src='https://goldtonemusicgroup.com/img/goldtone/main-page/news/playstore-badge.png' height='75px'/></a>
+<a target="_blank" href='https://play.google.com/store/apps/details?id=com.gdglagos.devfestlg'><img alt='Get it on Google Play' src='https://goldtonemusicgroup.com/img/goldtone/main-page/news/playstore-badge.png' height='75px'/></a>
 <a target="_blank" href='#'><img alt='Get it on the App Store' src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1280px-Download_on_the_App_Store_Badge.svg.png' height='75px'/></a>
 </p>
 <p align="center"><a href="#getting-started">:rocket: Get Started</a></p>
@@ -21,6 +21,7 @@ Some description goes here.
 
 - Flutter
 - Firebase
+- Cloud functions
 
 ## Getting Started
 
