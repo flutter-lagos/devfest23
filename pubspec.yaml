@@ -20,8 +20,8 @@ dependencies:
   firebase_core: ^2.21.0
   firebase_auth: ^4.12.1
   firebase_messaging: ^14.7.3
-  widgetbook: ^3.3.0
-  widgetbook_annotation: ^3.0.0
+  widgetbook: ^3.4.0
+  widgetbook_annotation: ^3.1.0
   flutter_svg: ^2.0.9
   font_awesome_flutter: ^10.6.0
   intl: ^0.18.1
