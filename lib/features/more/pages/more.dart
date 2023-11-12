@@ -1,4 +1,5 @@
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
@@ -89,7 +90,9 @@ class _MorePageState extends ConsumerState<MorePage> {
               title: const Text('Contact Us'),
               subtitle: const Text('Ask questions and make enquiries'),
               trailing: const Icon(Icons.chevron_right_rounded),
-              onPressed: () {},
+              onPressed: () {
+                _launchUrl('mailto:Team@gdglagos.com');
+              },
             ),
             MoreTile(
               leading: Align(
@@ -103,7 +106,9 @@ class _MorePageState extends ConsumerState<MorePage> {
               title: const Text('Join The Community'),
               subtitle: const Text('Make magic with us by joining a GDG'),
               trailing: const Icon(Icons.chevron_right_rounded),
-              onPressed: () {},
+              onPressed: () {
+                _launchUrl('https://gdg.community.dev/gdg-lagos/');
+              },
             ),
             const Spacer(),
             Padding(
@@ -131,6 +136,10 @@ class _MorePageState extends ConsumerState<MorePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {}
   }
 }
 
