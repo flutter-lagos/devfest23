@@ -38,6 +38,7 @@ final class Session extends Equatable {
   final int slot;
   final DateTime sessionDate;
   final bool hasRsvped;
+  final int order;
 
   const Session({
     required this.owner,
@@ -57,6 +58,7 @@ final class Session extends Equatable {
     required this.slot,
     required this.sessionDate,
     required this.hasRsvped,
+    required this.order,
   });
 
   Session.empty()
@@ -78,6 +80,7 @@ final class Session extends Equatable {
           slot: 0,
           sessionDate: DateTime.now(),
           hasRsvped: false,
+          order: -1,
         );
 
   factory Session.fromJson(Map<String, dynamic> json) => Session(
@@ -104,6 +107,7 @@ final class Session extends Equatable {
           return DateTime(date.year, date.month, date.day);
         }(),
         hasRsvped: false,
+        order: json['order'] ?? -1,
       );
 
   Session copyWith({
@@ -124,6 +128,7 @@ final class Session extends Equatable {
     int? slot,
     DateTime? sessionDate,
     bool? hasRsvped,
+    int? order,
   }) {
     return Session(
       owner: owner ?? this.owner,
@@ -143,6 +148,7 @@ final class Session extends Equatable {
       slot: slot ?? this.slot,
       sessionDate: sessionDate ?? this.sessionDate,
       hasRsvped: hasRsvped ?? this.hasRsvped,
+      order: order ?? this.order,
     );
   }
 
@@ -165,5 +171,6 @@ final class Session extends Equatable {
         slot,
         sessionDate,
         hasRsvped,
+        order,
       ];
 }

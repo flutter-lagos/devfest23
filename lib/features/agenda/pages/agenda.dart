@@ -1,5 +1,7 @@
+import 'package:devfest23/core/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../core/data/data.dart';
 import '../../../core/router/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -139,100 +141,46 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   },
                 ),
                 [
-                  AnimatedScale(
-                    key: const Key('AnimatedScaleDay1'),
-                    scale: day.index == 0 ? 1.0 : 0.98,
-                    curve: Curves.easeIn,
-                    duration: const Duration(milliseconds: 250),
-                    child: switch (ref.watch(scheduleViewModelProvider
-                        .select((value) => value.viewState))) {
-                      ViewState.loading => const FetchingSessions(),
-                      ViewState.success => AnimatedOpacity(
-                          key: const Key('AnimatedOpacityDay1'),
-                          opacity: day.index == 0 ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 250),
-                          curve: Curves.decelerate,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            key: const PageStorageKey<String>('Day1'),
-                            padding: const EdgeInsets.only(
-                                    top: Constants.verticalGutter)
-                                .w,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final session =
-                                  ref.watch(day1SessionsProvider)[index];
-                              return ScheduleTile(
-                                isGeneral: session.category.isEmpty,
-                                title: session.title,
-                                speaker: session.owner,
-                                time: session.scheduledDuration,
-                                venue: session.hall,
-                                category: session.category,
-                                speakerImage: session.speakerImage,
-                                hasRsvped: session.hasRsvped,
-                                onTap: () {
-                                  context.go(
-                                    RoutePaths.session,
-                                    extra: session,
-                                  );
-                                },
-                              );
-                            },
-                            separatorBuilder: (_, __) => 14.verticalSpace,
-                            itemCount: itemCount,
+                  switch (ref.watch(scheduleViewModelProvider
+                      .select((value) => value.viewState))) {
+                    ViewState.loading => Padding(
+                        padding: const EdgeInsets.symmetric(
+                                vertical: Constants.verticalGutter)
+                            .h,
+                        child: const FetchingSessions(),
+                      ),
+                    ViewState.success => ProviderScope(
+                        overrides: [
+                          _schedulesProvider.overrideWithValue(
+                            ref
+                                .watch(day1SessionsProvider)
+                                .safeSublist(itemCount),
                           ),
-                        ),
-                      _ => const SizedBox.shrink(),
-                    },
-                  ),
-                  AnimatedScale(
-                    key: const Key('AnimatedScaleDay2'),
-                    scale: day.index == 1 ? 1.0 : 0.98,
-                    curve: Curves.easeIn,
-                    duration: const Duration(milliseconds: 100),
-                    child: switch (ref.watch(scheduleViewModelProvider
-                        .select((value) => value.viewState))) {
-                      ViewState.loading => const FetchingSessions(),
-                      ViewState.success => AnimatedOpacity(
-                          key: const Key('AnimatedOpacityDay2'),
-                          opacity: day.index == 1 ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 150),
-                          curve: Curves.decelerate,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            key: const PageStorageKey<String>('Day2'),
-                            padding: const EdgeInsets.only(
-                                    top: Constants.verticalGutter)
-                                .w,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final session =
-                                  ref.watch(day2SessionsProvider)[index];
-                              return ScheduleTile(
-                                isGeneral: session.category.isEmpty,
-                                title: session.title,
-                                speaker: session.owner,
-                                time: session.scheduledDuration,
-                                venue: session.hall,
-                                category: session.category,
-                                speakerImage: session.speakerImage,
-                                hasRsvped: session.hasRsvped,
-                                onTap: () {
-                                  context.go(
-                                    RoutePaths.session,
-                                    extra: session,
-                                  );
-                                },
-                              );
-                            },
-                            separatorBuilder: (_, __) => 14.verticalSpace,
-                            itemCount: itemCount,
+                        ],
+                        child: const _AgendaSchedules(),
+                      ),
+                    _ => const SizedBox.shrink(),
+                  },
+                  switch (ref.watch(scheduleViewModelProvider
+                      .select((value) => value.viewState))) {
+                    ViewState.loading => Padding(
+                        padding: const EdgeInsets.symmetric(
+                                vertical: Constants.verticalGutter)
+                            .h,
+                        child: const FetchingSessions(),
+                      ),
+                    ViewState.success => ProviderScope(
+                        overrides: [
+                          _schedulesProvider.overrideWithValue(
+                            ref
+                                .watch(day2SessionsProvider)
+                                .safeSublist(itemCount),
                           ),
-                        ),
-                      _ => const SizedBox.shrink(),
-                    },
-                  ),
+                        ],
+                        child: const _AgendaSchedules(),
+                      ),
+                    _ => const SizedBox.shrink(),
+                  },
                 ].elementAt(day.index),
                 Center(
                   child: TextButton.icon(
@@ -260,72 +208,24 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   switch (ref.watch(speakersViewModelProvider
                       .select((value) => value.viewState))) {
                     ViewState.loading => const FetchingSpeakers(),
-                    ViewState.success => ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 16).h,
-                        itemBuilder: (context, index) {
-                          var color = [
-                            const Color(0xfff6eeee),
-                            DevfestColors.greenSecondary,
-                            DevfestColors.blueSecondary,
-                            const Color(0xffffafff)
-                          ].elementAt(index > 3 ? 3 : index);
-
-                          final speaker =
-                              ref.watch(day1AllSpeakersProvider)[index];
-                          return SpeakersChip(
-                            moodColor: color,
-                            name: speaker.name,
-                            shortInfo: speaker.role,
-                            avatarImageUrl: speaker.avatar,
-                            onTap: () {
-                              context.go(
-                                RoutePaths.speakers,
-                                extra: speaker,
-                              );
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            Constants.verticalGutter.verticalSpace,
-                        itemCount: itemCount,
+                    ViewState.success => ProviderScope(
+                        overrides: [
+                          _speakersProvider.overrideWithValue(
+                              ref.watch(day1AllSpeakersProvider)),
+                        ],
+                        child: const _Speakers(),
                       ),
                     _ => const SizedBox.shrink(),
                   },
                   switch (ref.watch(speakersViewModelProvider
                       .select((value) => value.viewState))) {
                     ViewState.loading => const FetchingSpeakers(),
-                    ViewState.success => ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 16).h,
-                        itemBuilder: (context, index) {
-                          var color = [
-                            const Color(0xfff6eeee),
-                            DevfestColors.greenSecondary,
-                            DevfestColors.blueSecondary,
-                            const Color(0xffffafff)
-                          ].elementAt(index > 3 ? 3 : index);
-
-                          final speaker =
-                              ref.watch(day2AllSpeakersProvider)[index];
-                          return SpeakersChip(
-                            moodColor: color,
-                            name: speaker.name,
-                            shortInfo: speaker.role,
-                            avatarImageUrl: speaker.avatar,
-                            onTap: () {
-                              context.go(
-                                RoutePaths.speakers,
-                                extra: speaker,
-                              );
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            Constants.verticalGutter.verticalSpace,
-                        itemCount: itemCount,
+                    ViewState.success => ProviderScope(
+                        overrides: [
+                          _speakersProvider.overrideWithValue(
+                              ref.watch(day2AllSpeakersProvider)),
+                        ],
+                        child: const _Speakers(),
                       ),
                     _ => const SizedBox.shrink(),
                   },
@@ -353,6 +253,82 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+final _schedulesProvider = Provider.autoDispose<List<Session>>((ref) {
+  throw UnimplementedError();
+});
+
+class _AgendaSchedules extends ConsumerWidget {
+  const _AgendaSchedules();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sessions = ref.watch(_schedulesProvider);
+    return ListView.separated(
+      shrinkWrap: true,
+      padding: const EdgeInsets.only(top: Constants.verticalGutter).w,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final session = sessions[index];
+        return ScheduleTile(
+          isGeneral: session.sessionId.isEmpty,
+          title: session.title,
+          speaker: session.owner,
+          time: session.scheduledDuration,
+          venue: session.hall,
+          category: session.category,
+          speakerImage: session.speakerImage,
+          hasRsvped: session.hasRsvped,
+          onTap: () {
+            context.go(RoutePaths.session, extra: session);
+          },
+        );
+      },
+      separatorBuilder: (_, __) => 14.verticalSpace,
+      itemCount: sessions.length,
+    );
+  }
+}
+
+final _speakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
+  throw UnimplementedError();
+});
+
+class _Speakers extends ConsumerWidget {
+  const _Speakers();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final speakers = ref.watch(_speakersProvider);
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(top: 16).h,
+      itemBuilder: (context, index) {
+        var color = [
+          const Color(0xfff6eeee),
+          DevfestColors.greenSecondary,
+          DevfestColors.blueSecondary,
+          const Color(0xffffafff)
+        ].elementAt(index > 3 ? 3 : index);
+
+        final speaker = speakers[index];
+        return SpeakersChip(
+          moodColor: color,
+          name: speaker.name,
+          shortInfo: speaker.role,
+          avatarImageUrl: speaker.avatar,
+          onTap: () {
+            context.go(RoutePaths.speakers, extra: speaker);
+          },
+        );
+      },
+      separatorBuilder: (context, index) =>
+          Constants.verticalGutter.verticalSpace,
+      itemCount: speakers.length,
     );
   }
 }

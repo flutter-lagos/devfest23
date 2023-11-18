@@ -3,6 +3,7 @@ import 'package:devfest23/features/schedule/application/controllers.dart';
 import 'package:devfest23/features/schedule/application/sessions/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/data.dart';
 import '../../../core/enums/devfest_day.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
@@ -121,74 +122,71 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           ),
         ];
       },
-      body: () {
-        if (ref.watch(
-                scheduleViewModelProvider.select((value) => value.viewState)) ==
-            ViewState.loading) {
-          return Padding(
+      body: switch (ref.watch(
+          scheduleViewModelProvider.select((value) => value.viewState))) {
+        ViewState.loading => Padding(
             padding: const EdgeInsets.symmetric(
                     horizontal: Constants.horizontalMargin)
                 .w,
             child: const FetchingSessions(),
-          );
-        }
+          ),
+        ViewState.success => AnimatedIndexedStack(
+            index: day.index,
+            children: [
+              ProviderScope(
+                overrides: [
+                  _schedulesProvider
+                      .overrideWithValue(ref.watch(day1SessionsProvider)),
+                ],
+                child: const _Schedules(),
+              ),
+              ProviderScope(
+                overrides: [
+                  _schedulesProvider
+                      .overrideWithValue(ref.watch(day2SessionsProvider)),
+                ],
+                child: const _Schedules(),
+              ),
+            ],
+          ),
+        _ => const SizedBox.shrink(),
+      },
+    );
+  }
+}
 
-        return AnimatedIndexedStack(
-          index: day.index,
-          children: [
-            ListView.separated(
-              key: const PageStorageKey<String>('Day1'),
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin,
-              ).w,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final session = ref.watch(day1SessionsProvider)[index];
-                return ScheduleTile(
-                  isGeneral: session.category.isEmpty,
-                  title: session.title,
-                  speaker: session.owner,
-                  time: session.scheduledDuration,
-                  venue: session.hall,
-                  category: session.category,
-                  speakerImage: session.speakerImage,
-                  hasRsvped: session.hasRsvped,
-                  onTap: () {
-                    context.go(RoutePaths.session, extra: session);
-                  },
-                );
-              },
-              separatorBuilder: (_, __) => 14.verticalSpace,
-              itemCount: ref.watch(day1SessionsProvider).length,
-            ),
-            ListView.separated(
-              key: const PageStorageKey<String>('Day2'),
-              padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.horizontalMargin)
-                  .w,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final session = ref.watch(day2SessionsProvider)[index];
-                return ScheduleTile(
-                  isGeneral: session.category.isEmpty,
-                  title: session.title,
-                  speaker: session.owner,
-                  time: session.scheduledDuration,
-                  venue: session.hall,
-                  category: session.category,
-                  speakerImage: session.speakerImage,
-                  hasRsvped: session.hasRsvped,
-                  onTap: () {
-                    context.go(RoutePaths.session, extra: session);
-                  },
-                );
-              },
-              separatorBuilder: (_, __) => 14.verticalSpace,
-              itemCount: ref.watch(day2SessionsProvider).length,
-            ),
-          ],
+final _schedulesProvider = Provider.autoDispose<List<Session>>((ref) {
+  throw UnimplementedError();
+});
+
+class _Schedules extends ConsumerWidget {
+  const _Schedules();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sessions = ref.watch(_schedulesProvider);
+    return ListView.separated(
+      padding:
+          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final session = sessions[index];
+        return ScheduleTile(
+          isGeneral: session.sessionId.isEmpty,
+          title: session.title,
+          speaker: session.owner,
+          time: session.scheduledDuration,
+          venue: session.hall,
+          category: session.category,
+          speakerImage: session.speakerImage,
+          hasRsvped: session.hasRsvped,
+          onTap: () {
+            context.go(RoutePaths.session, extra: session);
+          },
         );
-      }(),
+      },
+      separatorBuilder: (_, __) => 14.verticalSpace,
+      itemCount: sessions.length,
     );
   }
 }

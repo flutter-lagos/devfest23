@@ -32,20 +32,22 @@ class AgendaView extends StatefulWidget {
 
 class _AgendaViewState extends State<AgendaView>
     with AutomaticKeepAliveClientMixin {
+  bool get _canPop {
+    final navState = AppNavigator.getKey(Module.home).currentState;
+    if (navState != null && navState.canPop()) {
+      navState.pop();
+      return false; // We handled the popping manually
+    }
+    return true; // Allow default behavior
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return ModuleProvider(
       module: Module.home,
-      child: WillPopScope(
-        onWillPop: () async {
-          final navState = AppNavigator.getKey(Module.home).currentState;
-          if (navState != null && navState.canPop()) {
-            navState.pop();
-            return false; // We handled the popping manually
-          }
-          return true; // Allow default behavior
-        },
+      child: PopScope(
+        canPop: _canPop,
         child: Navigator(
           key: AppNavigator.getKey(Module.home),
           onUnknownRoute: (settings) => MaterialPageRoute(

@@ -13,7 +13,8 @@ final day1SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
       .watch(scheduleViewModelProvider.select((value) => value.sessions))
       .where((element) =>
           element.sessionDate.difference(Constants.day1).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day2SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
@@ -21,21 +22,24 @@ final day2SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
       .watch(scheduleViewModelProvider.select((value) => value.sessions))
       .where((element) =>
           element.sessionDate.difference(Constants.day2).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day1RSVPSessionProvider = Provider.autoDispose<List<Session>>((ref) {
   return ref
       .watch(day1SessionsProvider)
       .where((element) => element.hasRsvped)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day2RSVPSessionProvider = Provider.autoDispose<List<Session>>((ref) {
   return ref
       .watch(day2SessionsProvider)
       .where((element) => element.hasRsvped)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final sessionProvider = Provider.autoDispose<Session>((ref) {

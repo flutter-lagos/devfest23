@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../features/home/widgets/schedule_tile.dart';
 import '../../features/home/widgets/session_category_chip.dart';
 import '../../features/home/widgets/speakers_chip.dart';
-import '../constants.dart';
 import '../themes/themes.dart';
 
 class FetchingSessions extends StatelessWidget {
@@ -14,6 +13,7 @@ class FetchingSessions extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       itemBuilder: (context, index) => const ScheduleTileShimmer(),
       separatorBuilder: (_, __) => const SizedBox(height: 14),
       itemCount: 5,
@@ -28,8 +28,7 @@ class FetchingSpeakers extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
-      padding:
-          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+      padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
         var color = [
           const Color(0xfff6eeee),

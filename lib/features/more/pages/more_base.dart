@@ -7,19 +7,21 @@ import 'package:flutter/material.dart';
 class MoreView extends StatelessWidget {
   const MoreView({super.key});
 
+  bool get _canPop {
+    final navState = AppNavigator.getKey(Module.more).currentState;
+    if (navState != null && navState.canPop()) {
+      navState.pop();
+      return false; // We handled the popping manually
+    }
+    return true; // Allow default behavior
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModuleProvider(
       module: Module.more,
-      child: WillPopScope(
-        onWillPop: () async {
-          final navState = AppNavigator.getKey(Module.more).currentState;
-          if (navState != null && navState.canPop()) {
-            navState.pop();
-            return false; // We handled the popping manually
-          }
-          return true; // Allow default behavior
-        },
+      child: PopScope(
+        canPop: _canPop,
         child: Navigator(
           key: AppNavigator.getKey(Module.more),
           onGenerateRoute: (settings) {

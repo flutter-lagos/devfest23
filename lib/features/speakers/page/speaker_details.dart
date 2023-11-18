@@ -4,10 +4,12 @@ import 'package:devfest23/core/widgets/on_screen_loader.dart';
 import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:devfest23/features/speakers/application/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/data/data.dart';
+import '../../../core/icons.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/themes/themes.dart';
@@ -93,7 +95,7 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
                   height: 148.h,
                   child: Row(
                     children: [
-                      const SpeakerAvatar(),
+                      const _SpeakerAvatar(),
                       12.horizontalSpace,
                       Expanded(
                         child: Column(
@@ -236,8 +238,8 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
   }
 }
 
-class SpeakerAvatar extends ConsumerWidget {
-  const SpeakerAvatar({super.key});
+class _SpeakerAvatar extends ConsumerWidget {
+  const _SpeakerAvatar();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -249,7 +251,41 @@ class SpeakerAvatar extends ConsumerWidget {
           .watch(
               speakerDetailsViewModelProvider.select((value) => value.speaker))
           .avatar,
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => Container(
+        width: 133.w,
+        height: 148.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border(
+            left: BorderSide(
+              width: 1,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: borderColor,
+            ),
+            top: BorderSide(
+              width: 1,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: borderColor,
+            ),
+            right: BorderSide(
+              width: 6,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: borderColor,
+            ),
+            bottom: BorderSide(
+              width: 6,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: borderColor,
+            ),
+          ),
+        ),
+        alignment: Alignment.center,
+        child: SvgPicture.asset(
+          AppIcons.devfestLogo,
+          height: 24.h,
+          fit: BoxFit.contain,
+        ),
+      ),
       imageBuilder: (context, imageProvider) {
         return Container(
           width: 133.w,
