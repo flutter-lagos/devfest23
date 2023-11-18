@@ -28,14 +28,7 @@ class ScheduleView extends StatefulWidget {
 
 class _ScheduleViewState extends State<ScheduleView>
     with AutomaticKeepAliveClientMixin {
-  bool get _canPop {
-    final navState = AppNavigator.getKey(Module.schedule).currentState;
-    if (navState != null && navState.canPop()) {
-      navState.pop();
-      return false; // We handled the popping manually
-    }
-    return true; // Allow default behavior
-  }
+  bool canPop = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +36,20 @@ class _ScheduleViewState extends State<ScheduleView>
     return ModuleProvider(
       module: Module.schedule,
       child: PopScope(
-        canPop: _canPop,
+        canPop: canPop,
+        onPopInvoked: (didPop) {
+          final navState = AppNavigator.getKey(Module.schedule).currentState;
+          if (navState != null && navState.canPop()) {
+            AppNavigator.pop(module: Module.schedule);
+            setState(() {
+              canPop = false;
+            }); // We handled the popping manually
+            return;
+          }
+          setState(() {
+            canPop = true;
+          }); // Allow default behavior
+        },
         child: Navigator(
           key: AppNavigator.getKey(Module.schedule),
           onUnknownRoute: (settings) => MaterialPageRoute(

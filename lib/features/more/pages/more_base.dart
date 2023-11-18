@@ -4,24 +4,35 @@ import 'more.dart';
 import '../../profile/pages/profile.dart';
 import 'package:flutter/material.dart';
 
-class MoreView extends StatelessWidget {
+class MoreView extends StatefulWidget {
   const MoreView({super.key});
 
-  bool get _canPop {
-    final navState = AppNavigator.getKey(Module.more).currentState;
-    if (navState != null && navState.canPop()) {
-      navState.pop();
-      return false; // We handled the popping manually
-    }
-    return true; // Allow default behavior
-  }
+  @override
+  State<MoreView> createState() => _MoreViewState();
+}
+
+class _MoreViewState extends State<MoreView> {
+  bool canPop = false;
 
   @override
   Widget build(BuildContext context) {
     return ModuleProvider(
       module: Module.more,
       child: PopScope(
-        canPop: _canPop,
+        canPop: canPop,
+        onPopInvoked: (didPop) {
+          final navState = AppNavigator.getKey(Module.more).currentState;
+          if (navState != null && navState.canPop()) {
+            AppNavigator.pop(module: Module.more);
+            setState(() {
+              canPop = false;
+            }); // We handled the popping manually
+            return;
+          }
+          setState(() {
+            canPop = true;
+          }); // Allow default behavior
+        },
         child: Navigator(
           key: AppNavigator.getKey(Module.more),
           onGenerateRoute: (settings) {
