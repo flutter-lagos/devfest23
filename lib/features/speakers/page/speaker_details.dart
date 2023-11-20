@@ -96,7 +96,7 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
                   child: Row(
                     children: [
                       const _SpeakerAvatar(),
-                      12.horizontalSpace,
+                      Constants.horizontalMargin.horizontalSpace,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +114,7 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
                                   color: isDark
                                       ? DevfestColors.grey80
                                       : DevfestColors.grey30),
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             16.verticalSpace,
