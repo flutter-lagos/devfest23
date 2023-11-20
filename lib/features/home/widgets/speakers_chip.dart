@@ -112,26 +112,33 @@ class SpeakersChip extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: avatarImageUrl,
+            CachedNetworkImage(
+              imageUrl: avatarImageUrl,
+              imageBuilder: (context, imageProvider) => Container(
+                height: 54.w,
+                width: 54.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Container(
                 height: 54,
                 width: 54,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => Container(
-                  height: 54,
-                  width: 54,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: accentColor,
-                  ),
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(
-                    AppIcons.devfestLogo,
-                    height: 16.h,
-                    fit: BoxFit.contain,
-                  ),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: accentColor,
+                ),
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AppIcons.devfestLogo,
+                  height: 16.h,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
