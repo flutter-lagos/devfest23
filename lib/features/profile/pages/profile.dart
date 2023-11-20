@@ -4,8 +4,10 @@ import 'package:devfest23/features/profile/application/view_model.dart';
 import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/icons.dart';
 import '../../../core/images.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
@@ -251,12 +253,16 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                   width: 80.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: DevfestColors.blue,
+                    color: DevfestColors.blueSecondary,
                     border: Border.all(
                         color: DevfestColors.yellowSecondary, width: 2),
                   ),
                   alignment: Alignment.center,
-                  child: const Icon(Icons.error),
+                  child: SvgPicture.asset(
+                    AppIcons.devfestLogo,
+                    height: 16.h,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 imageBuilder: (context, imageProvider) => Container(
                   height: 80.w,

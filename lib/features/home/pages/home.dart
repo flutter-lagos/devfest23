@@ -54,61 +54,55 @@ class _AppHomeState extends ConsumerState<AppHome>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: DevFestTheme.of(context).backgroundColor,
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: pageController,
-          children: const [
-            AgendaView(),
-            ScheduleView(),
-            SpeakersView(),
-            FavouritesView(),
-            MoreView(),
-          ],
-        ),
-        floatingActionButton: ref.watch(appCurrentTab) == 4
-            ? null
-            : FloatingActionButton(
-                tooltip: 'refresh button',
-                onPressed: _userInfoCalls,
-                backgroundColor:
-                    DevFestTheme.of(context).buttonTheme?.backgroundColor,
-                child: Icon(
-                  Icons.refresh_rounded,
-                  color: DevFestTheme.of(context).buttonTheme?.iconColor,
-                ),
+    return Scaffold(
+      backgroundColor: DevFestTheme.of(context).backgroundColor,
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        children: const [
+          AgendaView(),
+          ScheduleView(),
+          SpeakersView(),
+          FavouritesView(),
+          MoreView(),
+        ],
+      ),
+      floatingActionButton: ref.watch(appCurrentTab) == 4
+          ? null
+          : FloatingActionButton(
+              tooltip: 'refresh button',
+              onPressed: _userInfoCalls,
+              backgroundColor:
+                  DevFestTheme.of(context).buttonTheme?.backgroundColor,
+              child: Icon(
+                Icons.refresh_rounded,
+                color: DevFestTheme.of(context).buttonTheme?.iconColor,
               ),
-        bottomNavigationBar: DevfestBottomNav(
-          index: ref.watch(appCurrentTab),
-          items: const [
-            DevfestBottomNavItem(
-                label: 'Home', icon: Icon(Icons.home_outlined)),
-            DevfestBottomNavItem(
-              label: 'Schedule',
-              icon: Icon(Icons.checklist_rtl_outlined),
             ),
-            DevfestBottomNavItem(
-                label: 'Speakers', icon: Icon(Icons.person_2_outlined)),
-            DevfestBottomNavItem(
-              label: 'Rsvp',
-              icon: Icon(Icons.star_border_outlined),
-            ),
-            DevfestBottomNavItem(
-              label: 'More',
-              icon: Icon(Icons.more_rounded, size: 18),
-              inactiveIcon: Icon(Icons.more_outlined),
-            ),
-          ],
-          onTap: (page) {
-            pageController.index = page;
-            ref.watch(appCurrentTab.notifier).update((state) => state = page);
-          },
-        ),
+      bottomNavigationBar: DevfestBottomNav(
+        index: ref.watch(appCurrentTab),
+        items: const [
+          DevfestBottomNavItem(label: 'Home', icon: Icon(Icons.home_outlined)),
+          DevfestBottomNavItem(
+            label: 'Schedule',
+            icon: Icon(Icons.checklist_rtl_outlined),
+          ),
+          DevfestBottomNavItem(
+              label: 'Speakers', icon: Icon(Icons.person_2_outlined)),
+          DevfestBottomNavItem(
+            label: 'Rsvp',
+            icon: Icon(Icons.star_border_outlined),
+          ),
+          DevfestBottomNavItem(
+            label: 'More',
+            icon: Icon(Icons.more_rounded, size: 18),
+            inactiveIcon: Icon(Icons.more_outlined),
+          ),
+        ],
+        onTap: (page) {
+          pageController.index = page;
+          ref.watch(appCurrentTab.notifier).update((state) => state = page);
+        },
       ),
     );
   }

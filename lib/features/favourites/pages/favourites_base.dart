@@ -28,19 +28,27 @@ class FavouritesView extends StatefulWidget {
 
 class _FavouritesViewState extends State<FavouritesView>
     with AutomaticKeepAliveClientMixin {
+  bool canPop = false;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return ModuleProvider(
       module: Module.favourites,
-      child: WillPopScope(
-        onWillPop: () async {
+      child: PopScope(
+        canPop: canPop,
+        onPopInvoked: (didPop) {
           final navState = AppNavigator.getKey(Module.favourites).currentState;
           if (navState != null && navState.canPop()) {
-            navState.pop();
-            return false; // We handled the popping manually
+            AppNavigator.pop(module: Module.favourites);
+            setState(() {
+              canPop = false;
+            }); // We handled the popping manually
+            return;
           }
-          return true; // Allow default behavior
+          setState(() {
+            canPop = true;
+          }); // Allow default behavior
         },
         child: Navigator(
           key: AppNavigator.getKey(Module.favourites),

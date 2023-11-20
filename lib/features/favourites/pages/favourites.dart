@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/data/data.dart';
 import '../../../core/icons.dart';
 import '../../../core/providers/current_tab_provider.dart';
 import '../../../core/router/navigator.dart';
@@ -94,7 +95,7 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
                       ?.copyWith(fontWeight: FontWeight.w500),
                   children: [
                     WidgetSpan(child: 4.horizontalSpace),
-                    const TextSpan(text: 'Rsvp')
+                    const TextSpan(text: 'RSVP')
                   ],
                 ),
               ),
@@ -148,70 +149,20 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
               ViewState.success => AnimatedIndexedStack(
                   index: day.index,
                   children: [
-                    () {
-                      if (ref.watch(day1RSVPSessionProvider).isEmpty) {
-                        return const NoRSVPSessions();
-                      }
-
-                      return ListView.separated(
-                        key: const PageStorageKey<String>('Day1'),
-                        padding: const EdgeInsets.symmetric(
-                                horizontal: Constants.horizontalMargin)
-                            .w,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final session =
-                              ref.watch(day1RSVPSessionProvider)[index];
-                          return ScheduleTile(
-                            isGeneral: session.category.isEmpty,
-                            title: session.title,
-                            speaker: session.owner,
-                            time: session.scheduledDuration,
-                            venue: session.hall,
-                            category: session.category,
-                            speakerImage: session.speakerImage,
-                            hasRsvped: session.hasRsvped,
-                            onTap: () {
-                              context.go(RoutePaths.session, extra: session);
-                            },
-                          );
-                        },
-                        separatorBuilder: (_, __) => 14.verticalSpace,
-                        itemCount: ref.watch(day1RSVPSessionProvider).length,
-                      );
-                    }(),
-                    () {
-                      if (ref.watch(day2RSVPSessionProvider).isEmpty) {
-                        return const NoRSVPSessions();
-                      }
-
-                      return ListView.separated(
-                        key: const PageStorageKey<String>('Day2'),
-                        padding: const EdgeInsets.symmetric(
-                                horizontal: Constants.horizontalMargin)
-                            .w,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final session =
-                              ref.watch(day2RSVPSessionProvider)[index];
-                          return ScheduleTile(
-                            isGeneral: session.category.isEmpty,
-                            title: session.title,
-                            speaker: session.owner,
-                            time: session.scheduledDuration,
-                            venue: session.hall,
-                            category: session.category,
-                            speakerImage: session.speakerImage,
-                            hasRsvped: session.hasRsvped,
-                            onTap: () {
-                              context.go(RoutePaths.session, extra: session);
-                            },
-                          );
-                        },
-                        separatorBuilder: (_, __) => 14.verticalSpace,
-                        itemCount: ref.watch(day2RSVPSessionProvider).length,
-                      );
-                    }(),
+                    ProviderScope(
+                      overrides: [
+                        _rsvpsProvider.overrideWithValue(
+                            ref.watch(day1RSVPSessionProvider)),
+                      ],
+                      child: const _RSVPs(),
+                    ),
+                    ProviderScope(
+                      overrides: [
+                        _rsvpsProvider.overrideWithValue(
+                            ref.watch(day2RSVPSessionProvider)),
+                      ],
+                      child: const _RSVPs(),
+                    ),
                   ],
                 ),
               _ => const SizedBox.shrink(),
@@ -221,6 +172,44 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
           return const _UserNotLoggedIn();
         },
       ),
+    );
+  }
+}
+
+final _rsvpsProvider = Provider.autoDispose<List<Session>>((ref) {
+  throw UnimplementedError();
+});
+
+class _RSVPs extends ConsumerWidget {
+  const _RSVPs();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sessions = ref.watch(_rsvpsProvider);
+    if (sessions.isEmpty) return const NoRSVPSessions();
+
+    return ListView.separated(
+      padding:
+          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin).w,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final session = sessions[index];
+        return ScheduleTile(
+          isGeneral: session.sessionId.isEmpty,
+          title: session.title,
+          speaker: session.owner,
+          time: session.scheduledDuration,
+          venue: session.hall,
+          category: session.category,
+          speakerImage: session.speakerImage,
+          hasRsvped: session.hasRsvped,
+          onTap: () {
+            context.go(RoutePaths.session, extra: session);
+          },
+        );
+      },
+      separatorBuilder: (_, __) => 14.verticalSpace,
+      itemCount: sessions.length,
     );
   }
 }

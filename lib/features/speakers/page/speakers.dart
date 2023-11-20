@@ -1,5 +1,6 @@
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 
+import '../../../core/data/data.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
 import '../../home/widgets/speakers_chip.dart';
@@ -133,74 +134,74 @@ class _SpeakersPageState extends ConsumerState<SpeakersPage> {
           ),
         ];
       },
-      body: () {
-        if (ref.watch(
-                speakersViewModelProvider.select((value) => value.viewState)) ==
-            ViewState.loading) {
-          return const FetchingSpeakers();
-        }
+      body: switch (ref.watch(
+          speakersViewModelProvider.select((value) => value.viewState))) {
+        ViewState.loading => Padding(
+            padding: const EdgeInsets.symmetric(
+                    horizontal: Constants.horizontalMargin)
+                .w,
+            child: const FetchingSpeakers(),
+          ),
+        ViewState.success => AnimatedIndexedStack(
+            index: day.index,
+            children: [
+              ProviderScope(
+                overrides: [
+                  _speakersProvider
+                      .overrideWithValue(ref.watch(day1SpeakersProvider)),
+                ],
+                child: const _Speakers(),
+              ),
+              ProviderScope(
+                overrides: [
+                  _speakersProvider
+                      .overrideWithValue(ref.watch(day2SpeakersProvider)),
+                ],
+                child: const _Speakers(),
+              ),
+            ],
+          ),
+        _ => const SizedBox.shrink(),
+      },
+    );
+  }
+}
 
-        return AnimatedIndexedStack(
-          index: day.index,
-          children: [
-            ListView.separated(
-              key: const PageStorageKey<String>('Day1'),
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.horizontalMargin,
-              ).w,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                var color = [
-                  const Color(0xfff6eeee),
-                  DevfestColors.greenSecondary,
-                  DevfestColors.blueSecondary,
-                  const Color(0xffffafff)
-                ].elementAt(index > 3 ? index % 2 : index);
+final _speakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
+  throw UnimplementedError();
+});
 
-                final speaker = ref.watch(day1SpeakersProvider)[index];
-                return SpeakersChip(
-                  moodColor: color,
-                  name: speaker.name,
-                  shortInfo: speaker.role,
-                  avatarImageUrl: speaker.avatar,
-                  onTap: () {
-                    context.go(RoutePaths.speakers, extra: speaker);
-                  },
-                );
-              },
-              separatorBuilder: (_, __) => const SizedBox(height: 14),
-              itemCount: ref.watch(day1SpeakersProvider).length,
-            ),
-            ListView.separated(
-              key: const PageStorageKey<String>('Day2'),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.horizontalMargin),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                var color = [
-                  const Color(0xfff6eeee),
-                  DevfestColors.greenSecondary,
-                  DevfestColors.blueSecondary,
-                  const Color(0xffffafff)
-                ].elementAt(index > 3 ? index % 2 : index);
+class _Speakers extends ConsumerWidget {
+  const _Speakers();
 
-                final speaker = ref.watch(day2SpeakersProvider)[index];
-                return SpeakersChip(
-                  moodColor: color,
-                  name: speaker.name,
-                  shortInfo: speaker.role,
-                  avatarImageUrl: speaker.avatar,
-                  onTap: () {
-                    context.go(RoutePaths.speakers, extra: speaker);
-                  },
-                );
-              },
-              separatorBuilder: (_, __) => const SizedBox(height: 14),
-              itemCount: ref.watch(day2SpeakersProvider).length,
-            ),
-          ],
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final speakers = ref.watch(_speakersProvider);
+    return ListView.separated(
+      padding:
+          const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin),
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        var color = [
+          const Color(0xfff6eeee),
+          DevfestColors.greenSecondary,
+          DevfestColors.blueSecondary,
+          const Color(0xffffafff)
+        ].elementAt(index > 3 ? index % 2 : index);
+
+        final speaker = speakers[index];
+        return SpeakersChip(
+          moodColor: color,
+          name: speaker.name,
+          shortInfo: speaker.role,
+          avatarImageUrl: speaker.avatar,
+          onTap: () {
+            context.go(RoutePaths.speakers, extra: speaker);
+          },
         );
-      }(),
+      },
+      separatorBuilder: (_, __) => const SizedBox(height: 14),
+      itemCount: speakers.length,
     );
   }
 }

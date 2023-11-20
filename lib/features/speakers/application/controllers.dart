@@ -9,7 +9,8 @@ final day1AllSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
       .watch(speakersViewModelProvider.select((value) => value.speakers))
       .where((element) =>
           element.sessionDate.difference(Constants.day1).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day2AllSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
@@ -17,7 +18,8 @@ final day2AllSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
       .watch(speakersViewModelProvider.select((value) => value.speakers))
       .where((element) =>
           element.sessionDate.difference(Constants.day2).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day1FilteredSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
@@ -26,7 +28,8 @@ final day1FilteredSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
           speakersViewModelProvider.select((value) => value.filteredSpeakers))
       .where((element) =>
           element.sessionDate.difference(Constants.day1).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day2FilteredSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
@@ -35,7 +38,8 @@ final day2FilteredSpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {
           speakersViewModelProvider.select((value) => value.filteredSpeakers))
       .where((element) =>
           element.sessionDate.difference(Constants.day2).inDays == 0)
-      .toList();
+      .toList()
+    ..sort((a, b) => a.order.compareTo(b.order));
 });
 
 final day1SpeakersProvider = Provider.autoDispose<List<Speaker>>((ref) {

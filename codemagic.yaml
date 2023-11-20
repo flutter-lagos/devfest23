@@ -4,7 +4,7 @@ workflows:
     instance_type: mac_mini_m1
     max_build_duration: 120
     environment:
-      flutter: 3.13.6
+      flutter: 3.16.0
       xcode: latest
       android_signing:
         - devfest23-key
@@ -36,13 +36,13 @@ workflows:
         script: |
           flutter pub run build_runner build --delete-conflicting-outputs
       - name: Flutter analyze
-        ignore_failure: true   
+        ignore_failure: true
         script: |
           flutter analyze .
       - name: Flutter unit tests
         script: |
           flutter test
-        ignore_failure: true   
+        ignore_failure: true
       - name: 🐦 Setup Shorebird
         script: |
           # Install Shorebird

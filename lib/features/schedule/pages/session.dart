@@ -4,7 +4,9 @@ import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/icons.dart';
 import '../../../core/router/navigator.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/widgets/chips.dart';
@@ -67,7 +69,7 @@ class _SessionPageState extends ConsumerState<SessionPage> {
           padding:
               const EdgeInsets.symmetric(horizontal: Constants.horizontalMargin)
                   .w,
-          child: ref.watch(sessionProvider).category.isEmpty
+          child: ref.watch(sessionProvider).sessionId.isEmpty
               ? GeneralSessionPage(info: ref.watch(sessionProvider))
               : SpeakerSessionPage(info: ref.watch(sessionProvider)),
         ),
@@ -87,10 +89,6 @@ class GeneralSessionPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // if (info.status != SessionStatus.notStarted) ...[
-          //   _SessionStatus(status: info.status),
-          //   Constants.largeVerticalGutter.verticalSpace,
-          // ],
           _TitleSection(info: info),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -130,11 +128,6 @@ class SpeakerSessionPage extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // SessionTimeLeftChip(
-                    //   minuteLeft: DateTime.now()
-                    //       .difference(widget.info.sessionTime)
-                    //       .inMinutes,
-                    // ),
                     SessionSlotsChip(slotsLeft: info.availableSeats),
                   ],
                 ),
@@ -150,10 +143,6 @@ class SpeakerSessionPage extends ConsumerWidget {
                       SessionTimeChip(sessionTime: info.scheduledAt),
                       Constants.horizontalGutter.horizontalSpace,
                       SessionVenueChip(venue: info.hall),
-                      // if (widget.info.status != SessionStatus.notStarted) ...[
-                      //   Constants.horizontalGutter.horizontalSpace,
-                      //   _SessionStatus(status: widget.info.status),
-                      // ],
                     ],
                   ),
                 ),
@@ -226,7 +215,24 @@ class _TitleSection extends StatelessWidget {
               imageUrl: info.speakerImage,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   CircularProgressIndicator(value: downloadProgress.progress),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => Container(
+                height: 32.w,
+                width: 32.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    color: DevfestColors.green,
+                    width: 2,
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AppIcons.devfestLogo,
+                  height: 10.w,
+                  fit: BoxFit.contain,
+                ),
+              ),
               imageBuilder: (context, imageProvider) => Container(
                 height: 32.w,
                 width: 32.w,

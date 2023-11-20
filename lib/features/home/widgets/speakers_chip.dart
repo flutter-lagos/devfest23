@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../core/icons.dart';
 import '../../../core/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -110,14 +112,34 @@ class SpeakersChip extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            ClipOval(
-              child: CachedNetworkImage(
-                imageUrl: avatarImageUrl,
+            CachedNetworkImage(
+              imageUrl: avatarImageUrl,
+              imageBuilder: (context, imageProvider) => Container(
+                height: 54.w,
+                width: 54.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Container(
                 height: 54,
                 width: 54,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: accentColor,
+                ),
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AppIcons.devfestLogo,
+                  height: 16.h,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(width: Constants.horizontalGutter),

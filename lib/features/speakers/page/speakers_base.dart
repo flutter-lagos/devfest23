@@ -28,19 +28,27 @@ class SpeakersView extends StatefulWidget {
 
 class _SpeakersViewState extends State<SpeakersView>
     with AutomaticKeepAliveClientMixin {
+  bool canPop = false;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return ModuleProvider(
       module: Module.speakers,
-      child: WillPopScope(
-        onWillPop: () async {
+      child: PopScope(
+        canPop: canPop,
+        onPopInvoked: (_) {
           final navState = AppNavigator.getKey(Module.speakers).currentState;
           if (navState != null && navState.canPop()) {
-            navState.pop();
-            return false; // We handled the popping manually
+            AppNavigator.pop(module: Module.speakers);
+            setState(() {
+              canPop = false;
+            }); // We handled the popping manually
+            return;
           }
-          return true; // Allow default behavior
+          setState(() {
+            canPop = true;
+          }); // Allow default behavior
         },
         child: Navigator(
           key: AppNavigator.getKey(Module.speakers),

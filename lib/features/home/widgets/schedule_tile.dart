@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/constants.dart';
+import '../../../core/icons.dart';
 import '../../../core/themes/colors.dart';
 import '../../../core/themes/theme_data.dart';
 import '../../../core/widgets/widgets.dart';
@@ -231,8 +233,24 @@ class _InActiveFavouriteSessionTileState
                               (context, url, downloadProgress) =>
                                   CircularProgressIndicator(
                                       value: downloadProgress.progress),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          errorWidget: (context, url, error) => Container(
+                            height: 32.w,
+                            width: 32.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                                color: DevfestColors.green,
+                                width: 2,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: SvgPicture.asset(
+                              AppIcons.devfestLogo,
+                              height: 10.w,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                           imageBuilder: (context, imageProvider) => Container(
                             height: 32.w,
                             width: 32.w,
@@ -251,53 +269,55 @@ class _InActiveFavouriteSessionTileState
                           ),
                         ),
                         const SizedBox(width: Constants.horizontalGutter),
-                        Text.rich(
-                          TextSpan(
-                            text: widget.speaker,
-                            style: DevFestTheme.of(context)
-                                .textTheme
-                                ?.body03
-                                ?.copyWith(
-                                  color: isDark
-                                      ? DevfestColors.grey80
-                                      : DevfestColors.grey10,
-                                ),
-                            children: [
-                              WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: AnimatedContainer(
-                                  duration: Constants.kAnimationDur,
-                                  height: 8.w,
-                                  width: 8.w,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: Constants.horizontalGutter),
-                                  decoration: BoxDecoration(
+                        Expanded(
+                          child: Text.rich(
+                            TextSpan(
+                              text: widget.speaker,
+                              style: DevFestTheme.of(context)
+                                  .textTheme
+                                  ?.body03
+                                  ?.copyWith(
                                     color: isDark
-                                        ? DevfestColors.grey100
-                                        : DevfestColors.grey70,
-                                    shape: BoxShape.circle,
+                                        ? DevfestColors.grey80
+                                        : DevfestColors.grey10,
+                                  ),
+                              children: [
+                                WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: AnimatedContainer(
+                                    duration: Constants.kAnimationDur,
+                                    height: 8.w,
+                                    width: 8.w,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: Constants.horizontalGutter),
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? DevfestColors.grey100
+                                          : DevfestColors.grey70,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              TextSpan(text: widget.time),
-                              WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: AnimatedContainer(
-                                  duration: Constants.kAnimationDur,
-                                  height: 8.w,
-                                  width: 8.w,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: Constants.horizontalGutter),
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? DevfestColors.grey100
-                                        : DevfestColors.grey70,
-                                    shape: BoxShape.circle,
+                                TextSpan(text: widget.time),
+                                WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: AnimatedContainer(
+                                    duration: Constants.kAnimationDur,
+                                    height: 8.w,
+                                    width: 8.w,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: Constants.horizontalGutter),
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? DevfestColors.grey100
+                                          : DevfestColors.grey70,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              TextSpan(text: widget.venue),
-                            ],
+                                TextSpan(text: widget.venue),
+                              ],
+                            ),
                           ),
                         ),
                       ],
