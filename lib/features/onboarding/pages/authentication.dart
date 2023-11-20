@@ -2,6 +2,7 @@ import 'package:devfest23/core/exceptions/exceptions.dart';
 import 'package:devfest23/core/ui_state_model/ui_state_model.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:devfest23/features/onboarding/application/application.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/router/navigator.dart';
@@ -278,7 +279,7 @@ class _AuthenticationPending extends ConsumerWidget {
           DevfestFilledButton(
             title: const Text('Register Now'),
             onPressed: () {
-              // TODO: register now
+              _launchUrl('https://devfestlagos.com');
             },
           ),
           Constants.verticalGutter.verticalSpace,
@@ -291,6 +292,10 @@ class _AuthenticationPending extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {}
   }
 }
 
