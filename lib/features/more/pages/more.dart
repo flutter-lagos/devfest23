@@ -95,6 +95,15 @@ class _MorePageState extends ConsumerState<MorePage> {
               },
             ),
             MoreTile(
+              leading: const Icon(Symbols.location_pin),
+              title: const Text('DevFest Venue Map'),
+              subtitle: const Text('Find your way around Landmark Center'),
+              trailing: const Icon(Icons.arrow_outward),
+              onPressed: () {
+                _launchUrl('https://devfestlagos.com/map');
+              },
+            ),
+            MoreTile(
               leading: Align(
                 child: SvgPicture.asset(
                   AppIcons.devfestLogo,
