@@ -90,7 +90,7 @@ class _AppHomeState extends ConsumerState<AppHome>
           DevfestBottomNavItem(
               label: 'Speakers', icon: Icon(Icons.person_2_outlined)),
           DevfestBottomNavItem(
-            label: 'Rsvp',
+            label: 'RSVP',
             icon: Icon(Icons.star_border_outlined),
           ),
           DevfestBottomNavItem(
