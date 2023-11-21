@@ -97,8 +97,11 @@ class GeneralSessionPage extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // SessionTimeChip(sessionTime: info.sessionTime),
-                Constants.horizontalGutter.verticalSpace,
+                if (info.scheduledAt.isNotEmpty) ...[
+                  SessionTimeChip(
+                      sessionTime: info.scheduledAt.split("-").first.trim()),
+                  Constants.horizontalGutter.horizontalSpace,
+                ],
                 SessionVenueChip(venue: info.hall),
               ],
             ),
@@ -140,8 +143,12 @@ class SpeakerSessionPage extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SessionTimeChip(sessionTime: info.scheduledAt),
-                      Constants.horizontalGutter.horizontalSpace,
+                      if (info.scheduledAt.isNotEmpty) ...[
+                        SessionTimeChip(
+                            sessionTime:
+                                info.scheduledAt.split("-").first.trim()),
+                        Constants.horizontalGutter.horizontalSpace,
+                      ],
                       SessionVenueChip(venue: info.hall),
                     ],
                   ),

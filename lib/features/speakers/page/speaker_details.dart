@@ -192,39 +192,44 @@ class _SpeakerDetailsPageState extends ConsumerState<SpeakerDetailsPage> {
                 ),
                 Constants.smallVerticalGutter.verticalSpace,
                 Text(
-                  ref.watch(speakerProvider).bio,
+                  ref.watch(speakerProvider.select((value) => value.bio)),
                   style: theme.textTheme?.body03?.copyWith(
                     color: isDark ? DevfestColors.grey80 : DevfestColors.grey10,
                   ),
                 ),
                 Constants.verticalGutter.verticalSpace,
-                Text(
-                  'TALK',
-                  style: theme.textTheme?.body04,
-                ),
-                Constants.smallVerticalGutter.verticalSpace,
-                StreamBuilder(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, snapshot) {
-                    if (snapshot.data != null) {
-                      return SpeakerActionCard(
+                if (ref
+                    .watch(speakerProvider
+                        .select((value) => value.currentSessionId))
+                    .isNotEmpty) ...[
+                  Text(
+                    'TALK',
+                    style: theme.textTheme?.body04,
+                  ),
+                  Constants.smallVerticalGutter.verticalSpace,
+                  StreamBuilder(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data != null) {
+                        return SpeakerActionCard(
+                          session: ref.watch(speakerDetailsViewModelProvider
+                              .select((value) => value.session)),
+                          reserveSessionOnTap: ref
+                              .read(speakerDetailsViewModelProvider.notifier)
+                              .reserveSessionOnTap,
+                        );
+                      }
+
+                      return SpeakerLoginActionCard(
                         session: ref.watch(speakerDetailsViewModelProvider
                             .select((value) => value.session)),
-                        reserveSessionOnTap: ref
-                            .read(speakerDetailsViewModelProvider.notifier)
-                            .reserveSessionOnTap,
+                        loginOnTap: () {
+                          AppNavigator.pushNamedAndClear(RoutePaths.onboarding);
+                        },
                       );
-                    }
-
-                    return SpeakerLoginActionCard(
-                      session: ref.watch(speakerDetailsViewModelProvider
-                          .select((value) => value.session)),
-                      loginOnTap: () {
-                        AppNavigator.pushNamedAndClear(RoutePaths.onboarding);
-                      },
-                    );
-                  },
-                ),
+                    },
+                  ),
+                ]
               ],
             ),
           ),
