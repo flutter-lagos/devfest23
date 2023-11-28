@@ -46,7 +46,7 @@ class _AppHomeState extends ConsumerState<AppHome>
 
   Future _userInfoCalls() {
     return Future.wait([
-      ref.read(scheduleViewModelProvider.notifier).fetchSessions(),
+      ref.read(sessionsViewModelProvider.notifier).fetchSessions(),
       ref.read(speakersViewModelProvider.notifier).fetchSpeakers(),
       ref.read(speakersViewModelProvider.notifier).fetchSessionCategories(),
     ]);

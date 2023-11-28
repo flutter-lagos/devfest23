@@ -13,37 +13,38 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  flutter_riverpod: ^2.4.5
-  flutter_native_splash: ^2.3.5
+  flutter_riverpod: ^2.4.9
+  flutter_native_splash: ^2.3.6
   equatable: ^2.0.5
   cloud_firestore: ^4.12.2
   firebase_core: ^2.21.0
   firebase_auth: ^4.12.1
   firebase_messaging: ^14.7.3
-  widgetbook: ^3.4.0
+  widgetbook: ^3.4.1
   widgetbook_annotation: ^3.1.0
   flutter_svg: ^2.0.9
   font_awesome_flutter: ^10.6.0
   intl: ^0.18.1
   shared_preferences: ^2.2.2
-  material_symbols_icons: ^4.2706.0
-  iconoir_flutter: ^7.0.0
+  material_symbols_icons: ^4.2711.0
+  iconoir_flutter: ^7.0.3
   regex_router: ^2.0.2
   flutter_screenutil: ^5.9.0
   either_dart: ^1.0.0
-  dio: ^5.3.3
+  dio: ^5.3.4
   shimmer: ^3.0.0
   cached_network_image: ^3.3.0
   url_launcher: ^6.2.1
-  package_info_plus: ^4.2.0
-  flutter_local_notifications: ^16.1.0
+  package_info_plus: ^5.0.1
+  flutter_local_notifications: ^16.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
-  widgetbook_generator: ^3.2.0
-  build_runner: ^2.4.6
+  widgetbook_generator: ^3.3.0
+  build_runner: ^2.4.7
+  mocktail: ^1.0.1
 
 
 flutter:

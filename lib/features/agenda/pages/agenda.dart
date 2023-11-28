@@ -141,7 +141,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                   },
                 ),
                 [
-                  switch (ref.watch(scheduleViewModelProvider
+                  switch (ref.watch(sessionsViewModelProvider
                       .select((value) => value.viewState))) {
                     ViewState.loading => Padding(
                         padding: const EdgeInsets.symmetric(
@@ -161,7 +161,7 @@ class _AgendaPageState extends ConsumerState<AgendaPage> {
                       ),
                     _ => const SizedBox.shrink(),
                   },
-                  switch (ref.watch(scheduleViewModelProvider
+                  switch (ref.watch(sessionsViewModelProvider
                       .select((value) => value.viewState))) {
                     ViewState.loading => Padding(
                         padding: const EdgeInsets.symmetric(

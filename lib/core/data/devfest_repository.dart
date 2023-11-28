@@ -30,6 +30,7 @@ abstract interface class DevfestRepository {
   Future<EitherExceptionOr<CategoriesResponseDto>> fetchSessionCategories();
 }
 
-final devfestRepositoryProvider = Provider.autoDispose((ref) {
+final devfestRepositoryProvider =
+    Provider.autoDispose<DevfestRepository>((ref) {
   return const DevfestRepositoryImplementation();
 });

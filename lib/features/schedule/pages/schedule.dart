@@ -123,7 +123,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         ];
       },
       body: switch (ref.watch(
-          scheduleViewModelProvider.select((value) => value.viewState))) {
+          sessionsViewModelProvider.select((value) => value.viewState))) {
         ViewState.loading => Padding(
             padding: const EdgeInsets.symmetric(
                     horizontal: Constants.horizontalMargin)

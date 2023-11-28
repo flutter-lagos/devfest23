@@ -25,7 +25,7 @@ void main() {
       Password password = Password('');
 
       expect(password.isValid, false); // invalid password input
-      expect(password.validationError, 'Password(Ticket ID) cannot be empty');
+      expect(password.validationError, 'Ticket Number cannot be empty');
 
       password = Password('1234');
       expect(password.isValid, true);
