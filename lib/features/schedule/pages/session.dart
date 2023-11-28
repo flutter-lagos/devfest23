@@ -38,7 +38,7 @@ class _SessionPageState extends ConsumerState<SessionPage> {
       sessionDetailsViewModelProvider.select((value) => value.viewState),
       (previous, next) {
         if (next == ViewState.success) {
-          ref.read(scheduleViewModelProvider.notifier).fetchSessions();
+          ref.read(sessionsViewModelProvider.notifier).fetchSessions();
         }
       },
     );

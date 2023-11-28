@@ -144,7 +144,7 @@ class _FavouritesPageState extends ConsumerState<FavouritesPage> {
         builder: (context, snapshot) {
           if (snapshot.data != null) {
             return switch (ref.watch(
-                scheduleViewModelProvider.select((value) => value.viewState))) {
+                sessionsViewModelProvider.select((value) => value.viewState))) {
               ViewState.loading => const FetchingSessions(),
               ViewState.success => AnimatedIndexedStack(
                   index: day.index,

@@ -8,13 +8,16 @@ import '../../../../core/data/data.dart';
 
 class SessionsViewModel extends StateNotifier<SessionsUiState> {
   final DevfestRepository _repo;
+  final FirebaseAuth _auth;
+  final FirebaseNotificationManager _notificationManager;
 
-  SessionsViewModel(this._repo) : super(const SessionsUiState.initial());
+  SessionsViewModel(this._repo, this._auth, this._notificationManager)
+      : super(const SessionsUiState.initial());
 
   Future<void> fetchSessions() async {
     await launch(state.ref, (model) async {
       state = model.setState(state.copyWith(viewState: ViewState.loading));
-      if (FirebaseAuth.instance.currentUser == null) {
+      if (_auth.currentUser == null) {
         final result = await _repo.fetchSessions();
 
         state = model.setState(
@@ -35,7 +38,7 @@ class SessionsViewModel extends StateNotifier<SessionsUiState> {
         _repo.fetchRSVPSessions(),
         _repo.updateUserDeviceToken(
           UpdateTokenRequestDto(
-            deviceToken: await FirebaseNotificationManager().deviceToken ?? '',
+            deviceToken: await _notificationManager.deviceToken ?? '',
           ),
         ),
       ]);
@@ -76,7 +79,8 @@ class SessionsViewModel extends StateNotifier<SessionsUiState> {
   }
 }
 
-final scheduleViewModelProvider =
+final sessionsViewModelProvider =
     StateNotifierProvider.autoDispose<SessionsViewModel, SessionsUiState>(
-  (ref) => SessionsViewModel(ref.read(devfestRepositoryProvider)),
+  (ref) => SessionsViewModel(ref.read(devfestRepositoryProvider),
+      FirebaseAuth.instance, FirebaseNotificationManager()),
 );

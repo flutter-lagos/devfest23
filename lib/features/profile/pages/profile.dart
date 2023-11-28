@@ -33,7 +33,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         profileViewModelProvider.select((value) => value.viewState),
         (previous, next) {
       if (next == ViewState.success) {
-        ref.read(scheduleViewModelProvider.notifier).fetchSessions();
+        ref.read(sessionsViewModelProvider.notifier).fetchSessions();
       }
     });
   }

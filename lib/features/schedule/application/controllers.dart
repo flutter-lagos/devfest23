@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants.dart';
 
 final allSessionsProviderProvider = Provider.autoDispose<List<Session>>((ref) {
-  return ref.watch(scheduleViewModelProvider.select((value) => value.sessions));
+  return ref.watch(sessionsViewModelProvider.select((value) => value.sessions));
 });
 
 final day1SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
   return ref
-      .watch(scheduleViewModelProvider.select((value) => value.sessions))
+      .watch(sessionsViewModelProvider.select((value) => value.sessions))
       .where((element) =>
           element.sessionDate.difference(Constants.day1).inDays == 0)
       .toList()
@@ -19,7 +19,7 @@ final day1SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
 
 final day2SessionsProvider = Provider.autoDispose<List<Session>>((ref) {
   return ref
-      .watch(scheduleViewModelProvider.select((value) => value.sessions))
+      .watch(sessionsViewModelProvider.select((value) => value.sessions))
       .where((element) =>
           element.sessionDate.difference(Constants.day2).inDays == 0)
       .toList()
