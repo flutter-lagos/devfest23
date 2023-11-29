@@ -1,6 +1,7 @@
 import '../constants.dart';
 import '../themes/colors.dart';
 import '../themes/theme_data.dart';
+import '../utils.dart';
 import 'widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -112,16 +113,6 @@ class _DateTile extends StatelessWidget {
             ?.copyWith(color: DevfestColors.grey10),
       ),
     );
-  }
-
-  String nthNumber(int day) {
-    if (day > 3 && day < 21) return 'th';
-    return switch (day % 10) {
-      1 => 'st',
-      2 => 'nd',
-      3 => 'rd',
-      _ => 'th',
-    };
   }
 }
 

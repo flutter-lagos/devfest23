@@ -7,3 +7,13 @@ extension ListX<E> on List<E> {
     }
   }
 }
+
+String nthNumber(int day) {
+  if (day > 3 && day < 21) return 'th';
+  return switch (day % 10) {
+    1 => 'st',
+    2 => 'nd',
+    3 => 'rd',
+    _ => 'th',
+  };
+}
