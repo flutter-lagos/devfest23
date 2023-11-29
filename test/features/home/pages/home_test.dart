@@ -94,9 +94,9 @@ void main() {
 
   group('$AppHome $AgendaView works as expected', () {
     testWidgets('$AgendaView loads correctly', (WidgetTester tester) async {
-      final _dateFormat = DateFormat('MMMM, yyyy');
-      final _dayFormat = DateFormat('dd');
-      final _day2 = DateTime(2023, 11, 25);
+      final dateFormat = DateFormat('MMMM, yyyy');
+      final dayFormat = DateFormat('dd');
+      final day2 = DateTime(2023, 11, 25);
 
       // Mock the providers
       final container = ProviderContainer(
@@ -175,7 +175,7 @@ void main() {
 
       expect(
           find.text(
-              '${_dayFormat.format(_day2)}${nthNumber(_day2.day)} ${_dateFormat.format(_day2)}'),
+              '${dayFormat.format(day2)}${nthNumber(day2.day)} ${dateFormat.format(day2)}'),
           findsOneWidget);
 
       // Clean up
