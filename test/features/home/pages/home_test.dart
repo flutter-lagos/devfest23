@@ -1,3 +1,4 @@
+import 'package:devfest23/core/constants.dart';
 import 'package:devfest23/core/data/data.dart';
 import 'package:devfest23/core/enums/tab_item.dart';
 import 'package:devfest23/core/router/module_provider.dart';
@@ -9,6 +10,7 @@ import 'package:devfest23/core/widgets/schedule_tab_bar.dart';
 import 'package:devfest23/core/widgets/widgets.dart';
 import 'package:devfest23/features/agenda/pages/agenda_base.dart';
 import 'package:devfest23/features/home/pages/home.dart';
+import 'package:devfest23/features/home/widgets/schedule_tile.dart';
 import 'package:devfest23/features/schedule/application/application.dart';
 import 'package:devfest23/features/schedule/pages/schedule_base.dart';
 import 'package:devfest23/features/speakers/application/application.dart';
@@ -41,12 +43,21 @@ void main() {
         return Future.value(
           Right(
             SessionsResponseDto(
-              sessions: [Session.empty()], // TODO: Add some fake sessions here
-            ),
+                sessions: List.generate(
+              20,
+              (index) => Session.empty().copyWith(
+                sessionId: index.toString(),
+                title: 'Session $index',
+                description: 'Session $index description',
+                sessionDate: index % 2 == 0 ? Constants.day1 : Constants.day2,
+              ),
+            ) // TODO: Add some fake sessions here
+                ),
           ),
         );
       },
     );
+    when(() => mockFirebaseAuth.currentUser).thenReturn(null);
     when(() => mockFirebaseNotificationManager.deviceToken).thenAnswer(
       (_) => Future.value('token'),
     );
@@ -109,11 +120,6 @@ void main() {
               mockFirebaseNotificationManager,
             ),
           ),
-          speakersViewModelProvider.overrideWith(
-            (ref) => SpeakersViewModel(
-              ref.read(devfestRepositoryProvider),
-            ),
-          ),
         ],
       );
 
@@ -137,7 +143,7 @@ void main() {
       );
 
       // Initial build
-      await tester.pumpAndSettle();
+      await tester.progressAnimationSafely();
 
       // Check if TabBarView is present
       expect(find.byType(TabBarView), findsOneWidget);
@@ -147,7 +153,8 @@ void main() {
 
       // Interact with FloatingActionButton
       await tester.tap(find.byType(FloatingActionButton));
-      await tester.pumpAndSettle(); // Wait for any async operations to complete
+      await tester
+          .progressAnimationSafely(); // Wait for any async operations to complete
 
       // Check for bottom navigation bar items
       expect(find.byType(DevfestBottomNav), findsOneWidget);
@@ -161,7 +168,7 @@ void main() {
 
       // TODO: Find schedule tiles and tao one
       // Verify ScheduleTiles are rendered
-      // expect(find.byType(ScheduleTile), findsNWidgets(1));
+      expect(find.byType(ScheduleTile), findsAtLeast(1));
       // TODO: Tap card and navigate to seeion detaik
 
       // Simulate tapping on a tab in the ScheduleTabBar
@@ -171,7 +178,7 @@ void main() {
         of: scheduleTabBarFinder,
         matching: find.byType(InkWell).at(1),
       ));
-      await tester.pumpAndSettle();
+      await tester.progressAnimationSafely();
 
       expect(
           find.text(
@@ -224,7 +231,7 @@ void main() {
       );
 
       // Initial build
-      await tester.pumpAndSettle();
+      await tester.progressAnimationSafely();
 
       // Check if TabBarView is present
       expect(find.byType(TabBarView), findsOneWidget);
@@ -234,14 +241,16 @@ void main() {
 
       // Interact with FloatingActionButton
       await tester.tap(find.byType(FloatingActionButton));
-      await tester.pumpAndSettle(); // Wait for any async operations to complete
+      await tester
+          .progressAnimationSafely(); // Wait for any async operations to complete
 
       // Check for bottom navigation bar items
       expect(find.byType(DevfestBottomNav), findsOneWidget);
 
       // Interact with bottom navigation bar
       await tester.tap(find.text('Schedule'));
-      await tester.pumpAndSettle(); // Wait for the page change animation
+      await tester
+          .progressAnimationSafely(); // Wait for the page change animation
 
       // Verify the TabController index changes
       expect(pageController.index, 1); // 'Schedule' is at index 1
@@ -291,7 +300,7 @@ void main() {
       );
 
       // Initial build
-      await tester.pumpAndSettle();
+      await tester.progressAnimationSafely();
 
       // Check if TabBarView is present
       expect(find.byType(TabBarView), findsOneWidget);
@@ -301,14 +310,16 @@ void main() {
 
       // Interact with FloatingActionButton
       await tester.tap(find.byType(FloatingActionButton));
-      await tester.pumpAndSettle(); // Wait for any async operations to complete
+      await tester
+          .progressAnimationSafely(); // Wait for any async operations to complete
 
       // Check for bottom navigation bar items
       expect(find.byType(DevfestBottomNav), findsOneWidget);
 
       // Interact with bottom navigation bar
       await tester.tap(find.text('Speakers'));
-      await tester.pumpAndSettle(); // Wait for the page change animation
+      await tester
+          .progressAnimationSafely(); // Wait for the page change animation
 
       // Verify the TabController index changes
       expect(pageController.index, 2); // 'Speakers' is at index 2

@@ -78,3 +78,13 @@ Future<T> neverEndingFuture<T>() async {
     await Future.delayed(const Duration(minutes: 5));
   }
 }
+
+const waitTime = Duration(milliseconds: 700);
+
+extension WidgetTesterX on WidgetTester {
+  Future<void> progressAnimationSafely() async {
+    for (int i = 0; i < 10; i++) {
+      await pump(waitTime);
+    }
+  }
+}
