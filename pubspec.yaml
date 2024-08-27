@@ -24,7 +24,7 @@ dependencies:
   widgetbook_annotation: ^3.1.0
   flutter_svg: ^2.0.9
   font_awesome_flutter: ^10.6.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   shared_preferences: ^2.2.2
   material_symbols_icons: ^4.2711.0
   iconoir_flutter: ^7.0.3
@@ -35,13 +35,13 @@ dependencies:
   shimmer: ^3.0.0
   cached_network_image: ^3.3.0
   url_launcher: ^6.2.1
-  package_info_plus: ^5.0.1
-  flutter_local_notifications: ^16.2.0
+  package_info_plus: ^8.0.2
+  flutter_local_notifications: ^17.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   widgetbook_generator: ^3.3.0
   build_runner: ^2.4.7
   mocktail: ^1.0.1
